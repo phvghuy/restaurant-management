@@ -2,23 +2,22 @@ const User = require("../models/User")
 const bcrypt = require("bcrypt")
 
 const authControllers = {
-    //REGISTER
-    registerUser: async(req, res) => {
-        try{
-            //bcrypt hash password: mã hóa lại mk
-            const salt = await bcrypt.genSalt(10)
-            const hashed = await bcrypt.hash(req.body.password, salt)
-            
-            //Create new user
-            const newUser = await new User({
-                username: req.body.username,
-                email: req.body.email,
-                password: hashed,
-            })
-
-            //Save to DB
-            const user = await newUser.save()
-            res.status(200).json(user)
+    //Login
+    loginUser: async (req, res) => {
+        try {
+            const user = await User.findOne({ username: req.body.username })
+            if (!user) {
+                res.status(404).json{"Wrong username!"}
+            }
+            const validPassword = await bcrypt.compare(
+                //password nhập vào
+                req.body.password,
+                //password hashed trên DB
+                user.password
+            )
+            if (!validPassword) {
+                res.status(404).json("Wrong password")
+            }
         } catch (err) {
             res.status(500).json(err)
         }
