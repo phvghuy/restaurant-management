@@ -7,7 +7,7 @@ const authControllers = {
         try {
             const user = await User.findOne({ username: req.body.username })
             if (!user) {
-                res.status(404).json{"Wrong username!"}
+                res.status(404).json("Wrong username!")
             }
             const validPassword = await bcrypt.compare(
                 //password nhập vào
@@ -17,6 +17,9 @@ const authControllers = {
             )
             if (!validPassword) {
                 res.status(404).json("Wrong password")
+            }
+            if (user && validPassword) {
+                res.status(200).json(user)
             }
         } catch (err) {
             res.status(500).json(err)
