@@ -112,6 +112,14 @@ const authControllers = {
             //tra lai cho user AccessToken vua moi tao lai
             res.status(200).json({accessToken: newAccessToken})
         })
+    },
+
+    //LOG OUT: bang cach clear het Token
+    userLogout: async(req, res) => {
+        res.clearCookie("refreshToken")
+        //reset array (vd la Database) filter xoa token hien tai khoi array
+        refreshTokens = refreshTokens.filter(token => token !== req.cookies.refreshToken)
+        res.status(200).json("Logged out")
     }
 }
 
