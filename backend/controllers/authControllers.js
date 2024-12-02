@@ -114,6 +114,16 @@ const authControllers = {
             res.status(200).json({accessToken: newAccessToken})
         })
 
+    },
+
+    //LOG OUT: bang cach clear het Token
+    userLogout: async(req, res) => {
+        res.clearCookie("refreshToken")
+        //reset array (vd la Database) filter xoa token hien tai khoi array
+        refreshTokens = refreshTokens.filter(token => token !== req.cookies.refreshToken)
+        res.status(200).json("Logged out")
+
+
 
 const authControllers = {
     //REGISTER
@@ -136,6 +146,7 @@ const authControllers = {
         } catch (err) {
             res.status(500).json(err)
         }
+
 
     }
 }
