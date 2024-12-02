@@ -33,4 +33,3 @@ app.use("/v1/auth", authRoute)
 app.listen(8000, () => {
     console.log("Server is running")
 })
-
