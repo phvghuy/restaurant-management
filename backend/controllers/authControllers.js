@@ -1,5 +1,6 @@
 const User = require("../models/User")
 const bcrypt = require("bcrypt")
+
 const jwt = require("jsonwebtoken")
 
 //REDIS la database de luu tru refreshToken, 
@@ -112,6 +113,30 @@ const authControllers = {
             //tra lai cho user AccessToken vua moi tao lai
             res.status(200).json({accessToken: newAccessToken})
         })
+
+
+const authControllers = {
+    //REGISTER
+    registerUser: async(req, res) => {
+        try{
+            //bcrypt hash password: mã hóa lại mk
+            const salt = await bcrypt.genSalt(10)
+            const hashed = await bcrypt.hash(req.body.password, salt)
+            
+            //Create new user
+            const newUser = await new User({
+                username: req.body.username,
+                email: req.body.email,
+                password: hashed,
+            })
+
+            //Save to DB
+            const user = await newUser.save()
+            res.status(200).json(user)
+        } catch (err) {
+            res.status(500).json(err)
+        }
+
     }
 }
 
