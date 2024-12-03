@@ -1,6 +1,5 @@
 const User = require("../models/User")
 const bcrypt = require("bcrypt")
-
 const jwt = require("jsonwebtoken")
 
 //REDIS la database de luu tru refreshToken, 
@@ -8,6 +7,28 @@ const jwt = require("jsonwebtoken")
 let refreshTokens = []
 
 const authControllers = {
+    //REGISTER
+    registerUser: async(req, res) => {
+        try{
+            //bcrypt hash password: mã hóa lại mk
+            const salt = await bcrypt.genSalt(10)
+            const hashed = await bcrypt.hash(req.body.password, salt)
+            
+            //Create new user
+            const newUser = await new User({
+                username: req.body.username,
+                email: req.body.email,
+                password: hashed,
+            })
+
+            //Save to DB
+            const user = await newUser.save()
+            res.status(200).json(user)
+        } catch (err) {
+            res.status(500).json(err)
+        }
+    },
+    
 //GENERATE ACCESS TOKEN
     generateAccessToken: (user)=>{
         return jwt.sign ({
@@ -39,7 +60,8 @@ const authControllers = {
         try {
             const user = await User.findOne({ username: req.body.username })
             if (!user) {
-                res.status(404).json("Wrong username!")
+                //them return, vi loi 'ER_HTTP_HEADERS_SENT' khi nhap sai tk nhung dung mk
+                return res.status(404).json("Wrong username!")
             }
             const validPassword = await bcrypt.compare(
                 //password nhập vào
@@ -48,7 +70,8 @@ const authControllers = {
                 user.password
             )
             if (!validPassword) {
-                res.status(404).json("Wrong password")
+                //them return, vi loi 'ER_HTTP_HEADERS_SENT' khi nhap sai tk nhung dung mk
+                return res.status(404).json("Wrong password")
             }
             if (user && validPassword) {
                 const accessToken = authControllers.generateAccessToken(user)
@@ -113,7 +136,6 @@ const authControllers = {
             //tra lai cho user AccessToken vua moi tao lai
             res.status(200).json({accessToken: newAccessToken})
         })
-
     },
 
     //LOG OUT: bang cach clear het Token
@@ -122,33 +144,7 @@ const authControllers = {
         //reset array (vd la Database) filter xoa token hien tai khoi array
         refreshTokens = refreshTokens.filter(token => token !== req.cookies.refreshToken)
         res.status(200).json("Logged out")
-
-
-
-const authControllers = {
-    //REGISTER
-    registerUser: async(req, res) => {
-        try{
-            //bcrypt hash password: mã hóa lại mk
-            const salt = await bcrypt.genSalt(10)
-            const hashed = await bcrypt.hash(req.body.password, salt)
-            
-            //Create new user
-            const newUser = await new User({
-                username: req.body.username,
-                email: req.body.email,
-                password: hashed,
-            })
-
-            //Save to DB
-            const user = await newUser.save()
-            res.status(200).json(user)
-        } catch (err) {
-            res.status(500).json(err)
-        }
-
-
     }
-}
+};
 
 module.exports = authControllers
