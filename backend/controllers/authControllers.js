@@ -19,6 +19,8 @@ const authControllers = {
                 username: req.body.username,
                 email: req.body.email,
                 password: hashed,
+                fullName: req.body.fullName,
+                phoneNumber: req.body.phoneNumber,
             })
 
             //Save to DB
