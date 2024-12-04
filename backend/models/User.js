@@ -39,8 +39,30 @@ const userSchema = new mongoose.Schema({
         //mặc định ko phải là admin
         default: false,
     },
+    emailVerifiedAt: {
+        type: Date, // Lưu thời gian xác minh email
+        default: null,
+    },
     //thêm thời gian khi tạo và cập nhật
 }, { timestamps: true }
 );
+
+// Static method to verify email
+userSchema.statics.verify = async function (email) {
+    try {
+        const updatedUser = await this.findOneAndUpdate(
+            { email },
+            { emailVerifiedAt: new Date() },
+            { new: true } // Trả về user sau khi cập nhật
+        );
+
+        if (!updatedUser) {
+            throw new Error("Email not found!");
+        }
+        return updatedUser;
+    } catch (err) {
+        throw err;
+    }
+};
 
 module.exports = mongoose.model("User", userSchema)
