@@ -1,6 +1,8 @@
 const User = require("../models/User")
 const bcrypt = require("bcrypt")
 const jwt = require("jsonwebtoken")
+require('dotenv/config')
+const mailer = require('../utils/mailer')
 
 //REDIS la database de luu tru refreshToken, 
 //nhung chua co database nen tao array tuong trung
@@ -25,9 +27,30 @@ const authControllers = {
 
             //Save to DB
             const user = await newUser.save()
-            res.status(200).json(user)
+
+            //cho chuc nang FORGOTPASSWORD:
+            // Generate verification token using JWT
+            const token = jwt.sign(
+                { email: user.email }, // Payload
+                process.env.JWT_ACCESS_KEY, // Secret key
+                { expiresIn: '1h' } // Token expiration time
+            );
+
+            // Create verification link
+            const verifyLink = `${process.env.APP_URL}/v1/auth/verify?email=${user.email}&token=${token}`;
+
+
+            // Send email
+            await mailer.sendMail({
+                to: user.email,
+                subject: "[RESTAURANT MANAGEMENT] Verify Your Email",
+                htmlContent: `<p>Click the link below to verify your email:</p>
+                    <a href="${verifyLink}">Verify Email</a>`,
+            });
+
+            res.status(200).json({ message: "User registered successfully. Please verify your email.", user });
         } catch (err) {
-            res.status(500).json(err)
+            res.status(500).json({ error: err.message });
         }
     },
     
@@ -146,7 +169,116 @@ const authControllers = {
         //reset array (vd la Database) filter xoa token hien tai khoi array
         refreshTokens = refreshTokens.filter(token => token !== req.cookies.refreshToken)
         res.status(200).json("Logged out")
-    }
+    },
+
+    // VERIFY (cho forgotPassword)
+    verify: async (req, res) => {
+        try {
+            const { email, token } = req.query;
+
+            // Kiểm tra token hợp lệ và giải mã
+            const decoded = jwt.verify(token, process.env.JWT_ACCESS_KEY);
+
+            // So sánh email từ token với email từ query
+            if (decoded.email !== email) {
+                return res.status(400).json("Invalid verification token!");
+            }
+
+            // Cập nhật emailVerifiedAt
+            const updatedUser = await User.findOneAndUpdate(
+                { email },
+                { emailVerifiedAt: new Date() },
+                { new: true } // Trả về user sau khi cập nhật
+            );
+
+            if (!updatedUser) {
+                return res.status(404).json("User not found!");
+            }
+
+            res.status(200).json({ message: "Email verified successfully!", user: updatedUser });
+        } catch (err) {
+            if (err.name === 'TokenExpiredError') {
+                return res.status(400).json("Verification token has expired!");
+            }
+            res.status(500).json({ error: err.message });
+        }
+    },
+
+    // Forgot Password
+    //forgotPassword: Phương thức này nhận địa chỉ email, tạo token, 
+    //và gửi email chứa link để người dùng có thể thay đổi mật khẩu.
+    forgotPassword: async (req, res) => {
+        try {
+            const { email } = req.body;
+
+            // Tìm người dùng trong cơ sở dữ liệu theo email
+            const user = await User.findOne({ email });
+            if (!user) {
+                return res.status(404).json("User not found!");
+            }
+
+            // Tạo token để reset mật khẩu
+            const token = jwt.sign(
+                { email: user.email },
+                process.env.JWT_ACCESS_KEY,
+                { expiresIn: '1h' } // Token hết hạn trong 1 giờ
+            );
+
+            // Tạo link reset mật khẩu
+            const resetLink = `${process.env.APP_URL}/v1/auth/reset-password?email=${user.email}&token=${token}`;
+
+            // Gửi email chứa link reset mật khẩu
+            await mailer.sendMail({
+                to: user.email,
+                subject: "[RESTAURANT MANAGEMENT] Reset Your Password",
+                htmlContent: `<p>Click the link below to reset your password:</p>
+                    <a href="${resetLink}">Reset Password</a>`,
+            });
+
+            res.status(200).json({ message: "Check your email to reset your password." });
+        } catch (err) {
+            res.status(500).json({ error: err.message });
+        }
+    },
+
+    // Reset Password
+    //resetPassword: Phương thức này nhận token và mật khẩu mới từ người dùng, kiểm tra token hợp lệ, 
+    //và cập nhật mật khẩu mới trong cơ sở dữ liệu. 
+    resetPassword: async (req, res) => {
+        try {
+            const { email, token, password } = req.body;
+
+            // Kiểm tra token hợp lệ và giải mã
+            const decoded = jwt.verify(token, process.env.JWT_ACCESS_KEY);
+
+            // So sánh email từ token với email từ query
+            if (decoded.email !== email) {
+                return res.status(400).json("Invalid reset password token!");
+            }
+
+            // Mã hóa mật khẩu mới
+            const salt = await bcrypt.genSalt(10);
+            const hashedPassword = await bcrypt.hash(password, salt);
+
+            // Cập nhật mật khẩu trong cơ sở dữ liệu
+            const updatedUser = await User.findOneAndUpdate(
+                { email },
+                { password: hashedPassword },
+                { new: true }
+            );
+
+            if (!updatedUser) {
+                return res.status(404).json("User not found!");
+            }
+
+            res.status(200).json({ message: "Password reset successfully!" });
+        } catch (err) {
+            if (err.name === 'TokenExpiredError') {
+                return res.status(400).json("Reset password token has expired!");
+            }
+            res.status(500).json({ error: err.message });
+        }
+    },
 };
 
 module.exports = authControllers

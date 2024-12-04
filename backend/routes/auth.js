@@ -1,3 +1,4 @@
+const { verify } = require("jsonwebtoken")
 const authControllers = require("../controllers/authControllers")
 const middlewareController = require("../controllers/middlewareControllers")
 
@@ -17,5 +18,14 @@ router.post("/logout", middlewareController.verifyToken ,authControllers.userLog
 //REGISTER
 //phần logic nằm trong controllers theo mô hình MVC
 router.post("/register", authControllers.registerUser)
+
+//FORGOT_PASSWORD
+router.get("/verify", authControllers.verify)
+
+// Forgot Password
+router.post("/forgot-password", authControllers.forgotPassword);
+
+// Reset Password
+router.post("/reset-password", authControllers.resetPassword);
 
 module.exports = router
