@@ -11,14 +11,15 @@ const middlewareController = {
             jwt.verify(accessToken, process.env.JWT_ACCESS_KEY, (err, user) => {
                 //neu loi nghia la khong phai nguoi dung dang nhap hoac Token het han
                 if(err) {
-                    res.status(403).json("Token is not valid")
+                    // Thêm return để dừng lại
+                    return res.status(403).json("Token is not valid")
                 }
                 req.user = user
                 next()
             })
         }
         else {
-            res.status(401).json("You're not authenticated")
+            return res.status(401).json("You're not authenticated")
         }
     }
 }
