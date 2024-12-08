@@ -7,6 +7,6 @@ const router = require("express").Router()
 router.get("/getUser/:id", middlewareController.verifyToken, userController.getUser)
 
 // UPDATE USER (chỉnh sửa thông tin người dùng)
-router.put("/updateUser/:id", middlewareController.verifyToken, userController.updateUser);
+router.put("/updateUser/:id", userController.updateUser);
 
 module.exports = router
