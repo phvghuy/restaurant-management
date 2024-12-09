@@ -7,7 +7,9 @@ const morgan = require("morgan"); // Đảm bảo bạn đã cài đặt morgan
 const reservationRoutes = require('./routes/reservationRoutes'); // Import routes
 const authRoute = require("./routes/auth")
 const userRoute = require("./routes/user")
+
 const menuRoute = require("./routes/menu")
+
 
 const app = express();
 dotenv.config();
@@ -36,8 +38,10 @@ app.use(morgan("common")); // Đảm bảo bạn đã cài đặt morgan
 //ROUTES
 app.use("/v1/auth", authRoute)
 app.use("/v1/user", userRoute)
+
 app.use('/api/reservations', reservationRoutes)
 app.use("/v1/menu", menuRoute)
+
 
 app.listen(8000, () => {
     console.log("Server is running")

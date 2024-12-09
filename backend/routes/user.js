@@ -9,4 +9,10 @@ router.get("/getUser/:id", middlewareController.verifyToken, userController.getU
 // UPDATE USER (chỉnh sửa thông tin người dùng)
 router.put("/updateUser/:id", userController.updateUser);
 
+// Yêu cầu mã xác thực để cập nhật email
+router.post("/requestEmailUpdate", middlewareController.verifyToken, userController.requestEmailUpdate);
+
+// Xác thực và cập nhật email
+router.post("/verifyEmailUpdate", middlewareController.verifyToken, userController.verifyEmailUpdate);
+
 module.exports = router

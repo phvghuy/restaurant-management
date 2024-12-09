@@ -63,7 +63,7 @@ const authControllers = {
         //Tao secret key cho JWT
         process.env.JWT_ACCESS_KEY,
         // tao thoi han cho JWT 
-        {expiresIn: "30s"}
+        {expiresIn: "1h"}
         )
     },
 
