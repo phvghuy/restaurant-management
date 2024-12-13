@@ -1,0 +1,16 @@
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+  }
+  
+  .booking-section {
+    text-align: center;
+    padding: 0px;
+  }
+  .datban-section {
+        display: flex;
+        justify-content: space-around;
+        padding: 30px;
+        background-color: rgb(55, 53, 53);
+        color: white;
+  }

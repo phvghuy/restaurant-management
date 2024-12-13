@@ -1,0 +1,31 @@
+/* src/index.css */
+
+/* Reset margin và padding cho tất cả phần tử */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  
+  /* Thêm kiểu dáng cho body */
+  body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    color: #333;
+  }
+  
+  /* Định dạng phần tử root */
+  #root {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #fff;
+  }
+  
+  /* Cấu trúc mặc định cho các phần tử tiêu đề */
+  h1 {
+    color: #333;
+    text-align: center;
+  }
+  

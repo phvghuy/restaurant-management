@@ -1,0 +1,48 @@
+.booking-form-container {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    margin: 20px auto;
+    max-width: 800px;
+  }
+  
+  .sushi-image {
+    max-width: 400px;
+    border-radius: 10px;
+  }
+  
+  .booking-form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    width: 100%;
+    max-width: 400px;
+  }
+  
+  .booking-form label {
+    display: flex;
+    flex-direction: column;
+    font-size: 15px;
+    font-weight: bold;
+  }
+  
+  .booking-form input,
+  .booking-form select,
+  .booking-form button {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 14px;
+  }
+  
+  .booking-form input[type="date"] {
+    color: #555;
+  }
+  
+  .submit-btn {
+    background-color: #ff5a5f;
+    color: white;
+    cursor: pointer;
+    font-weight: bold;
+  }
+  
