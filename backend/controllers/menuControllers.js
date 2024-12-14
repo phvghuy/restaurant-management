@@ -27,6 +27,70 @@ const menuControllers = {
             return res.status(500).json({ success: false, message: "Server error" });
         }
     },
+    getMenu: async (req, res) => {
+        try {
+            // Các tham số phân trang, mặc định trang 1, mỗi trang 10 phần tử
+            const page = parseInt(req.query.page) || 1;
+            const limit = parseInt(req.query.limit) || 10;
+            const skip = (page - 1) * limit;
+
+            // Các tham số lọc (ví dụ: lọc theo category)
+            const category = req.query.category;
+            let filter = {};
+            if (category) {
+                filter.category = category; 
+            }
+
+            // Các tham số sắp xếp (ví dụ: sắp xếp theo giá tăng dần)
+            const sort = req.query.sort;
+            let sortOptions = {};
+            if (sort) {
+                if(sort === 'price_asc'){
+                    sortOptions = { price: 1 }; // Tăng dần
+                } else if(sort === 'price_desc'){
+                    sortOptions = { price: -1 }; // Giảm dần
+                } else if(sort === 'name_asc'){
+                    sortOptions = { dish_name: 1 };
+                } else if(sort === 'name_desc'){
+                    sortOptions = { dish_name: -1 }
+                }
+            }
+
+            // Lấy danh sách món ăn
+            const dishes = await Dish.find(filter)
+                .skip(skip)
+                .limit(limit)
+                .sort(sortOptions); 
+
+            // Lấy tổng số món ăn (để tính tổng số trang)
+            const totalDishes = await Dish.countDocuments(filter);
+
+            res.status(200).json({
+                success: true,
+                data: dishes,
+                pagination: {
+                    currentPage: page,
+                    totalPages: Math.ceil(totalDishes / limit),
+                    totalItems: totalDishes,
+                },
+            });
+        } catch (error) {
+            console.error(error);
+            res.status(500).json({ success: false, message: "Server error" });
+        }
+    },
+
+    getCategories: async (req, res) => {
+        try {
+            // Lấy danh sách các danh mục duy nhất, দোকুপদম,
+            const categories = await Dish.distinct("category");
+
+            res.status(200).json({ success: true, data: categories });
+        } catch (error) {
+            console.error(error);
+            res.status(500).json({ success: false, message: "Server error" });
+        }
+    },
 };
 
 module.exports = menuControllers;
