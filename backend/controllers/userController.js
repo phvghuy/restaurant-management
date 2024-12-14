@@ -135,6 +135,46 @@ const userController = {
             res.status(500).json({ error: err.message });
         }
     },
+    changePassword: async (req, res) => {
+        try {
+            const userId = req.user.id; // Lấy userId từ req.user (đã được verifyToken xác thực)
+            const { currentPassword, newPassword } = req.body;
+
+            // Tìm user trong database
+            const user = await User.findById(userId);
+            if (!user) {
+                return res.status(404).json({ message: "User not found" });
+            }
+
+            // Kiểm tra mật khẩu cũ
+            const isMatch = await bcrypt.compare(currentPassword, user.password);
+            if (!isMatch) {
+                return res.status(400).json({ message: "Incorrect current password" });
+            }
+
+            // Kiểm tra mật khẩu mới và cũ có trùng nhau không
+            if (currentPassword === newPassword) {
+                return res.status(400).json({ message: "New password cannot be the same as the current password" });
+            }
+            
+            // Kiểm tra độ dài mật khẩu mới
+            if (newPassword.length < 6) {
+                return res.status(400).json({ message: "New password must be at least 6 characters long" });
+            }
+
+            // Hash mật khẩu mới
+            const salt = await bcrypt.genSalt(10);
+            const hashedPassword = await bcrypt.hash(newPassword, salt);
+
+            // Cập nhật mật khẩu mới vào database
+            user.password = hashedPassword;
+            await user.save();
+
+            res.status(200).json({ message: "Password changed successfully" });
+        } catch (err) {
+            res.status(500).json({ error: err.message });
+        }
+    },
 }
 
 module.exports = userController

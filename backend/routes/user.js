@@ -15,4 +15,7 @@ router.post("/requestEmailUpdate", middlewareController.verifyToken, userControl
 // Xác thực và cập nhật email
 router.post("/verifyEmailUpdate", middlewareController.verifyToken, userController.verifyEmailUpdate);
 
+// Đổi mật khẩu
+router.put("/changePassword", middlewareController.verifyToken, userController.changePassword);
+
 module.exports = router
