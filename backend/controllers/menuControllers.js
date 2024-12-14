@@ -27,6 +27,34 @@ const menuControllers = {
             return res.status(500).json({ success: false, message: "Server error" });
         }
     },
+    searchDish: async (req, res) => {
+        const { query } = req.query;
+
+        if (!query) {
+            return res.status(400).json({ success: false, message: "Query parameter is required" });
+        }
+
+        try {
+            // Tìm kiếm món ăn dựa trên tên món ăn (dish_name) hoặc loại món ăn (category)
+            // Sử dụng $or để tìm kiếm theo một trong hai trường
+            // Sử dụng .trim() để loại bỏ khoảng trắng thừa từ query;  Regex không phân biệt hoa thường (i flag)
+            const dishes = await Dish.find({
+                $or: [
+                    { dish_name: { $regex: new RegExp(query.trim(), "i") } },
+                    { category: { $regex: new RegExp(query.trim(), "i") } }
+                ]
+            });
+
+            if (dishes.length === 0) {
+                return res.status(404).json({ success: false, message: "No dishes found matching the query" });
+            }
+
+            return res.status(200).json({ success: true, data: dishes });
+        } catch (error) {
+            console.error(error);
+            return res.status(500).json({ success: false, message: "Server error" });
+        }
+    },
 };
 
 module.exports = menuControllers;
