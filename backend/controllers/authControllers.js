@@ -28,7 +28,7 @@ const authControllers = {
             //Save to DB
             const user = await newUser.save()
 
-            //cho chuc nang FORGOTPASSWORD:
+            //cho chuc nang FORGOTPASSWORD va xac thuc email truoc khi REGISTER:
             // Generate verification token using JWT
             const token = jwt.sign(
                 { email: user.email }, // Payload
@@ -195,7 +195,11 @@ const authControllers = {
                 return res.status(404).json("User not found!");
             }
 
-            res.status(200).json({ message: "Email verified successfully!", user: updatedUser });
+            // Chuyển hướng đến trang chủ của FE
+            // Thay đổi URL dưới đây thành URL trang chủ của bạn
+            const frontendURL = process.env.FRONTEND_URL || "http://localhost:3000"; 
+            return res.redirect(`${frontendURL}`);
+            
         } catch (err) {
             if (err.name === 'TokenExpiredError') {
                 return res.status(400).json("Verification token has expired!");

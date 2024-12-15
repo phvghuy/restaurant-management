@@ -45,19 +45,19 @@ function LoginPopup({ isOpen, onClose }) {
         <div className={styles.header}>
             <h2>Đăng nhập</h2>
             <button className={styles.closeButton} onClick={onClose}>
-            ×
+            X
             </button>
         </div>
         <form onSubmit={handleLogin} className={styles.form}>
           <div className={styles.inputGroup}>
-            <label htmlFor="username">Tên người dùng</label>
+            <label htmlFor="username">Tài khoản</label>
             <input
               type="text"
               id="username"
               name="username"
               value={username}
               onChange={handleUsernameChange}
-              placeholder='Tên người dùng'
+              placeholder='Tài khoản'
               className={styles.input}
             />
           </div>

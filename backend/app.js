@@ -31,7 +31,9 @@ async function connectDB() {
 // app.use(cors()) giúp ứng dụng của bạn tránh lỗi 
 //CORS khi front-end và back-end nằm trên các miền khác nhau, 
 //giúp giao tiếp giữa hai bên dễ dàng hơn.
-app.use(cors())
+
+// Middleware
+app.use(cors());
 app.use(cookieParser())
 app.use(express.json())
 app.use(morgan("common")); // Đảm bảo bạn đã cài đặt morgan
