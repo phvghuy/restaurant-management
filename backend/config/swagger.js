@@ -45,6 +45,40 @@ const options = {
                 },
             },
         },
+                // Định nghĩa Blog schema
+                Blog: {
+                    type: 'object',
+                    properties: {
+                        _id: {
+                            type: 'string',
+                            description: 'ID của bài viết'
+                        },
+                        title: {
+                            type: 'string',
+                            description: 'Tiêu đề bài viết'
+                        },
+                        content: {
+                            type: 'string',
+                            description: 'Nội dung bài viết'
+                        },
+                        author: {
+                            type: 'string',
+                            description: 'Tác giả bài viết'
+                        },
+                        createdAt: {
+                            type: 'string',
+                            format: 'date-time',
+                            description: 'Thời gian tạo bài viết'
+                        },
+                        updatedAt: {
+                            type: 'string',
+                            format: 'date-time',
+                            description: 'Thời gian cập nhật bài viết'
+                        }
+                    }
+                }
+            }
+        }
     },
     apis: ['./routes/*.js'], // Đường dẫn tới file định nghĩa API
 };
