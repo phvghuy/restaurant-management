@@ -47,9 +47,9 @@ app.use("/v1/user", userRoute)
 app.use('/api/reservations', reservationRoutes)
 app.use("/v1/menu", menuRoute)
 
-app.listen(3000, () => {
+app.listen(8000, () => {
     console.log("Server is running");
-    console.log("Swagger Docs available at http://localhost:3000/api-docs");
+    console.log("Swagger Docs available at http://localhost:8000/api-docs");
 })
 
 
