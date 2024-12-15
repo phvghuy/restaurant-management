@@ -73,6 +73,38 @@ const options = {
                             description: 'Thời gian cập nhật bài viết'
                         }
                     }
+                },
+                Dish: { // Thêm Dish schema
+                    type: 'object',
+                    required: [
+                        "category",
+                        "dish_name",
+                        "image_link",
+                        "description",
+                        "price"
+                    ],
+                    properties: {
+                        category: {
+                            type: 'string',
+                            description: 'Danh mục món ăn'
+                        },
+                        dish_name: {
+                            type: 'string',
+                            description: 'Tên món ăn'
+                        },
+                        image_link: {
+                            type: 'string',
+                            description: 'Link hình ảnh'
+                        },
+                        description: {
+                            type: 'string',
+                            description: 'Mô tả món ăn'
+                        },
+                        price: {
+                            type: 'number',
+                            description: 'Giá món ăn'
+                        }
+                    }
                 }
             }
         }

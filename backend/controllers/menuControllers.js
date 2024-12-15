@@ -27,29 +27,64 @@ const menuControllers = {
             return res.status(500).json({ success: false, message: "Server error" });
         }
     },
-    searchDish: async (req, res) => {
-        const { query } = req.query;
 
-        if (!query) {
-            return res.status(400).json({ success: false, message: "Query parameter is required" });
+    searchDish: async (req, res) => {
+        const { dish_name, category, page, limit, sort } = req.query; // Lấy thêm category
+        const filter = {};
+
+        // Tìm kiếm theo dish_name (nếu có)
+        if (dish_name) {
+            filter.dish_name = { $regex: new RegExp(dish_name.trim(), "i") };
         }
 
-        try {
-            // Tìm kiếm món ăn dựa trên tên món ăn (dish_name) hoặc loại món ăn (category)
-            // Sử dụng $or để tìm kiếm theo một trong hai trường
-            // Sử dụng .trim() để loại bỏ khoảng trắng thừa từ query;  Regex không phân biệt hoa thường (i flag)
-            const dishes = await Dish.find({
-                $or: [
-                    { dish_name: { $regex: new RegExp(query.trim(), "i") } },
-                    { category: { $regex: new RegExp(query.trim(), "i") } }
-                ]
-            });
+        // Lọc theo category (nếu có)
+        const validCategories = ["sushi", "sashimi", "grilled_dishes", "hot_pots", "desserts", "beverages"];
+        if (category && validCategories.includes(category)) {
+            filter.category = category;
+        }
 
-            if (dishes.length === 0) {
-                return res.status(404).json({ success: false, message: "No dishes found matching the query" });
+        // Các tham số phân trang, mặc định trang 1, mỗi trang 10 phần tử
+        const pageQuery = parseInt(page) || 1;
+        const limitQuery = parseInt(limit) || 10;
+        const skip = (pageQuery - 1) * limitQuery;
+
+        // Các tham số sắp xếp (ví dụ: sắp xếp theo giá tăng dần)
+        // const sort = req.query.sort;
+        let sortOptions = {};
+        if (sort) {
+            if (sort === 'price_asc') {
+                sortOptions = { price: 1 }; // Tăng dần
+            } else if (sort === 'price_desc') {
+                sortOptions = { price: -1 }; // Giảm dần
+            } else if (sort === 'name_asc') {
+                sortOptions = { dish_name: 1 };
+            } else if (sort === 'name_desc') {
+                sortOptions = { dish_name: -1 }
+            }
+        }
+        try {
+            const dishes = await Dish.find(filter)
+                .skip(skip)
+                .limit(limitQuery)
+                .sort(sortOptions);
+
+            // Lấy tổng số món ăn (để tính tổng số trang)
+            const totalDishes = await Dish.countDocuments(filter);
+            const response = {
+                success: true,
+                data: dishes,
+                pagination: {
+                    currentPage: pageQuery,
+                    totalPages: Math.ceil(totalDishes / limitQuery),
+                    totalItems: totalDishes,
+                },
             }
 
-            return res.status(200).json({ success: true, data: dishes });
+            if (dishes.length === 0) {
+                response.message = "No dishes found matching the criteria";
+            }
+            
+            return res.status(200).json(response);
         } catch (error) {
             console.error(error);
             return res.status(500).json({ success: false, message: "Server error" });
