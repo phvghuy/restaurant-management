@@ -135,6 +135,52 @@ const userController = {
             res.status(500).json({ error: err.message });
         }
     },
+
+    // Lấy danh sách người dùng
+    getUsers: async (req, res) => {
+        try {
+            const users = await User.find(); // Lấy tất cả người dùng từ database
+            res.status(200).json(users); // Trả về danh sách người dùng
+        } catch (err) {
+            res.status(500).json({ error: err.message });
+        }
+    },
+
+    // Kích hoạt tài khoản người dùng
+    activateUser: async (req, res) => {
+        try {
+            const userId = req.params.id; // Lấy ID người dùng từ URL
+            const user = await User.findById(userId);
+            if (!user) {
+                return res.status(404).json({ message: 'User not found' });
+            }
+
+            user.isActive = true; // Cập nhật trạng thái tài khoản thành 'active'
+            await user.save(); // Lưu vào database
+
+            res.status(200).json({ message: 'User account activated successfully', user });
+        } catch (err) {
+            res.status(500).json({ error: err.message });
+        }
+    },
+
+    // Vô hiệu hóa tài khoản người dùng
+    deactivateUser: async (req, res) => {
+        try {
+            const userId = req.params.id; // Lấy ID người dùng từ URL
+            const user = await User.findById(userId);
+            if (!user) {
+                return res.status(404).json({ message: 'User not found' });
+            }
+
+            user.isActive = false; // Cập nhật trạng thái tài khoản thành 'inactive'
+            await user.save(); // Lưu vào database
+
+            res.status(200).json({ message: 'User account deactivated successfully', user });
+        } catch (err) {
+            res.status(500).json({ error: err.message });
+        }
+    },
 }
 
 module.exports = userController
