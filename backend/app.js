@@ -31,7 +31,9 @@ async function connectDB() {
 // app.use(cors()) giúp ứng dụng của bạn tránh lỗi 
 //CORS khi front-end và back-end nằm trên các miền khác nhau, 
 //giúp giao tiếp giữa hai bên dễ dàng hơn.
-app.use(cors())
+
+// Middleware
+app.use(cors());
 app.use(cookieParser())
 app.use(express.json())
 app.use(morgan("common")); // Đảm bảo bạn đã cài đặt morgan
@@ -47,7 +49,7 @@ app.use("/v1/user", userRoute)
 app.use('/api/reservations', reservationRoutes)
 app.use("/v1/menu", menuRoute)
 
-app.listen(3000, () => {
+app.listen(8000, () => {
     console.log("Server is running");
     console.log("Swagger Docs available at http://localhost:3000/api-docs");
 })
