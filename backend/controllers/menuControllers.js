@@ -82,9 +82,8 @@ const menuControllers = {
 
     getCategories: async (req, res) => {
         try {
-            // Lấy danh sách các danh mục duy nhất,
+            // Lấy danh sách các danh mục duy nhất
             const categories = await Dish.distinct("category");
-
             res.status(200).json({ success: true, data: categories });
         } catch (error) {
             console.error(error);

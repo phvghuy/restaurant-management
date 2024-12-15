@@ -43,6 +43,10 @@ const userSchema = new mongoose.Schema({
         type: Date, // Lưu thời gian xác minh email
         default: null,
     },
+    isActive: {
+        type: Boolean,
+        default: true, // Người dùng mặc định được kích hoạt
+      },
     //thêm thời gian khi tạo và cập nhật
 }, { timestamps: true }
 );

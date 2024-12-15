@@ -9,10 +9,4 @@ router.get("/getDishDetail/:dishName", middlewareController.verifyToken, menuCon
 // SEARCH DISH
 router.get("/search", menuControllers.searchDish);
 
-// GET MENU
-router.get("/", menuControllers.getMenu);
-
-// GET CATEGORIES
-router.get("/categories", menuControllers.getCategories);
-
 module.exports = router
