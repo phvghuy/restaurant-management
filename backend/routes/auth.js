@@ -19,7 +19,7 @@ router.post("/logout", middlewareController.verifyToken ,authControllers.userLog
 //phần logic nằm trong controllers theo mô hình MVC
 router.post("/register", authControllers.registerUser)
 
-//FORGOT_PASSWORD
+//FORGOT_PASSWORD va REGISTER 
 router.get("/verify", authControllers.verify)
 
 // Forgot Password
