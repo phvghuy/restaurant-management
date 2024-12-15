@@ -12,7 +12,7 @@ const options = {
         },
         servers: [
             {
-                url: 'http://localhost:3000', // URL của server
+                url: 'http://localhost:8000', // URL của server
                 description: 'Local server'
             }
         ],
@@ -41,12 +41,9 @@ const options = {
                             type: 'boolean',
                             description: 'Whether the user account is active'
                         }
-                    },
+                    }
                 },
-            },
-        },
-                // Định nghĩa Blog schema
-                Blog: {
+                Blog: { // Định nghĩa Blog schema
                     type: 'object',
                     properties: {
                         _id: {
