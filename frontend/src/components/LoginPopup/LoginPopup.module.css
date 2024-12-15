@@ -89,3 +89,18 @@
 .registerLink a:hover{
   text-decoration: underline;
 }
+
+/* Thêm CSS cho phần "Quên mật khẩu" */
+.forgotPassword {
+  text-align: right;
+  margin-top: 10px; 
+}
+
+.forgotPassword a {
+  color: red; 
+  text-decoration: none;
+}
+
+.forgotPassword a:hover {
+  text-decoration: underline; /* Thêm gạch chân khi hover */
+}
