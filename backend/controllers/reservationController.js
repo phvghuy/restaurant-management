@@ -1,14 +1,16 @@
+//backend/controllers/reservationControllers.js
 const Reservation = require('../models/Reservation');
 
 // Tạo một đặt bàn mới
 const createReservation = async (req, res) => {
   try {
-    const { Name, numberOfPeople, reservationDate, phoneNumber } = req.body; // Thêm phoneNumber
+    const { Name, numberOfPeople, reservationDate, phoneNumber, message } = req.body; // Thêm phoneNumber
     const newReservation = new Reservation({
       Name,
       numberOfPeople,
-      reservationDate,
+      reservationDate, // Giờ đã được bao gồm trong reservationDate
       phoneNumber,
+      message, 
     });
     await newReservation.save();
     res.status(201).json(newReservation);
