@@ -22,7 +22,8 @@ const reservationSchema = new mongoose.Schema({
     type: String,
     required: false, 
   },
-});
+}, { timestamps: true } //thêm thời gian khi tạo và cập nhật
+);
 
 const Reservation = mongoose.model('Reservation', reservationSchema);
 

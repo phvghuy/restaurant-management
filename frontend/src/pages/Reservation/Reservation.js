@@ -25,14 +25,12 @@ const Reservation = () => {
     const handleSubmit = (e) => {
         e.preventDefault();
 
-        // Kết hợp ngày và giờ thành một đối tượng Date duy nhất
-        const dateTime = new Date(formData.reservationDate);
-        const [hours, minutes] = formData.time.split(':').map(Number);
-        dateTime.setHours(hours, minutes);
+        // Tạo đối tượng Date mới từ ngày và giờ được chọn
+        const reservationDateTime = new Date(`${formData.reservationDate}T${formData.time}:00`);
 
         const reservationData = {
           ...formData,
-          reservationDate: dateTime, // Gửi đối tượng Date mới
+          reservationDate: reservationDateTime, // Gửi đối tượng Date mới
         };
 
         dispatch(createReservation(reservationData));
