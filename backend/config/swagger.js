@@ -73,6 +73,28 @@ const options = {
                             description: 'Thời gian cập nhật bài viết'
                         }
                     }
+                },
+                Error: { // Thêm Error schema
+                    type: 'object',
+                    properties: {
+                        success: {
+                            type: 'boolean',
+                            description: 'Indicates if the request was successful',
+                            example: false
+                        },
+                        message: {
+                            type: 'string',
+                            description: 'Error message',
+                            example: 'Error message'
+                        }
+                    }
+                },
+                securitySchemes: {
+                    bearerAuth: {
+                        type: 'http',
+                        scheme: 'bearer',
+                        bearerFormat: 'JWT'
+                    }
                 }
             }
         }

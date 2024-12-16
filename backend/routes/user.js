@@ -72,4 +72,76 @@ router.patch("/:id/activate", userController.activateUser);
  */
 router.patch("/:id/deactivate", userController.deactivateUser);
 
+/**
+ * @swagger
+ * /v1/user/changePassword:
+ *   put:
+ *     summary: Đổi mật khẩu người dùng
+ *     tags: [User]
+ *     security:
+ *       - bearerAuth: []
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             required:
+ *               - currentPassword
+ *               - newPassword
+ *               - confirmNewPassword
+ *             properties:
+ *               currentPassword:
+ *                 type: string
+ *                 description: Mật khẩu hiện tại
+ *               newPassword:
+ *                 type: string
+ *                 description: Mật khẩu mới
+ *               confirmNewPassword:
+ *                 type: string
+ *                 description: Xác nhận mật khẩu mới
+ *             example:
+ *               currentPassword: "old_password"
+ *               newPassword: "new_password"
+ *               confirmNewPassword: "new_password"
+ *     responses:
+ *       200:
+ *         description: Đổi mật khẩu thành công
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 success:
+ *                   type: boolean
+ *                   example: true
+ *                 message:
+ *                   type: string
+ *                   example: "Password changed successfully"
+ *       400:
+ *         description: Lỗi request (sai mật khẩu cũ, mật khẩu mới trùng mật khẩu cũ, mật khẩu mới quá ngắn, mật khẩu mới và xác nhận mật khẩu mới không khớp, thiếu tham số)
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/Error'
+ *       403:
+ *         description: Forbidden (token không hợp lệ)
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/Error'
+ *       404:
+ *         description: Không tìm thấy user
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/Error'
+ *       500:
+ *         description: Lỗi server
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/Error'
+ */
+router.put("/changePassword", middlewareController.verifyToken, userController.changePassword);
 module.exports = router
