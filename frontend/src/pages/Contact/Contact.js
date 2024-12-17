@@ -1,27 +1,12 @@
 import React from 'react';
+import Navbar from '../../components/Navbar/Navbar';
 import './Contact.css';
 
 const Contact = () => {
     return (
         <div className="contact-container">
             <header className="contact-header">
-                <div className="contact-navbar">
-                    <img src="/logo.png" alt="Logo" className="contact-logo" />
-                    <nav>
-                        <ul>
-                            <li><a href="/">Trang Chủ</a></li>
-                            <li><a href="/menu">Thực Đơn</a></li>
-                            <li><a href="/reservation">Đặt Bàn</a></li>
-                            <li><a href="/blog">Tin Tức</a></li>
-                            <li><a href="/contact">Liên Hệ</a></li>
-                        </ul>
-                    </nav>
-                    <div className="contact-search-login">
-                        <input type="text" placeholder="Tìm kiếm" />
-                        <button>Đăng nhập</button>
-                        <button>Đăng ký</button>
-                    </div>
-                </div>
+                <Navbar currentPage="contact" />
                 <h1 className="contact-title">Liên hệ</h1>
             </header>
 
