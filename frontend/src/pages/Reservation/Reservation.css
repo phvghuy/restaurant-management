@@ -1,4 +1,9 @@
 /* General container */
+body {
+    margin: 0;
+    padding: 0;
+}
+
 .reservation-container {
     font-family: Arial, sans-serif;
     color: #333;
@@ -57,46 +62,92 @@
 
 /* Main Content */
 .reservation-main {
-    padding: 20px;
-    background-color: #f8f8f8;
+    padding: 100px 20px;
+    background-image: url('../../../public/images/background_reservation.png');
+    /* Thay đổi đường dẫn hình nền */
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    min-height: 700px;
+    /* Thêm chiều cao tối thiểu */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.content-wrapper {
+    background-color: rgba(0, 0, 0, 0.5);
+    /* Thêm màu nền đen trong suốt */
+    padding: 40px;
+    border-radius: 10px;
+    /* Thêm border-radius để bo góc */
+    width: fit-content;
 }
 
 .reservation-content {
     display: flex;
     gap: 40px;
     justify-content: center;
-    align-items: flex-start;
+    align-items: stretch; /* Thay đổi align-items thành stretch */
+    max-width: 1200px;
+    margin: 0 auto;
 }
 
 /* Left Section: Call Reservation */
 .reservation-call-section {
-    background: white;
-    padding: 20px;
+    background-image: url('../../../public/images/background_reservation_2.png');
+    /* Thay đổi màu nền */
+    padding: 30px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     border-radius: 8px;
-    width: 40%;
+    width: 400px;
+    /* Cố định chiều rộng */
+    text-align: left;
+    display: flex; /* Thêm display: flex */
+    flex-direction: column; /* Thêm flex-direction: column */
 }
 
 .reservation-call-section h2 {
-    color: #ff5a5f;
+    color: #DA4B26;
+    font-size: 1.5rem;
+    margin-bottom: 10px;
+    font-weight: bold;
+}
+
+.call-title {
+    color: #000 !important;
 }
 
 .reservation-phone {
     font-weight: bold;
-    margin-top: 10px;
+    color: #DA4B26;
+    margin-top: 15px;
+}
+
+.reservation-call-section h3 {
+    color: #333;
+    margin-bottom: 10px;
+}
+
+.phone-number {
+    margin-top: 0; /* Giảm khoảng cách giữa các số điện thoại */
 }
 
 /* Right Section: Form */
 .reservation-form-section {
-    background: white;
-    padding: 20px;
+    background: rgb(255, 255, 255);
+    padding: 30px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     border-radius: 8px;
-    width: 40%;
+    width: 400px;
+    /* Cố định chiều rộng */
+    display: flex; /* Thêm display: flex */
+    flex-direction: column; /* Thêm flex-direction: column */
 }
 
 .reservation-form-section h2 {
-    color: #ff5a5f;
+    color: #DA4B26;
+    font-size: 1.5rem;
     margin-bottom: 20px;
 }
 
@@ -104,6 +155,8 @@
     display: flex;
     flex-direction: column;
     gap: 15px;
+    flex-grow: 1; /* Form sẽ chiếm toàn bộ khoảng trống còn lại */
+    justify-content: space-between;
 }
 
 .reservation-form-section input,
@@ -112,20 +165,69 @@
     padding: 10px;
     border: 1px solid #ddd;
     border-radius: 5px;
+    font-size: 1rem;
+}
+
+.reservation-form-section select {
+    appearance: none;
+    /* Ẩn mũi tên mặc định của select */
+    background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 4 5'%3E%3Cpath fill='%23333' d='M2 0L0 2h4zm0 5L0 3h4z'/%3E%3C/svg%3E");
+    /* Thêm icon mũi tên */
+    background-repeat: no-repeat;
+    background-position: right 10px center;
+    background-size: 8px;
+    padding-right: 30px;
+    /* Tạo khoảng trống cho icon */
 }
 
 .reservation-form-section button {
-    padding: 10px;
-    background-color: #ff5a5f;
+    padding: 12px;
+    background-color: #DA4B26;
     color: white;
     border: none;
     cursor: pointer;
     border-radius: 5px;
-    font-size: 1rem;
+    font-size: 1.1rem;
 }
 
 .reservation-form-section button:hover {
-    background-color: #e04848;
+    background-color: #af2424;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+.logo-text {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+/* Logo in call section */
+.logo-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.reservation-logo-call {
+    width: 150px;
+    height: 150px;
+}
+
+/* Success and Error Messages */
+.success-message {
+    color: green;
+    margin-top: 10px;
+}
+
+.error-message {
+    color: red;
+    margin-top: 10px;
 }
 
 /* Footer */
