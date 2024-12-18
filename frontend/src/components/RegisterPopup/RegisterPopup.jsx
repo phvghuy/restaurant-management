@@ -1,3 +1,4 @@
+//frontend/src/components/RegisterPopup/RegisterPopup.jsx
 import React, { useState } from 'react';
 import styles from './RegisterPopup.module.css';
 import { registerUser } from '../../redux/apiRequest';
