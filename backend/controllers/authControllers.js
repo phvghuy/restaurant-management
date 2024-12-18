@@ -37,7 +37,8 @@ const authControllers = {
             );
 
             // Create verification link
-            const verifyLink = `${process.env.APP_URL}/v1/auth/verify?email=${user.email}&token=${token}`;
+            const frontendURL = process.env.FRONTEND_URL || "http://localhost:3000"; 
+            const verifyLink = `${frontendURL}/v1/auth/verify?email=${user.email}&token=${token}`;
 
 
             // Send email
@@ -229,7 +230,8 @@ const authControllers = {
             );
 
             // Tạo link reset mật khẩu
-            const resetLink = `${process.env.APP_URL}/v1/auth/reset-password?email=${user.email}&token=${token}`;
+            const frontendURL = process.env.FRONTEND_URL || "http://localhost:3000"; 
+            const resetLink = `${frontendURL}/reset-password?email=${user.email}&token=${token}`;
 
             // Gửi email chứa link reset mật khẩu
             await mailer.sendMail({

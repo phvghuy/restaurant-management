@@ -10,6 +10,7 @@ import LoginPopup from "./components/LoginPopup/LoginPopup";
 import RegisterPopup from "./components/RegisterPopup/RegisterPopup";
 import { useState } from "react";
 import Footer from "./components/Footer/Footer";
+import ResetPassword from './pages/ResetPassword/ResetPassword';
 
 function App() {
   const [isLoginPopupOpen, setIsLoginPopupOpen] = useState(false);
@@ -35,6 +36,7 @@ function App() {
           <Route path="/contact" element={<Contact />} />
           <Route path="/blog" element={<Blog />} />
           <Route path="/reservation" element={<Reservation />} />
+          <Route path="/reset-password" element={<ResetPassword />} />
         </Routes>
         <LoginPopup isOpen={isLoginPopupOpen} onClose={toggleLoginPopup} />
         <RegisterPopup isOpen={isRegisterPopupOpen} onClose={toggleRegisterPopup} />

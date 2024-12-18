@@ -2,10 +2,10 @@
 import React, { useState } from 'react';
 import styles from './LoginPopup.module.css';
 import { loginUser } from '../../redux/apiRequest';
-import { useDispatch} from "react-redux";
-import { useNavigate} from "react-router-dom";
+import { useDispatch } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 
-function LoginPopup({ isOpen, onClose }) {
+function LoginPopup({ isOpen, onClose, onForgotPassword }) {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [rememberMe, setRememberMe] = useState(false);
@@ -25,17 +25,18 @@ function LoginPopup({ isOpen, onClose }) {
   };
 
   const handleLogin = (event) => {
-    // Ngăn tải lại trang (khi nhấn đăng nhập không tải lại trang)
     event.preventDefault();
-    // Xử lý logic đăng nhập ở đây (gọi API, kiểm tra thông tin, v.v.)
     const newUser = {
-        username: username,
-        password: password,
+      username: username,
+      password: password,
     };
     loginUser(newUser, dispatch, navigate);
-
-    // Sau khi xử lý đăng nhập thành công, đóng popup
     onClose();
+  };
+
+  const handleForgotPasswordClick = () => {
+    onClose(); // Đóng popup đăng nhập
+    onForgotPassword(); // Mở popup quên mật khẩu (hàm này được truyền từ HomePage)
   };
 
   if (!isOpen) return null;
@@ -44,10 +45,10 @@ function LoginPopup({ isOpen, onClose }) {
     <div className={styles.overlay}>
       <div className={styles.popup}>
         <div className={styles.header}>
-            <h2>Đăng nhập</h2>
-            <button className={styles.closeButton} onClick={onClose}>
+          <h2>Đăng nhập</h2>
+          <button className={styles.closeButton} onClick={onClose}>
             X
-            </button>
+          </button>
         </div>
         <form onSubmit={handleLogin} className={styles.form}>
           <div className={styles.inputGroup}>
@@ -58,7 +59,7 @@ function LoginPopup({ isOpen, onClose }) {
               name="username"
               value={username}
               onChange={handleUsernameChange}
-              placeholder='Tài khoản'
+              placeholder="Tài khoản"
               className={styles.input}
             />
           </div>
@@ -70,7 +71,7 @@ function LoginPopup({ isOpen, onClose }) {
               name="password"
               value={password}
               onChange={handlePasswordChange}
-              placeholder='Mật khẩu'
+              placeholder="Mật khẩu"
               className={styles.input}
             />
           </div>
@@ -90,6 +91,12 @@ function LoginPopup({ isOpen, onClose }) {
           <p className={styles.registerLink}>
             Bạn chưa có tài khoản? <a href="/register">Đăng ký ngay</a>
           </p>
+          <div className={styles.forgotPassword}>
+            {/* Nút để gọi handleForgotPasswordClick */}
+            <a href="#" onClick={handleForgotPasswordClick}>
+              Quên mật khẩu?
+            </a>
+          </div>
         </form>
       </div>
     </div>
