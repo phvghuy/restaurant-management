@@ -48,7 +48,7 @@ cd restaurant-management/frontend
 ```bash
 npm install
 ```
-**Bước 4:** Tạo file .env
+**Bước 4:** Tạo file .env trong thư mục backend
 ```bash
 MONGODB_URL=mongodb+srv://<db_username>:<db_password>@cluster0.mc7rj.mongodb.net/restaurant-management?retryWrites=true&w=majority&appName=Cluster0
 ```
