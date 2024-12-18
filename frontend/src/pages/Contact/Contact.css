@@ -1,0 +1,123 @@
+/* General container */
+.contact-container {
+    font-family: Arial, sans-serif;
+    color: #333;
+}
+
+/* Header styling */
+.contact-header {
+    background-color: #333;
+    color: white;
+    padding: 0 0 20px 0;
+    text-align: center;
+}
+
+.contact-navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 20px;
+}
+
+.contact-navbar ul {
+    list-style: none;
+    display: flex;
+    gap: 20px;
+    padding: 0;
+}
+
+.contact-navbar li a {
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.contact-logo {
+    width: 100px;
+}
+
+.contact-search-login input {
+    padding: 5px;
+    margin-right: 10px;
+}
+
+.contact-search-login button {
+    padding: 5px 10px;
+    background-color: #ff5a5f;
+    color: white;
+    border: none;
+    cursor: pointer;
+    border-radius: 3px;
+}
+
+.contact-title {
+    font-size: 2.5rem;
+    margin-top: 20px;
+}
+
+/* Main Content */
+.contact-main {
+    padding: 20px;
+    background-color: #f8f8f8;
+}
+
+.contact-content {
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+    align-items: flex-start;
+    margin: 20px 0;
+}
+
+.contact-info {
+    background: white;
+    padding: 20px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    width: 50%;
+}
+
+.contact-info h2 {
+    color: #ff5a5f;
+}
+
+.contact-label {
+    font-weight: bold;
+    display: inline-block;
+    margin-top: 10px;
+}
+
+.contact-map img {
+    width: 100%;
+    height: auto;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* Footer */
+.contact-footer {
+    background-color: #333;
+    color: white;
+    padding: 20px 0;
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+}
+
+.footer-section {
+    margin: 10px;
+    min-width: 200px;
+}
+
+.footer-section h3 {
+    margin-bottom: 10px;
+}
+
+.footer-section ul {
+    list-style: none;
+    padding: 0;
+}
+
+.footer-section li {
+    margin-bottom: 5px;
+}

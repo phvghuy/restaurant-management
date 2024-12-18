@@ -1,0 +1,157 @@
+/* General container */
+.reservation-container {
+    font-family: Arial, sans-serif;
+    color: #333;
+}
+
+/* Header styling */
+.reservation-header {
+    background-color: #333;
+    color: white;
+    padding: 20px 0;
+    text-align: center;
+}
+
+.reservation-navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 20px;
+}
+
+.reservation-navbar ul {
+    list-style: none;
+    display: flex;
+    gap: 20px;
+    padding: 0;
+}
+
+.reservation-navbar li a {
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.reservation-logo {
+    width: 100px;
+}
+
+.reservation-search-login input {
+    padding: 5px;
+    margin-right: 10px;
+}
+
+.reservation-search-login button {
+    padding: 5px 10px;
+    background-color: #ff5a5f;
+    color: white;
+    border: none;
+    cursor: pointer;
+    border-radius: 3px;
+}
+
+.reservation-title {
+    font-size: 2.5rem;
+    margin-top: 20px;
+}
+
+/* Main Content */
+.reservation-main {
+    padding: 20px;
+    background-color: #f8f8f8;
+}
+
+.reservation-content {
+    display: flex;
+    gap: 40px;
+    justify-content: center;
+    align-items: flex-start;
+}
+
+/* Left Section: Call Reservation */
+.reservation-call-section {
+    background: white;
+    padding: 20px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    width: 40%;
+}
+
+.reservation-call-section h2 {
+    color: #ff5a5f;
+}
+
+.reservation-phone {
+    font-weight: bold;
+    margin-top: 10px;
+}
+
+/* Right Section: Form */
+.reservation-form-section {
+    background: white;
+    padding: 20px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    width: 40%;
+}
+
+.reservation-form-section h2 {
+    color: #ff5a5f;
+    margin-bottom: 20px;
+}
+
+.reservation-form-section form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.reservation-form-section input,
+.reservation-form-section select,
+.reservation-form-section textarea {
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}
+
+.reservation-form-section button {
+    padding: 10px;
+    background-color: #ff5a5f;
+    color: white;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+    font-size: 1rem;
+}
+
+.reservation-form-section button:hover {
+    background-color: #e04848;
+}
+
+/* Footer */
+.reservation-footer {
+    background-color: #333;
+    color: white;
+    padding: 20px 0;
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+}
+
+.footer-section {
+    margin: 10px;
+    min-width: 200px;
+}
+
+.footer-section h3 {
+    margin-bottom: 10px;
+}
+
+.footer-section ul {
+    list-style: none;
+    padding: 0;
+}
+
+.footer-section li {
+    margin-bottom: 5px;
+}
