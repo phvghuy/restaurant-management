@@ -1,0 +1,45 @@
+.blog-card {
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.blog-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 10px rgba(0, 0, 0, 0.2);
+}
+
+.blog-image {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+}
+
+.blog-card-title {
+    font-size: 1.25rem;
+    margin: 15px 10px;
+    color: #333;
+}
+
+.blog-card-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 15px;
+    font-size: 0.9rem;
+    color: #666;
+}
+
+.blog-actions .blog-icon {
+    margin-left: 10px;
+    cursor: pointer;
+    color: #ff5a5f;
+    transition: color 0.3s ease;
+}
+
+.blog-actions .blog-icon:hover {
+    color: #e0484c;
+}

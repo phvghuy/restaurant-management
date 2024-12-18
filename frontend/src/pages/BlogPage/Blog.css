@@ -1,0 +1,31 @@
+body {
+    margin: 0;
+    padding: 0;
+}
+/* General container */
+.blog-container {
+    font-family: Arial, sans-serif;
+    color: #333;
+}
+
+.blog-header {
+    background-color: #333;
+    color: white;
+    text-align: center;
+    width: 100%; 
+    padding: 20px 0; 
+    margin-top: 96px;
+}
+
+.blog-title {
+    font-size: 2.5rem;
+    margin-bottom: 20px;
+}
+
+.blog-posts {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 20px;
+    justify-content: center;
+    margin: 80px;
+}

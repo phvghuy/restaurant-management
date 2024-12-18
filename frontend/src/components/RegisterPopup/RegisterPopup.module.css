@@ -1,0 +1,117 @@
+/* //frontend/src/components/RegisterPopup/RegisterPopup.module.css */
+.popup {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+  }
+  
+  .popupInner {
+    background-color: #fff;
+    padding: 0px 30px; 
+    border-radius: 10px;
+    position: relative;
+    width: 400px;
+  }
+  
+  .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .title {
+    font-size: 24px;
+    font-weight: bold;
+    text-align: left;
+    line-height: 0.8;
+  }
+  
+  .subtitle {
+    font-size: 16px;
+    color: #777;
+    margin-top: 0px;
+    margin-bottom: 20px; /* Xóa margin bottom của subtitle */
+    line-height: 1.5;
+  }
+  
+  .closeButton {
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    cursor: pointer;
+    padding: 0;
+    line-height: 1;
+  }
+  
+  .formGroup {
+    margin-bottom: 10px; /* Khoảng cách mặc định giữa các form group */
+  }
+  
+  .inputSection .formGroup {
+    margin-bottom: 15px; /* Khoảng cách giữa các form group trong phần input */
+  }
+  
+  .inputSection {
+    margin-bottom: 20px; /* Khoảng cách giữa phần 1 (input) và phần 2 (checkbox + button) */
+  }
+  
+  .formGroup label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+  }
+  
+  .inputField {
+    width: 100%; /* Chỉnh lại độ rộng 100% */
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 1rem;
+    box-sizing: border-box; /* Thêm box-sizing để width 100% bao gồm cả padding và border */
+  }
+  
+  .checkboxGroup {
+    margin-top: 0px; /* Xóa margin-top */
+    margin-bottom: 15px; /* giữ nguyên */
+    display: flex;
+    align-items: center;
+  }
+  
+  .checkboxGroup input {
+    margin-right: 5px;
+  }
+  
+  .checkboxGroup label {
+    font-size: 14px;
+  }
+  
+  .link {
+    color: #e34234;
+    text-decoration: none;
+  }
+  
+  .submitButton {
+    background-color: #e34234;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    font-size: 18px;
+    cursor: pointer;
+    width: 100%;
+    margin-bottom: 20px;
+    margin-top: 10px; /* Tăng khoảng cách phía trên nút submit */
+  }
+
+  .error {
+    color: red;
+    margin-top: 5px;
+    font-size: 14px;
+  }
