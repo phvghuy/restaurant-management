@@ -9,6 +9,7 @@ import Navbar from "./components/Navbar/Navbar";
 import LoginPopup from "./components/LoginPopup/LoginPopup";
 import RegisterPopup from "./components/RegisterPopup/RegisterPopup";
 import { useState } from "react";
+import Footer from "./components/Footer/Footer";
 
 function App() {
   const [isLoginPopupOpen, setIsLoginPopupOpen] = useState(false);
@@ -37,6 +38,7 @@ function App() {
         </Routes>
         <LoginPopup isOpen={isLoginPopupOpen} onClose={toggleLoginPopup} />
         <RegisterPopup isOpen={isRegisterPopupOpen} onClose={toggleRegisterPopup} />
+        <Footer />
       </div>
     </Router>
   );
