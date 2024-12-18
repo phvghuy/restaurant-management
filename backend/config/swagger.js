@@ -74,6 +74,42 @@ const options = {
                         }
                     }
                 },
+                Reservation: {
+                    type: 'object',
+                    required: [
+                        'Name',
+                        'numberOfPeople',
+                        'reservationDate',
+                        'phoneNumber'
+                    ],
+                    properties: {
+                        _id: {
+                            type: 'string',
+                            description: 'The unique identifier of the reservation'
+                        },
+                        Name: {
+                            type: 'string',
+                            description: 'Name for the reservation'
+                        },
+                        numberOfPeople: {
+                            type: 'integer',
+                            description: 'Number of people for the reservation'
+                        },
+                        reservationDate: {
+                            type: 'string',
+                            format: 'date-time',
+                            description: 'Date and time of the reservation'
+                        },
+                        phoneNumber: {
+                            type: 'string',
+                            description: 'Phone number for the reservation'
+                        },
+                        message: {
+                            type: 'string',
+                            description: 'Optional message or notes for the reservation'
+                        }
+                    }
+                },
                 Error: { // Thêm Error schema
                     type: 'object',
                     properties: {
