@@ -3,7 +3,6 @@ import HomePage from "./pages/HomePage/HomePage";
 import './App.css';
 import { BrowserRouter as Router, Route, Routes} from "react-router-dom";
 import Blog from "./pages/BlogPage/Blog";
-import Reservation from "./pages/Reservation/Reservation";
 import Contact from "./pages/Contact/Contact";
 import Navbar from "./components/Navbar/Navbar";
 import LoginPopup from "./components/LoginPopup/LoginPopup";
@@ -11,7 +10,6 @@ import RegisterPopup from "./components/RegisterPopup/RegisterPopup";
 import { useState } from "react";
 import Footer from "./components/Footer/Footer";
 import ResetPassword from './pages/ResetPassword/ResetPassword';
-import Blog from "./pages/BlogPage/Blog";
 import Reservation from "./pages/Reservation/Reservation";
 
 

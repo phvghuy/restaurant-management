@@ -39,23 +39,6 @@ const Reservation = () => {
     return (
         <div className="reservation-container">
             <header className="reservation-header">
-                <div className="reservation-navbar">
-                    <img src="/logo.png" alt="Logo" className="reservation-logo" />
-                    <nav>
-                        <ul>
-                            <li><a href="/">Trang Chủ</a></li>
-                            <li><a href="/menu">Thực Đơn</a></li>
-                            <li><a href="/reservation">Đặt Bàn</a></li>
-                            <li><a href="/blog">Tin Tức</a></li>
-                            <li><a href="/contact">Liên Hệ</a></li>
-                        </ul>
-                    </nav>
-                    <div className="reservation-search-login">
-                        <input type="text" placeholder="Tìm kiếm" />
-                        <button>Đăng nhập</button>
-                        <button>Đăng ký</button>
-                    </div>
-                </div>
                 <h1 className="reservation-title">Đặt bàn</h1>
             </header>
 
@@ -103,30 +86,6 @@ const Reservation = () => {
                     </div>
                 </div>
             </main>
-
-            <footer className="reservation-footer">
-                <div className="footer-section">
-                    <h3>AJIMAZING</h3>
-                    <p>Khám phá hương vị Nhật Bản đích thực tại Ajimazing - nơi ẩm thực truyền thống hòa quyện với phong cách hiện đại</p>
-                </div>
-                <div className="footer-section">
-                    <h3>LIÊN HỆ</h3>
-                    <p>Đường Hàn Thuyên, Khu Phố 6, Thủ Đức, HCM</p>
-                    <p>(+84) 12 3456 7891</p>
-                    <p>info@gmail.com</p>
-                </div>
-                <div className="footer-section">
-                    <h3>HỖ TRỢ KHÁCH HÀNG</h3>
-                    <ul>
-                        <li><a href="#">Chính sách bảo mật thông tin</a></li>
-                        <li><a href="#">Quy chế hoạt động</a></li>
-                        <li><a href="#">Chính sách thanh toán</a></li>
-                        <li><a href="#">Chính sách thay đổi đơn hàng</a></li>
-                        <li><a href="#">Chính sách vận chuyển</a></li>
-                        <li><a href="#">Giới thiệu sản phẩm</a></li>
-                    </ul>
-                </div>
-            </footer>
         </div>
     );
 };

@@ -5,23 +5,6 @@ const Blog = () => {
     return (
         <div className="blog-container">
             <header className="blog-header">
-                <div className="blog-navbar">
-                    <img src="/logo.png" alt="Logo" className="blog-logo" />
-                    <nav>
-                        <ul>
-                            <li><a href="/">Trang Chủ</a></li>
-                            <li><a href="/menu">Thực Đơn</a></li>
-                            <li><a href="/reservation">Đặt Bàn</a></li>
-                            <li><a href="/blog">Tin Tức</a></li>
-                            <li><a href="/contact">Liên Hệ</a></li>
-                        </ul>
-                    </nav>
-                    <div className="blog-search-login">
-                        <input type="text" placeholder="Tìm kiếm" />
-                        <button>Đăng nhập</button>
-                        <button>Đăng ký</button>
-                    </div>
-                </div>
                 <h1 className="blog-title">Blog</h1>
             </header>
 
@@ -36,30 +19,6 @@ const Blog = () => {
                     ))}
                 </div>
             </main>
-
-            <footer className="blog-footer">
-                <div className="footer-section">
-                    <h3>AJIMAZING</h3>
-                    <p>Khám phá hương vị Nhật Bản đích thực tại Ajimazing - nơi ẩm thực truyền thống hòa quyện với phong cách hiện đại</p>
-                </div>
-                <div className="footer-section">
-                    <h3>LIÊN HỆ</h3>
-                    <p>Đường Hàn Thuyên, Khu Phố 6, Thủ Đức, HCM</p>
-                    <p>(+84) 12 3456 7891</p>
-                    <p>info@gmail.com</p>
-                </div>
-                <div className="footer-section">
-                    <h3>HỖ TRỢ KHÁCH HÀNG</h3>
-                    <ul>
-                        <li>Chính sách bảo mật thông tin</li>
-                        <li>Quy chế hoạt động</li>
-                        <li>Chính sách thanh toán</li>
-                        <li>Chính sách thay đổi đơn hàng</li>
-                        <li>Chính sách vận chuyển</li>
-                        <li>Giới thiệu sản phẩm</li>
-                    </ul>
-                </div>
-            </footer>
         </div>
     );
 };
