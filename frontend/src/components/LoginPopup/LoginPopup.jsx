@@ -1,3 +1,4 @@
+//frontend/src/components/LoginPopup/LoginPopup.jsx
 import React, { useState } from 'react';
 import styles from './LoginPopup.module.css';
 import { loginUser } from '../../redux/apiRequest';

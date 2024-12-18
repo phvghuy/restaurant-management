@@ -1,8 +1,9 @@
+//frontend/src/components/Navbar/Navbar.js
 import React from 'react';
 import { useLocation } from 'react-router-dom';
 import './Navbar.css';
 
-const Navbar = () => {
+const Navbar = ({ toggleLoginPopup, toggleRegisterPopup }) => {
     const location = useLocation();
     const currentPage = location.pathname.replace('/', '') || 'home';
     return (
@@ -25,8 +26,12 @@ const Navbar = () => {
                 {/* Search and Buttons */}
                 <div className="navbar-actions">
                     <input type="text" placeholder="Tìm kiếm" className="navbar-search" />
-                    <button className="navbar-login">Đăng nhập</button>
-                    <button className="navbar-register">Đăng ký</button>
+                    <button className="navbar-login" onClick={toggleLoginPopup}>
+                      Đăng nhập
+                    </button>
+                    <button className="navbar-register" onClick={toggleRegisterPopup}>
+                      Đăng ký
+                    </button>
                 </div>
             </div>
         </header>

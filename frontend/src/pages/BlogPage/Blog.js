@@ -5,23 +5,6 @@ const Blog = () => {
     return (
         <div className="blog-container">
             <header className="blog-header">
-                <div className="blog-navbar">
-                    <img src="/logo.png" alt="Logo" className="blog-logo" />
-                    <nav>
-                        <ul>
-                            <li><a href="/">Trang Chủ</a></li>
-                            <li><a href="/menu">Thực Đơn</a></li>
-                            <li><a href="/reservation">Đặt Bàn</a></li>
-                            <li><a href="/blog">Tin Tức</a></li>
-                            <li><a href="/contact">Liên Hệ</a></li>
-                        </ul>
-                    </nav>
-                    <div className="blog-search-login">
-                        <input type="text" placeholder="Tìm kiếm" />
-                        <button>Đăng nhập</button>
-                        <button>Đăng ký</button>
-                    </div>
-                </div>
                 <h1 className="blog-title">Blog</h1>
             </header>
 

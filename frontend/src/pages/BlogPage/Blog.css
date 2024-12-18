@@ -9,37 +9,6 @@
     text-align: center;
 }
 
-.blog-navbar {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-
-.blog-logo {
-    width: 100px;
-}
-
-.blog-navbar ul {
-    list-style: none;
-    display: flex;
-    gap: 20px;
-    padding: 0;
-}
-
-.blog-navbar li a {
-    color: white;
-    text-decoration: none;
-}
-
-.blog-search-login {
-    display: flex;
-    gap: 10px;
-}
-
-.blog-search-login input {
-    padding: 5px;
-}
-
 .blog-title {
     margin-top: 20px;
     font-size: 2rem;

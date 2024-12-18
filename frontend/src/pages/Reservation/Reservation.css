@@ -12,44 +12,6 @@
     text-align: center;
 }
 
-.reservation-navbar {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 0 20px;
-}
-
-.reservation-navbar ul {
-    list-style: none;
-    display: flex;
-    gap: 20px;
-    padding: 0;
-}
-
-.reservation-navbar li a {
-    color: white;
-    text-decoration: none;
-    font-weight: bold;
-}
-
-.reservation-logo {
-    width: 100px;
-}
-
-.reservation-search-login input {
-    padding: 5px;
-    margin-right: 10px;
-}
-
-.reservation-search-login button {
-    padding: 5px 10px;
-    background-color: #ff5a5f;
-    color: white;
-    border: none;
-    cursor: pointer;
-    border-radius: 3px;
-}
-
 .reservation-title {
     font-size: 2.5rem;
     margin-top: 20px;

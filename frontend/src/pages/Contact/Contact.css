@@ -1,3 +1,9 @@
+/* frontend/src/pages/Contact/Contact.css */
+body {
+    margin: 0;
+    padding: 0;
+
+}
 /* General container */
 .contact-container {
     font-family: Arial, sans-serif;
@@ -8,15 +14,9 @@
 .contact-header {
     background-color: #333;
     color: white;
-    padding: 0 0 20px 0;
     text-align: center;
-}
-
-.contact-navbar {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 0 20px;
+    width: 100%; 
+    padding: 20px 0; 
 }
 
 .contact-navbar ul {
@@ -32,24 +32,6 @@
     font-weight: bold;
 }
 
-.contact-logo {
-    width: 100px;
-}
-
-.contact-search-login input {
-    padding: 5px;
-    margin-right: 10px;
-}
-
-.contact-search-login button {
-    padding: 5px 10px;
-    background-color: #ff5a5f;
-    color: white;
-    border: none;
-    cursor: pointer;
-    border-radius: 3px;
-}
-
 .contact-title {
     font-size: 2.5rem;
     margin-top: 20px;
@@ -57,41 +39,82 @@
 
 /* Main Content */
 .contact-main {
-    padding: 20px;
+    padding: 50px 20px;
     background-color: #f8f8f8;
 }
 
 .contact-content {
     display: flex;
-    gap: 20px;
     justify-content: center;
-    align-items: flex-start;
-    margin: 20px 0;
+    margin: 20px auto;
+    width: 80%;
+    max-width: 1200px;
+    background-color: white;
+    border-radius: 0;
+    box-shadow: -11px -11px 12px 0px rgb(0 0 0 / 34%);
+    overflow: hidden;
 }
 
 .contact-info {
     background: white;
-    padding: 20px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    border-radius: 8px;
+    padding: 30px 40px 30px 50px; /* Tăng padding-left và thêm padding-right */
+    border-radius: 0;
     width: 50%;
+    flex-shrink: 0;
+    box-sizing: border-box;
+    background-image: url('../../../public/images/background_2.png');
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
 }
 
 .contact-info h2 {
-    color: #ff5a5f;
+    color: #000000;
+    margin-bottom: 10px;
+    font-size: 2rem;
+    font-weight: bold;
 }
 
 .contact-label {
     font-weight: bold;
-    display: inline-block;
+    display: block;
+    margin-top: 25px;
+    color: #C52525;
+    font-size: 1.2rem;
+}
+
+.contact-info > p:first-of-type {
+    margin-bottom: 40px;
+}
+
+.contact-info > p:nth-child(3) {
     margin-top: 10px;
+}
+
+.contact-info > p > span {
+    margin-bottom: 5px;
+}
+
+.contact-info > p:not(:first-of-type):not(:nth-child(2)) {
+    font-size: 1.5rem;
+}
+
+.contact-info > p:not(:first-of-type):not(:nth-child(2)) > span{
+    display: block;
+}
+
+.contact-map {
+    width: 50%;
+    position: relative;
+    overflow: hidden;
 }
 
 .contact-map img {
     width: 100%;
-    height: auto;
-    border-radius: 8px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    height: 100%;
+    object-fit: cover;
+    border-radius: 0;
+    box-shadow: none;
 }
 
 /* Footer */
@@ -116,6 +139,8 @@
 .footer-section ul {
     list-style: none;
     padding: 0;
+    display: flex;
+    gap: 10px;
 }
 
 .footer-section li {

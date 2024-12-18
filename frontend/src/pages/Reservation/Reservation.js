@@ -5,23 +5,6 @@ const Reservation = () => {
     return (
         <div className="reservation-container">
             <header className="reservation-header">
-                <div className="reservation-navbar">
-                    <img src="/logo.png" alt="Logo" className="reservation-logo" />
-                    <nav>
-                        <ul>
-                            <li><a href="/">Trang Chủ</a></li>
-                            <li><a href="/menu">Thực Đơn</a></li>
-                            <li><a href="/reservation">Đặt Bàn</a></li>
-                            <li><a href="/blog">Tin Tức</a></li>
-                            <li><a href="/contact">Liên Hệ</a></li>
-                        </ul>
-                    </nav>
-                    <div className="reservation-search-login">
-                        <input type="text" placeholder="Tìm kiếm" />
-                        <button>Đăng nhập</button>
-                        <button>Đăng ký</button>
-                    </div>
-                </div>
                 <h1 className="reservation-title">Đặt bàn</h1>
             </header>
 
