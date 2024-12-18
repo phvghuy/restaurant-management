@@ -20,19 +20,6 @@ body {
     margin-top: 96px;
 }
 
-.contact-navbar ul {
-    list-style: none;
-    display: flex;
-    gap: 20px;
-    padding: 0;
-}
-
-.contact-navbar li a {
-    color: white;
-    text-decoration: none;
-    font-weight: bold;
-}
-
 .contact-title {
     font-size: 2.5rem;
     margin-top: 20px;

@@ -1,24 +1,52 @@
 import React from 'react';
-import './Blog.css';
+import BlogCard from '../../components/BlogCard/BlogCard';
+import '../BlogPage/Blog.css'
+import SushiImageBlog from '../../assets/image/sushi-blog.png'
 
 const Blog = () => {
-    return (
-        <div className="blog-container">
-            <header className="blog-header">
-                <h1 className="blog-title">Blog</h1>
-            </header>
+    const blogPosts = [
+        {
+            id: 1,
+            title: 'Khám Phá Nghệ Thuật và Hương Vị Của Sushi: Hành Trình Đến Với Tinh Hoa Ẩm Thực Nhật Bản',
+            date: 'July 9, 2024',
+            imageUrl: (SushiImageBlog)
+        },
+        
+        { 
+            id: 2, 
+            title: 'Khám Phá Nghệ Thuật và Hương Vị Của Sushi: Hành Trình Đến Với Tinh Hoa Ẩm Thực Nhật Bản', 
+            date: 'July 9, 2024', 
+            imageUrl: (SushiImageBlog)
+        },
+        
+        { 
+            id: 3, 
+            title: 'Khám Phá Nghệ Thuật và Hương Vị Của Sushi: Hành Trình Đến Với Tinh Hoa Ẩm Thực Nhật Bản', 
+            date: 'July 9, 2024', 
+            imageUrl: (SushiImageBlog)
+        },
+        
+        { 
+            id: 4, 
+            title: 'Khám Phá Nghệ Thuật và Hương Vị Của Sushi: Hành Trình Đến Với Tinh Hoa Ẩm Thực Nhật Bản', 
+            date: 'July 9, 2024', 
+            imageUrl: (SushiImageBlog)
+        },
+        
+    ];
 
-            <main className="blog-main">
-                <div className="blog-articles">
-                    {[1, 2, 3, 4].map((item) => (
-                        <article key={item} className="blog-article">
-                            <img src="/sushi-blog.png" alt="Sushi" className="blog-image" />
-                            <h2>Khám Phá Nghệ Thuật và Hương Vị Của Sushi: Hành Trình Đến Với Tinh Hoa Ẩm Thực Nhật Bản</h2>
-                            <p className="blog-date">July 9, 2024</p>
-                        </article>
+    return (
+        <div>
+            <div className="blog-container">
+                <header className="contact-header">
+                    <h1 className="blog-title">Blog</h1>
+                </header>
+                <div className="blog-posts">
+                    {blogPosts.map((post) => (
+                        <BlogCard key={post.id} title={post.title} date={post.date} imageUrl={post.imageUrl} />
                     ))}
                 </div>
-            </main>
+            </div>
         </div>
     );
 };
