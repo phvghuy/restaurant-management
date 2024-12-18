@@ -38,10 +38,10 @@ Các thành viên trong nhóm bao gồm:
 git clone https://github.com/phvghuy/restaurant-management.git
 ```
 
-**Bước 2:** Di chuyển vào thư mục frontend dự án.
+**Bước 2:** Di chuyển vào thư mục backend dự án.
 
 ```bash
-cd restaurant-management/frontend
+cd restaurant-management/backend
 ```
 **Bước 3:** Cài đặt các dependencies.
 
@@ -56,10 +56,10 @@ Lưu ý: muốn điền <db_username>:<db_password> trước tiên phải đư�
 ![image](https://github.com/user-attachments/assets/d1abcc6a-f80e-4924-8dc0-908ed1a62419)
 
 
-**Bước 5:** Di chuyển vào thư mục backend dự án.
+**Bước 5:** Di chuyển vào thư mục frontend dự án.
 
 ```bash
-cd restaurant-management/backend
+cd restaurant-management/frontend
 ```
 **Bước 6:** Cài đặt các dependencies.
 
