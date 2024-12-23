@@ -11,15 +11,6 @@
     z-index: 1000;
 }
 
-.navbar-container:hover {
-    background-color: #fff;
-    transition: background-color 1s ease, color 0.5s ease;
-}
-
-.navbar-container:hover .navbar-links a {
-    color: #000;
-}
-
 .navbar {
     display: flex;
     justify-content: space-between;
@@ -45,7 +36,9 @@
     transition: color 0.3s ease;
 }
 
-.navbar-links:hover a:hover {
+/* Chỉ đổi màu chữ khi hover vào từng link */
+.navbar-links a:hover {
+    color: #fff;
     text-decoration: underline;
     text-decoration-color: #ff5a5f;
     text-decoration-thickness: 2px; 
@@ -89,6 +82,7 @@
 .navbar-login:hover {
     background-color: #000;
     color: #fff;
+    border: 1px solid #fff;
 }
 
 .navbar-register {
@@ -100,4 +94,14 @@
 .navbar-register:hover {
     background-color: #ff5a5f;
     color: #fff;
+}
+
+.navbar-user {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.navbar-user span {
+    font-weight: bold;
 }

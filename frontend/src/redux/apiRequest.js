@@ -5,22 +5,31 @@ import { loginFailed, loginStart, loginSuccess, registerStart, registerFailed, r
 // user: Thông tin người dùng cần để đăng nhập (ví dụ: username, password).
 // dispatch: Hàm dispatch của Redux, được sử dụng để gửi các actions đến store.
 // navigate: Hàm navigate từ react-router-dom (hoặc thư viện tương tự), được sử dụng để chuyển hướng trang.
-export const loginUser = async (user, dispatch, navigate) => { 
-  dispatch(loginStart()); 
+export const loginUser = async (user, dispatch, navigate) => {
+  dispatch(loginStart());
   try {
-      console.log("User data:", user); // Log user data
-      //Vì đã cấu hình trong package.json là "proxy": "http://localhost:8000/"
-      // Nên có thể viết tắt dòng ("http://localhost:8000/v1/auth/login", user);
-      const res = await axios.post("/v1/auth/login", user);
-        
-      console.log("API response:", res); // Log API response
-      dispatch(loginSuccess(res.data));
-      navigate("/");
-    } catch (err) {
-      console.error("Login error:", err); // Log error
-      dispatch(loginFailed());
+    const res = await axios.post("/v1/auth/login", user);
+    dispatch(loginSuccess(res.data));
+    navigate("/");
+    return Promise.resolve();
+  } catch (err) {
+    console.error("Login error:", err);
+    if (err.response && err.response.data) {
+      // Sửa lỗi dispatch loginFailed
+      dispatch(loginFailed({
+          code: err.response.data.code,
+          message: err.response.data.message,
+      }));
+    } else {
+      dispatch(loginFailed({
+          code: "NETWORK_ERROR",
+          message: "Đã có lỗi xảy ra. Vui lòng thử lại sau.",
+      }));
     }
+    return Promise.reject();
+  }
 };
+
 
 export const registerUser = async (user, dispatch, navigate) => {
   dispatch(registerStart());
@@ -79,5 +88,15 @@ export const resetPassword = async ({ email, token, password }, dispatch, naviga
     } else {
       setMessage('Đã có lỗi xảy ra, vui lòng thử lại sau.');
     }
+  }
+};
+
+export const resendVerificationEmail = async (email) => {
+  try {
+    const res = await axios.post('/v1/auth/resend-verification-email', { email });
+    return res.data;
+  } catch (err) {
+    console.error('Resend verification email error:', err);
+    throw err; // Re-throw the error to be handled by the caller
   }
 };
