@@ -16,7 +16,8 @@ const authSlice = createSlice ({
             error: false,
             //them success cho chac
             success: false
-        }
+        },
+        registrationSuccess: false,
     },
     reducers:{
         loginStart: (state) => {
@@ -40,6 +41,7 @@ const authSlice = createSlice ({
             state.register.isFetching = false;
             state.register.error = false;
             state.register.success = true;
+            state.registrationSuccess = true;
         },
         registerFailed: (state) => {
             state.register.isFetching = false;
