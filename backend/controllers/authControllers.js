@@ -38,8 +38,7 @@ const authControllers = {
 
             // Create verification link
             const frontendURL = process.env.FRONTEND_URL || "http://localhost:3000"; 
-            const verifyLink = `${frontendURL}/v1/auth/verify?email=${user.email}&token=${token}`;
-
+            const verifyLink = `${frontendURL}/verify?email=${user.email}&token=${token}`;
 
             // Send email
             await mailer.sendMail({
