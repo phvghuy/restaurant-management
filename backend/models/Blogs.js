@@ -1,3 +1,4 @@
+// backend/models/Blogs.js
 const mongoose = require('mongoose');
 
 const blogSchema = new mongoose.Schema({
@@ -12,6 +13,10 @@ const blogSchema = new mongoose.Schema({
   author: {
     type: String,
     required: true
+  },
+  imageUrl: {
+    type: String,
+    default: '/default-blog-image.png', // Đường dẫn ảnh mặc định
   },
   createdAt: {
     type: Date,
