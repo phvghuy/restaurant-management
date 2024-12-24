@@ -11,6 +11,7 @@ import { useState } from "react";
 import Footer from "./components/Footer/Footer";
 import ResetPassword from './pages/ResetPassword/ResetPassword';
 import Reservation from "./pages/Reservation/Reservation";
+import VerifyEmail from "./pages/VerifyEmail/VerifyEmail";
 
 
 function App() {
@@ -38,6 +39,8 @@ function App() {
           <Route path="/blog" element={<Blog />} />
           <Route path="/reservation" element={<Reservation />} />
           <Route path="/reset-password" element={<ResetPassword />} />
+          <Route path="/reservation" element={<Reservation />} />
+          <Route path="/verify" element={<VerifyEmail />} />
         </Routes>
         <LoginPopup isOpen={isLoginPopupOpen} onClose={toggleLoginPopup} />
         <RegisterPopup isOpen={isRegisterPopupOpen} onClose={toggleRegisterPopup} />
