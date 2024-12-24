@@ -110,12 +110,12 @@ export const resendVerificationEmail = async (email) => {
 export const getAllBlogs = async (accessToken, dispatch) => {
   dispatch(getBlogStart());
   try {
-      const res = await axios.get('/v1/blogs', {
-          headers: { token: `Bearer ${accessToken}` },
-      });
-      dispatch(getBlogSuccess(res.data));
+    const url = accessToken ? '/v1/blogs/admin' : '/v1/blogs'; // Chọn URL dựa trên accessToken
+    const headers = accessToken ? { token: `Bearer ${accessToken}` } : {};
+    const res = await axios.get(url, { headers });
+    dispatch(getBlogSuccess(res.data));
   } catch (err) {
-      dispatch(getBlogsFailed());
+    dispatch(getBlogsFailed());
   }
 };
 

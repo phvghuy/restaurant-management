@@ -1,54 +1,40 @@
-import React from 'react';
+// frontend/src/pages/BlogPage/Blog.js
+import React, { useEffect } from 'react';
 import BlogCard from '../../components/BlogCard/BlogCard';
-import '../BlogPage/Blog.css'
-import SushiImageBlog from '../../assets/image/sushi-blog.png'
+import '../BlogPage/Blog.css';
+import { getAllBlogs } from '../../redux/apiRequest';
+import { useDispatch, useSelector } from 'react-redux';
 
 const Blog = () => {
-    const blogPosts = [
-        {
-            id: 1,
-            title: 'Khám Phá Nghệ Thuật và Hương Vị Của Sushi: Hành Trình Đến Với Tinh Hoa Ẩm Thực Nhật Bản',
-            date: 'July 9, 2024',
-            imageUrl: (SushiImageBlog)
-        },
-        
-        { 
-            id: 2, 
-            title: 'Khám Phá Nghệ Thuật và Hương Vị Của Sushi: Hành Trình Đến Với Tinh Hoa Ẩm Thực Nhật Bản', 
-            date: 'July 9, 2024', 
-            imageUrl: (SushiImageBlog)
-        },
-        
-        { 
-            id: 3, 
-            title: 'Khám Phá Nghệ Thuật và Hương Vị Của Sushi: Hành Trình Đến Với Tinh Hoa Ẩm Thực Nhật Bản', 
-            date: 'July 9, 2024', 
-            imageUrl: (SushiImageBlog)
-        },
-        
-        { 
-            id: 4, 
-            title: 'Khám Phá Nghệ Thuật và Hương Vị Của Sushi: Hành Trình Đến Với Tinh Hoa Ẩm Thực Nhật Bản', 
-            date: 'July 9, 2024', 
-            imageUrl: (SushiImageBlog)
-        },
-        
-    ];
+  const dispatch = useDispatch();
+  const allBlogs = useSelector((state) => state.blogs.blogs.allBlogs);
 
-    return (
-        <div>
-            <div className="blog-container">
-                <header className="contact-header">
-                    <h1 className="blog-title">Blog</h1>
-                </header>
-                <div className="blog-posts">
-                    {blogPosts.map((post) => (
-                        <BlogCard key={post.id} title={post.title} date={post.date} imageUrl={post.imageUrl} />
-                    ))}
-                </div>
-            </div>
+  useEffect(() => {
+    getAllBlogs(null, dispatch); // Không cần accessToken vì đây là trang public
+  }, [dispatch]);
+
+  return (
+    <div>
+      <div className="blog-container">
+        {/* ... (phần code khác giữ nguyên) */}
+        <div className="blog-posts">
+          {allBlogs &&
+            allBlogs.map((post) => (
+              <BlogCard
+                key={post._id}
+                title={post.title}
+                date={new Date(post.createdAt).toLocaleDateString()}
+                content={post.content}
+                author={post.author}
+                imageUrl={post.imageUrl}
+                postId={post._id}
+                isAdmin={false} // Truyền isAdmin={false} cho người dùng thường
+              />
+            ))}
         </div>
-    );
+      </div>
+    </div>
+  );
 };
 
 export default Blog;

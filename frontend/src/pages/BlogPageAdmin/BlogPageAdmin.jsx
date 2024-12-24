@@ -69,6 +69,13 @@ const BlogPageAdmin = () => {
     <div>
       <div className="blog-container">
         <h1 className="blog-title">Blog</h1>
+        {/* Di chuyển EditBlogPopup ra ngoài div có điều kiện */}
+        <EditBlogPopup
+          isOpen={showEditForm}
+          onClose={handleCloseEditPopup}
+          onSuccess={handleEditBlogSuccess}
+          blog={selectedBlog}
+        />
         {user?.admin && (
           <div className="blog-create">
             <button className="create-button" onClick={handleCreateClick}>
@@ -78,12 +85,6 @@ const BlogPageAdmin = () => {
               isOpen={showCreateForm}
               onClose={handleClosePopup}
               onSuccess={handleCreateBlogSuccess}
-            />
-            <EditBlogPopup
-              isOpen={showEditForm}
-              onClose={handleCloseEditPopup}
-              onSuccess={handleEditBlogSuccess}
-              blog={selectedBlog}
             />
           </div>
         )}
@@ -101,6 +102,7 @@ const BlogPageAdmin = () => {
                 accessToken={accessToken}
                 onDelete={handleDelete}
                 onEdit={handleEdit}
+                isAdmin={user?.admin}
               />
             ))}
         </div>

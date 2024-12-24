@@ -95,7 +95,11 @@ router.delete("/:id", blogController.deleteBlog);
  *               items:
  *                 $ref: '#/components/schemas/Blog'
  */
-router.get("/", middlewareController.verifyToken, blogController.getBlogs);
+// Route cho public (không cần xác thực)
+router.get("/", blogController.getBlogs);
+
+// Route cho admin (yêu cầu xác thực)
+router.get("/admin", middlewareController.verifyToken, blogController.getBlogs);
 
 /**
  * @swagger
