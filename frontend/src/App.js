@@ -38,7 +38,6 @@ function App() {
           <Route path="/blog" element={<Blog />} />
           <Route path="/reservation" element={<Reservation />} />
           <Route path="/reset-password" element={<ResetPassword />} />
-          <Route path="/reservation" element={<Reservation />} />
         </Routes>
         <LoginPopup isOpen={isLoginPopupOpen} onClose={toggleLoginPopup} />
         <RegisterPopup isOpen={isRegisterPopupOpen} onClose={toggleRegisterPopup} />

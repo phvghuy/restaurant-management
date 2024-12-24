@@ -1,6 +1,7 @@
 //frontend/src/components/Navbar/Navbar.js
 import React from 'react';
 import { useLocation } from 'react-router-dom';
+import { CiSearch } from "react-icons/ci";
 import './Navbar.css';
 
 const Navbar = ({ toggleLoginPopup, toggleRegisterPopup }) => {
@@ -10,9 +11,9 @@ const Navbar = ({ toggleLoginPopup, toggleRegisterPopup }) => {
         <header className="navbar-container">
             <div className="navbar">
                 {/* Logo */}
-                <div className="navbar-logo">
+                <a className="navbar-logo" href='/'>
                     <img src="/logo.png" alt="AJIMAZING Logo" />
-                </div>
+                </a>
                 {/* Navigation Links */}
                 <nav className="navbar-links">
                     <ul>

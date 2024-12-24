@@ -1,0 +1,28 @@
+.service {
+    background-color: white;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    text-decoration: none;
+    color : #000;
+}
+
+.service:hover {
+    background-color: red;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    text-decoration: none;
+    color : #fff;
+}
+
+.service h3 {
+    margin-bottom: 20px;
+    text-align: left;
+}
+
+.service p {
+    text-align: justify;
+}
