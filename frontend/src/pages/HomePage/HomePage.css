@@ -92,6 +92,11 @@ body {
 .about-content {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
+    text-align: justify;
+}
+
+.about-description {
+    padding: 0 40px;
 }
 
 .about-description h2 {
