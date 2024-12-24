@@ -1,3 +1,4 @@
+// backend/models/Dish.js
 const mongoose = require("mongoose")
 
 const dishSchema = new mongoose.Schema({
