@@ -1,6 +1,8 @@
+// backend/routes/blogRoutes.js
 const express = require('express');
 const router = express.Router();
 const blogController = require('../controllers/blogController');
+const middlewareController = require('../controllers/middlewareControllers');
 
 /**
  * @swagger
@@ -26,7 +28,8 @@ const blogController = require('../controllers/blogController');
  *       400:
  *         description: Bad request
  */
-router.post("/", blogController.createBlog);
+// Route tạo blog
+router.post("/", middlewareController.verifyTokenAndAdminAuth, blogController.createBlog);
 
 /**
  * @swagger
@@ -92,7 +95,7 @@ router.delete("/:id", blogController.deleteBlog);
  *               items:
  *                 $ref: '#/components/schemas/Blog'
  */
-router.get("/", blogController.getBlogs);
+router.get("/", middlewareController.verifyToken, blogController.getBlogs);
 
 /**
  * @swagger

@@ -1,27 +1,35 @@
+//backend/controllers/middlewareControllers.js
 const jwt = require("jsonwebtoken")
 
 const middlewareController = {
     //verifyToken
     verifyToken: (req, res, next) => {
-        const token = req.headers.token
+        const token = req.headers.token;
         if(token) {
-            //Vi trong headers cua token thi value se la Bearer ...
-            //nen tach ra chi lay phan ... sau Bearer thoi
-            const accessToken = token.split(" ")[1]
+            const accessToken = token.split(" ")[1];
             jwt.verify(accessToken, process.env.JWT_ACCESS_KEY, (err, user) => {
-                //neu loi nghia la khong phai nguoi dung dang nhap hoac Token het han
                 if(err) {
-                    // Thêm return để dừng lại
-                    return res.status(403).json("Token is not valid")
+                    return res.status(403).json("Token is not valid");
                 }
-                req.user = user
-                next()
-            })
+                req.user = user;
+                next(); // Gọi next() ở đây để tiếp tục đến middleware hoặc route handler tiếp theo
+            });
         }
         else {
-            return res.status(401).json("You're not authenticated")
+            return res.status(401).json("You're not authenticated");
         }
-    }
+    },
+
+    verifyTokenAndAdminAuth: (req, res, next) => {
+        middlewareController.verifyToken(req, res, () => {
+            // Sau khi verifyToken gọi next(), code ở đây sẽ được thực thi
+            if (req.user.admin) {
+                next(); // Bây giờ next() này là next() của verifyTokenAndAdminAuth
+            } else {
+                res.status(403).json("You're not Admin");
+            }
+        });
+    },
 }
 
-module.exports = middlewareController
+module.exports = middlewareController;
