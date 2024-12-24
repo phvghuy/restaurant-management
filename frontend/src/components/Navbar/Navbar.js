@@ -13,9 +13,9 @@ const Navbar = ({ toggleLoginPopup, toggleRegisterPopup }) => {
         <header className="navbar-container">
             <div className="navbar">
                 {/* Logo */}
-                <div className="navbar-logo">
+                <a className="navbar-logo" href='/'>
                     <img src="/logo.png" alt="AJIMAZING Logo" />
-                </div>
+                </a>
                 {/* Navigation Links */}
                 <nav className="navbar-links">
                     <ul>

@@ -1,4 +1,6 @@
 import React from 'react';
+import { FaFacebook, FaDiscord, FaPhoneAlt } from "react-icons/fa";
+import { IoLocationOutline, IoMail } from "react-icons/io5";
 import './Footer.css';
 
 const Footer = () => {
@@ -10,9 +12,11 @@ const Footer = () => {
                 </div>
                 <div className="footer-section">
                     <h3>LIÊN HỆ</h3>
-                    <p><i className="fas fa-map-marker-alt"></i> Đường Hàn Thuyên, Khu Phố 6, Thủ Đức, HCM</p>
-                    <p><i className="fas fa-phone-alt"></i> (+84) 12 3456 7891</p>
-                    <p><i className="fas fa-envelope"></i> info@gmail.com</p>
+                    <p><FaFacebook /> Facebook</p>
+                    <p><FaDiscord /> Discord</p>
+                    <p><IoLocationOutline /> Đường Hàn Thuyên, Khu Phố 6, Thủ Đức, HCM</p>
+                    <p><FaPhoneAlt /> (+84) 12 3456 7891</p>
+                    <p><IoMail /> info@gmail.com</p>
                 </div>
                 <div className="footer-section">
                     <h3>HỖ TRỢ KHÁCH HÀNG</h3>

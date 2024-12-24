@@ -1,0 +1,13 @@
+.btn-reserve {
+    background-color: red;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    cursor: pointer;
+    border-radius: 4px;
+    font-weight: bold;
+}
+
+.btn-reserve:hover {
+    background-color: #cc0000;
+}
