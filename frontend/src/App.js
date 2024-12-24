@@ -3,6 +3,7 @@ import HomePage from "./pages/HomePage/HomePage";
 import './App.css';
 import { BrowserRouter as Router, Route, Routes} from "react-router-dom";
 import Blog from "./pages/BlogPage/Blog";
+import MenuPage from "./pages/MenuPage/MenuPage";
 import Contact from "./pages/Contact/Contact";
 import Navbar from "./components/Navbar/Navbar";
 import LoginPopup from "./components/LoginPopup/LoginPopup";
@@ -35,11 +36,11 @@ function App() {
         />
         <Routes>
           <Route path="/" element={<HomePage />} />
+          <Route path="/menu" element={<MenuPage />} />
           <Route path="/contact" element={<Contact />} />
           <Route path="/blog" element={<Blog />} />
           <Route path="/reservation" element={<Reservation />} />
           <Route path="/reset-password" element={<ResetPassword />} />
-          <Route path="/reservation" element={<Reservation />} />
           <Route path="/verify" element={<VerifyEmail />} />
         </Routes>
         <LoginPopup isOpen={isLoginPopupOpen} onClose={toggleLoginPopup} />
