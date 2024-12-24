@@ -14,25 +14,48 @@ const Blog = () => {
   }, [dispatch]);
 
   return (
-    <div>
-      <div className="blog-container">
-        {/* ... (phần code khác giữ nguyên) */}
-        <div className="blog-posts">
-          {allBlogs &&
-            allBlogs.map((post) => (
-              <BlogCard
-                key={post._id}
-                title={post.title}
-                date={new Date(post.createdAt).toLocaleDateString()}
-                content={post.content}
-                author={post.author}
-                imageUrl={post.imageUrl}
-                postId={post._id}
-                isAdmin={false} // Truyền isAdmin={false} cho người dùng thường
-              />
-            ))}
-        </div>
-      </div>
+    // <div>
+    //   <div className="blog-container">
+    //     {/* ... (phần code khác giữ nguyên) */}
+    //     <div className="blog-posts">
+    //       {allBlogs &&
+    //         allBlogs.map((post) => (
+    //           <BlogCard
+    //             key={post._id}
+    //             title={post.title}
+    //             date={new Date(post.createdAt).toLocaleDateString()}
+    //             content={post.content}
+    //             author={post.author}
+    //             imageUrl={post.imageUrl}
+    //             postId={post._id}
+    //             isAdmin={false} // Truyền isAdmin={false} cho người dùng thường
+    //           />
+    //         ))}
+    //     </div>
+    //   </div>
+    // </div>
+    <div className="contact-container">
+      <header className="contact-header">
+          <h1 className="contact-title">Tin tức</h1>
+      </header>
+
+      <main className="blog-main">
+      <div className="blog-posts">
+           {allBlogs &&
+             allBlogs.map((post) => (
+               <BlogCard
+                 key={post._id}
+                 title={post.title}
+                 date={new Date(post.createdAt).toLocaleDateString()}
+                 content={post.content}
+                 author={post.author}
+                 imageUrl={post.imageUrl}
+                 postId={post._id}
+                 isAdmin={false} // Truyền isAdmin={false} cho người dùng thường
+               />
+             ))}
+         </div>
+      </main>
     </div>
   );
 };
