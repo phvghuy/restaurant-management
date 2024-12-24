@@ -1,23 +1,28 @@
+// backend/controllers/blogController.js
 const Blog = require('../models/Blogs');
 
 const blogController = {
   // Thêm bài viết mới
   createBlog: async (req, res) => {
     try {
-      const { title, content, author } = req.body;
+      const newBlog = new Blog({
+        title: req.body.title,
+        content: req.body.content,
+        author: req.body.author,
+        imageUrl: 'http://localhost:3000/images/default-blog-image.png',// Thêm imageUrl từ request body
+      });
 
-      // Kiểm tra các trường bắt buộc có hợp lệ không
-      if (!title || !content || !author) {
-        return res.status(400).json({ message: 'Title, content, and author are required' });
-      }
-
-      // Tạo một blog mới và lưu vào database
-      const newBlog = new Blog({ title, content, author });
-      await newBlog.save();
-
-      res.status(201).json({ message: 'Blog created successfully', blog: newBlog });
+      const savedBlog = await newBlog.save();
+      res.status(201).json(savedBlog);
     } catch (err) {
-      res.status(500).json({ error: err.message });
+      console.error("Error in createBlog:", err);
+      if (err.name === 'ValidationError') {
+        return res.status(400).json({ message: "Lỗi validation", errors: err.errors });
+      } else if (err.code === 11000) {
+        return res.status(400).json({ message: "Lỗi trùng lặp dữ liệu", error: err });
+      } else {
+        return res.status(500).json({ message: "Lỗi server", error: err.message });
+      }
     }
   },
 
@@ -58,7 +63,7 @@ const blogController = {
         return res.status(404).json({ message: 'Blog not found' });
       }
 
-      await blog.deleteOne();  // Xóa bài viết khỏi database
+      await blog.deleteOne();
       res.status(200).json({ message: 'Blog deleted successfully' });
     } catch (err) {
       res.status(500).json({ error: err.message });
@@ -68,8 +73,8 @@ const blogController = {
   // Lấy tất cả bài viết
   getBlogs: async (req, res) => {
     try {
-      const blogs = await Blog.find();  // Lấy tất cả bài viết từ database
-      res.status(200).json(blogs);  // Trả về danh sách bài viết
+      const blogs = await Blog.find();
+      res.status(200).json(blogs);
     } catch (err) {
       res.status(500).json({ error: err.message });
     }
@@ -79,13 +84,13 @@ const blogController = {
   getBlogById: async (req, res) => {
     try {
       const { id } = req.params;
-      const blog = await Blog.findById(id);  // Tìm bài viết theo ID
+      const blog = await Blog.findById(id);
 
       if (!blog) {
         return res.status(404).json({ message: 'Blog not found' });
       }
 
-      res.status(200).json(blog);  // Trả về bài viết theo ID
+      res.status(200).json(blog);
     } catch (err) {
       res.status(500).json({ error: err.message });
     }

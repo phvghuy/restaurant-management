@@ -1,23 +1,65 @@
-//frontend/src/components/LoginPopup/LoginPopup.jsx
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import styles from './LoginPopup.module.css';
-import { loginUser } from '../../redux/apiRequest';
-import { useDispatch } from 'react-redux';
+import { loginUser, resendVerificationEmail } from '../../redux/apiRequest';
+import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 
 function LoginPopup({ isOpen, onClose, onForgotPassword }) {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [rememberMe, setRememberMe] = useState(false);
+  const [showVerifyButton, setShowVerifyButton] = useState(false);
+  const [errorMessage, setErrorMessage] = useState('');
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
+  const error = useSelector((state) => state.auth.login.error);
+  const isFetching = useSelector((state) => state.auth.login.isFetching);
+
+  useEffect(() => {
+    if (error) {
+      // Hiển thị thông báo lỗi dựa trên mã lỗi
+      switch (error.code) {
+        case 'USERNAME_NOT_FOUND':
+          setErrorMessage('Tên đăng nhập không tồn tại.');
+          setShowVerifyButton(false);
+          break;
+        case 'INVALID_PASSWORD':
+          setErrorMessage('Mật khẩu không đúng.');
+          setShowVerifyButton(false);
+          break;
+        case 'EMAIL_NOT_VERIFIED':
+          setErrorMessage(error.message);
+          setShowVerifyButton(true);
+          break;
+        case 'NETWORK_ERROR':
+        case 'INTERNAL_SERVER_ERROR':
+          setErrorMessage(error.message);
+          setShowVerifyButton(false);
+          break;
+        default:
+          setErrorMessage('Đã có lỗi xảy ra.');
+          setShowVerifyButton(false);
+          break;
+      }
+    } else {
+      setErrorMessage('');
+      setShowVerifyButton(false);
+    }
+  }, [error]);
+
   const handleUsernameChange = (event) => {
     setUsername(event.target.value);
+    // Xóa thông báo lỗi khi người dùng bắt đầu nhập
+    setErrorMessage('');
+    setShowVerifyButton(false);
   };
 
   const handlePasswordChange = (event) => {
     setPassword(event.target.value);
+    // Xóa thông báo lỗi khi người dùng bắt đầu nhập
+    setErrorMessage('');
+    setShowVerifyButton(false);
   };
 
   const handleRememberMeChange = (event) => {
@@ -30,13 +72,26 @@ function LoginPopup({ isOpen, onClose, onForgotPassword }) {
       username: username,
       password: password,
     };
-    loginUser(newUser, dispatch, navigate);
-    onClose();
+    loginUser(newUser, dispatch, navigate)
+      .then(() => {
+        // Đóng popup chỉ khi đăng nhập thành công
+        onClose();
+      })
+      .catch(() => {});
+  };
+
+  const handleResendVerification = async () => {
+    try {
+      const message = await resendVerificationEmail({ email: username });
+      alert(message);
+    } catch (error) {
+      alert(error);
+    }
   };
 
   const handleForgotPasswordClick = () => {
-    onClose(); // Đóng popup đăng nhập
-    onForgotPassword(); // Mở popup quên mật khẩu (hàm này được truyền từ HomePage)
+    onClose();
+    onForgotPassword();
   };
 
   if (!isOpen) return null;
@@ -85,14 +140,32 @@ function LoginPopup({ isOpen, onClose, onForgotPassword }) {
             />
             <label htmlFor="rememberMe">Ghi nhớ đăng nhập</label>
           </div>
-          <button type="submit" className={styles.submitButton}>
-            Đăng nhập
+
+          {/* Hiển thị thông báo lỗi */}
+          {errorMessage && (
+            <p className={`${styles.errorMessage} ${styles.errorText}`}>
+              {errorMessage}
+            </p>
+          )}
+
+          {/* Hiển thị nút gửi lại email xác minh */}
+          {showVerifyButton && (
+            <button
+              type="button"
+              onClick={handleResendVerification}
+              className={styles.verifyButton}
+            >
+              Gửi lại email xác minh
+            </button>
+          )}
+
+          <button type="submit" className={styles.submitButton} disabled={isFetching}>
+            {isFetching ? 'Đang xử lý...' : 'Đăng nhập'}
           </button>
           <p className={styles.registerLink}>
             Bạn chưa có tài khoản? <a href="/register">Đăng ký ngay</a>
           </p>
           <div className={styles.forgotPassword}>
-            {/* Nút để gọi handleForgotPasswordClick */}
             <a href="#" onClick={handleForgotPasswordClick}>
               Quên mật khẩu?
             </a>

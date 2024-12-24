@@ -43,3 +43,8 @@
 .blog-actions .blog-icon:hover {
     color: #e0484c;
 }
+
+.blog-content {
+    text-align: justify;
+    padding: 0 20px;
+}

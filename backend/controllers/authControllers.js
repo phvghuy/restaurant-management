@@ -1,3 +1,4 @@
+//backend/controllers/authControllers.js
 const User = require("../models/User")
 const bcrypt = require("bcryptjs")
 const jwt = require("jsonwebtoken")
@@ -38,8 +39,7 @@ const authControllers = {
 
             // Create verification link
             const frontendURL = process.env.FRONTEND_URL || "http://localhost:3000"; 
-            const verifyLink = `${frontendURL}/v1/auth/verify?email=${user.email}&token=${token}`;
-
+            const verifyLink = `${frontendURL}/verify?email=${user.email}&token=${token}`;
 
             // Send email
             await mailer.sendMail({
@@ -84,48 +84,87 @@ const authControllers = {
     //Login
     loginUser: async (req, res) => {
         try {
-            const user = await User.findOne({ username: req.body.username })
+            const user = await User.findOne({ username: req.body.username });
             if (!user) {
-                //them return, vi loi 'ER_HTTP_HEADERS_SENT' khi nhap sai tk nhung dung mk
-                return res.status(404).json("Wrong username!")
+                return res.status(404).json({ code: "USERNAME_NOT_FOUND", message: "Wrong username!" });
             }
+    
             const validPassword = await bcrypt.compare(
-                //password nhập vào
                 req.body.password,
-                //password hashed trên DB
                 user.password
-            )
+            );
             if (!validPassword) {
-                //them return, vi loi 'ER_HTTP_HEADERS_SENT' khi nhap sai tk nhung dung mk
-                return res.status(404).json("Wrong password")
+                return res.status(404).json({ code: "INVALID_PASSWORD", message: "Wrong password" });
             }
+    
+            // Kiểm tra xem email đã được xác thực chưa
+            if (!user.emailVerifiedAt) {
+                return res.status(401).json({
+                    code: "EMAIL_NOT_VERIFIED",
+                    message: "Email not verified. Please verify your email before logging in.",
+                    showVerifyButton: true,
+                });
+            }
+    
             if (user && validPassword) {
-                const accessToken = authControllers.generateAccessToken(user)
-                const refreshToken = authControllers.generateRefreshToken(user)
-
-                //tam thoi dung array de thay the database
-                refreshTokens.push(refreshToken)
-                // REDUX STORE -> ACCESSTOKEN
-                // HTTPONLY COOKIE -> REFRESHTOKEN
-
-                //luu reFreshToken vao Cookie
+                const accessToken = authControllers.generateAccessToken(user);
+                const refreshToken = authControllers.generateRefreshToken(user);
+    
+                refreshTokens.push(refreshToken);
+    
                 res.cookie("refreshToken", refreshToken, {
                     httpOnly: true,
-                    //khi DELOY thi set secure thanh true, con luc dev thi false
                     secure: false,
                     path: "/",
-                    //ngan chan tan cong CSRF bang cach chi cho HTTP den tu site nay
                     sameSite: "strict",
-                })
-
-                //khong muon hien thi password khi tra ve thong tin
-                const {password, ...others} = user._doc
-                res.status(200).json({...others, accessToken})
+                });
+    
+                const { password, ...others } = user._doc;
+                res.status(200).json({ ...others, accessToken });
             }
         } catch (err) {
-            res.status(500).json(err)
+            res.status(500).json({ code: "INTERNAL_SERVER_ERROR", message: err.message });
         }
     },
+
+    resendVerificationEmail: async (req, res) => {
+        try {
+          const { email } = req.body;
+    
+          const user = await User.findOne({ email });
+    
+          if (!user) {
+            return res.status(404).json("User not found!");
+          }
+    
+          if (user.emailVerifiedAt) {
+            return res.status(400).json("Email already verified!");
+          }
+    
+          // Tạo token mới
+          const token = jwt.sign(
+            { email: user.email },
+            process.env.JWT_ACCESS_KEY,
+            { expiresIn: '1h' }
+          );
+    
+          // Tạo link xác thực
+          const frontendURL = process.env.FRONTEND_URL || "http://localhost:3000";
+          const verifyLink = `${frontendURL}/VerifyEmail?email=${user.email}&token=${token}`;
+    
+          // Gửi email
+          await mailer.sendMail({
+            to: user.email,
+            subject: "[RESTAURANT MANAGEMENT] Verify Your Email",
+            htmlContent: `<p>Click the link below to verify your email:</p>
+                        <a href="${verifyLink}">Verify Email</a>`,
+          });
+    
+          res.status(200).json({ message: "Verification email resent. Please check your email." });
+        } catch (err) {
+          res.status(500).json({ error: err.message });
+        }
+      },
 
     //REDIS la database de luu tru refreshToken, nhung chua co database nen tao array tuong trung
     requestRefreshToken: async(req, res) => {

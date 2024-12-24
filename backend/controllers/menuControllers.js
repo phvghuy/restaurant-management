@@ -1,3 +1,4 @@
+// backend/controllers/menuControllers.js
 const Dish = require("../models/Dish");
 
 const menuControllers = {
@@ -25,6 +26,16 @@ const menuControllers = {
         } catch (error) {
             console.error(error);
             return res.status(500).json({ success: false, message: "Server error" });
+        }
+    },
+
+    getAllDishes: async (req, res) => {
+        try {
+            const dishes = await Dish.find({}); // Lấy tất cả món ăn
+            res.status(200).json({ success: true, data: dishes });
+        } catch (error) {
+            console.error(error);
+            res.status(500).json({ success: false, message: "Server error" });
         }
     },
 };

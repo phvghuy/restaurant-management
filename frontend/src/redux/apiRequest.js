@@ -1,25 +1,40 @@
 //frontend/redux/apiRequest.js
 import axios from "axios";
 import { loginFailed, loginStart, loginSuccess, registerStart, registerFailed, registerSuccess } from "./authSlice";
+import { getBlogsFailed, getBlogStart, getBlogSuccess } from "./blogSlice";
+import { createBlogFailed, createBlogStart, createBlogSuccess } from "./blogSlice";
 
 // user: Thông tin người dùng cần để đăng nhập (ví dụ: username, password).
 // dispatch: Hàm dispatch của Redux, được sử dụng để gửi các actions đến store.
 // navigate: Hàm navigate từ react-router-dom (hoặc thư viện tương tự), được sử dụng để chuyển hướng trang.
-export const loginUser = async (user, dispatch, navigate) => { 
-  dispatch(loginStart()); 
+export const loginUser = async (user, dispatch, navigate) => {
+  dispatch(loginStart());
   try {
-      console.log("User data:", user); // Log user data
-      //Vì đã cấu hình trong package.json là "proxy": "http://localhost:8000/"
-      // Nên có thể viết tắt dòng ("http://localhost:8000/v1/auth/login", user);
-      const res = await axios.post("/v1/auth/login", user);
-        
-      console.log("API response:", res); // Log API response
-      dispatch(loginSuccess(res.data));
+    const res = await axios.post("/v1/auth/login", user);
+    dispatch(loginSuccess(res.data));
+    // Kiểm tra nếu là admin thì chuyển hướng đến /BlogAdmin
+    if (res.data.admin) {
+      navigate("/BlogAdmin");
+    } else {
       navigate("/");
-    } catch (err) {
-      console.error("Login error:", err); // Log error
-      dispatch(loginFailed());
     }
+    return Promise.resolve();
+  } catch (err) {
+    console.error("Login error:", err);
+    if (err.response && err.response.data) {
+      // Sửa lỗi dispatch loginFailed
+      dispatch(loginFailed({
+          code: err.response.data.code,
+          message: err.response.data.message,
+      }));
+    } else {
+      dispatch(loginFailed({
+          code: "NETWORK_ERROR",
+          message: "Đã có lỗi xảy ra. Vui lòng thử lại sau.",
+      }));
+    }
+    return Promise.reject();
+  }
 };
 
 export const registerUser = async (user, dispatch, navigate) => {
@@ -79,5 +94,88 @@ export const resetPassword = async ({ email, token, password }, dispatch, naviga
     } else {
       setMessage('Đã có lỗi xảy ra, vui lòng thử lại sau.');
     }
+  }
+};
+
+export const resendVerificationEmail = async (email) => {
+  try {
+    const res = await axios.post('/v1/auth/resend-verification-email', { email });
+    return res.data;
+  } catch (err) {
+    console.error('Resend verification email error:', err);
+    throw err; // Re-throw the error to be handled by the caller
+  }
+};
+
+export const getAllBlogs = async (accessToken, dispatch) => {
+  dispatch(getBlogStart());
+  try {
+    const url = accessToken ? '/v1/blogs/admin' : '/v1/blogs'; // Chọn URL dựa trên accessToken
+    const headers = accessToken ? { token: `Bearer ${accessToken}` } : {};
+    const res = await axios.get(url, { headers });
+    dispatch(getBlogSuccess(res.data));
+  } catch (err) {
+    dispatch(getBlogsFailed());
+  }
+};
+
+export const createBlog = async (blog, accessToken, dispatch, onSuccess) => {
+  dispatch(createBlogStart());
+  try {
+    const res = await axios.post('/v1/blogs', blog, {
+      headers: {
+        token: `Bearer ${accessToken}`,
+      },
+    });
+    console.log("Response from server:", res);
+    if (res.status === 201) {
+      dispatch(createBlogSuccess(res.data));
+      if (onSuccess) {
+        onSuccess();
+      }
+      return Promise.resolve(res.data);
+    } else {
+      dispatch(createBlogFailed());
+      alert(res.data.message || 'Failed to create blog.');
+      return Promise.reject(res.data.message || 'Failed to create blog.');
+    }
+  } catch (err) {
+    console.error("Error creating blog:", err.response || err);
+    dispatch(createBlogFailed());
+    if (err.response) {
+      alert(err.response.data.message || 'Failed to create blog.');
+      return Promise.reject(err.response.data.message || 'Failed to create blog.');
+    } else {
+      alert('Network error or server error.');
+      return Promise.reject('Network error or server error.');
+    }
+  }
+};
+
+export const deleteBlog = async (postId, accessToken, dispatch) => {
+  try {
+    await axios.delete(`/v1/blogs/${postId}`, {
+      headers: { token: `Bearer ${accessToken}` },
+    });
+    // Không cần dispatch action ở đây vì ta sẽ cập nhật danh sách blog ở BlogPageAdmin
+    return Promise.resolve();
+  } catch (err) {
+    console.error("Delete blog error:", err);
+    return Promise.reject(err);
+  }
+};
+
+export const updateBlog = async (postId, updatedBlog, accessToken, dispatch, onSuccess) => {
+  try {
+    const res = await axios.put(`/v1/blogs/${postId}`, updatedBlog, {
+      headers: { token: `Bearer ${accessToken}` },
+    });
+    if (onSuccess) {
+      onSuccess();
+    }
+    return Promise.resolve(res.data);
+  } catch (err) {
+    console.error("Update blog error:", err);
+    return Promise.reject(err);
   }
 };

@@ -1,43 +1,37 @@
-//backend/app.js
+// backend/app.js
 const express = require("express");
 const cors = require("cors");
 const dotenv = require("dotenv");
 const mongoose = require("mongoose");
 const cookieParser = require("cookie-parser");
-const morgan = require("morgan"); // Đảm bảo bạn đã cài đặt morgan
-const reservationRoutes = require('./routes/reservationRoutes'); // Import routes
+const morgan = require("morgan");
+const reservationRoutes = require('./routes/reservationRoutes');
 const authRoute = require("./routes/auth")
-const blogRoutes = require("./routes/blogRoutes"); // Import route blog
-const swaggerSetup = require('./config/swagger'); // Import cấu hình Swagger
+const blogRoutes = require("./routes/blogRoutes");
+const swaggerSetup = require('./config/swagger');
 const userRoute = require("./routes/user")
 const menuRoute = require("./routes/menu")
-
 
 const app = express();
 dotenv.config();
 
-connectDB();
-
 // Sử dụng async function để kết nối với MongoDB
 async function connectDB() {
-  try {
+    try {
       await mongoose.connect(process.env.MONGODB_URL);
       console.log("Connected to MongoDB");
-  } catch (error) {
+    } catch (error) {
       console.error("Error connecting to MongoDB:", error);
-  }
+    }
 }
-
-// Middleware
-// app.use(cors()) giúp ứng dụng của bạn tránh lỗi 
-//CORS khi front-end và back-end nằm trên các miền khác nhau, 
-//giúp giao tiếp giữa hai bên dễ dàng hơn.
+connectDB();
 
 // Middleware
 app.use(cors());
 app.use(cookieParser())
 app.use(express.json())
 app.use(morgan("common")); // Đảm bảo bạn đã cài đặt morgan
+app.use(express.static('public'));
 
 // Tích hợp Swagger
 swaggerSetup(app);
@@ -54,5 +48,3 @@ app.listen(8000, () => {
     console.log("Server is running");
     console.log("Swagger Docs available at http://localhost:8000/api-docs");
 })
-
-
