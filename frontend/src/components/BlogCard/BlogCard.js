@@ -4,7 +4,7 @@ import '../BlogCard/BlogCard.css';
 import { FaHeart, FaEdit, FaTrash } from 'react-icons/fa';
 
 const BlogCard = ({ title, date, imageUrl, content, author, postId, isAdmin, onDelete, onEdit }) => {
-  const imageSrc = imageUrl || '/images/default-blog-image.png';
+  const imageSrc = imageUrl; 
 
   const handleEditClick = (event) => {
     event.stopPropagation(); // Ngăn chặn propagation

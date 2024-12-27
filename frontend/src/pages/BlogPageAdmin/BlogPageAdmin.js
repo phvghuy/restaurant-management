@@ -27,7 +27,6 @@ const BlogPageAdmin = () => {
   };
 
   const handleCreateBlogSuccess = () => {
-    alert('Blog created successfully!');
     setShowCreateForm(false);
     getAllBlogs(accessToken, dispatch);
   };
@@ -40,11 +39,11 @@ const BlogPageAdmin = () => {
     if (window.confirm('Bạn có chắc chắn muốn xóa blog này?')) {
       try {
         await deleteBlog(postId, accessToken, dispatch);
-        alert('Blog deleted successfully!');
+        alert('Blog đã được xóa thành công!');
         getAllBlogs(accessToken, dispatch);
       } catch (err) {
         console.error(err);
-        alert('Failed to delete blog!');
+        alert('Xóa Blog thất bại!');
       }
     }
   };
@@ -56,7 +55,7 @@ const BlogPageAdmin = () => {
   };
 
   const handleEditBlogSuccess = () => {
-    alert('Blog updated successfully!');
+    alert('Blog đã được cập nhật thành công');
     setShowEditForm(false);
     getAllBlogs(accessToken, dispatch);
   };

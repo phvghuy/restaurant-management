@@ -42,7 +42,12 @@ const blogSlice = createSlice({
       state.createBlog.error = true;
       state.createBlog.success = false;
     },
-    resetCreateBlogState: (state) => { // New reducer
+    resetCreateBlogState: (state) => { 
+      state.createBlog.isFetching = false;
+      state.createBlog.error = false;
+      state.createBlog.success = false;
+    },
+    resetCreateBlogState: (state) => { 
       state.createBlog.isFetching = false;
       state.createBlog.error = false;
       state.createBlog.success = false;
@@ -57,7 +62,7 @@ export const {
   createBlogStart,
   createBlogSuccess,
   createBlogFailed,
-  resetCreateBlogState // Export new action
+  resetCreateBlogState
 } = blogSlice.actions;
 
 export default blogSlice.reducer;
