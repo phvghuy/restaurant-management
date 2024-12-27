@@ -8,6 +8,7 @@ import Contact from "./pages/Contact/Contact";
 import Navbar from "./components/Navbar/Navbar";
 import LoginPopup from "./components/LoginPopup/LoginPopup";
 import RegisterPopup from "./components/RegisterPopup/RegisterPopup";
+import ForgotPasswordPopup from "./components/ForgotPasswordPopup/ForgotPasswordPopup";
 import { useState } from "react";
 import Footer from "./components/Footer/Footer";
 import ResetPassword from './pages/ResetPassword/ResetPassword';
@@ -15,10 +16,10 @@ import Reservation from "./pages/Reservation/Reservation";
 import VerifyEmail from "./pages/VerifyEmail/VerifyEmail";
 import BlogPageAdmin from "./pages/BlogPageAdmin/BlogPageAdmin";
 
-
 function App() {
   const [isLoginPopupOpen, setIsLoginPopupOpen] = useState(false);
   const [isRegisterPopupOpen, setIsRegisterPopupOpen] = useState(false);
+  const [isForgotPasswordPopupOpen, setIsForgotPasswordPopupOpen] = useState(false); 
 
   const toggleLoginPopup = () => {
     setIsLoginPopupOpen(!isLoginPopupOpen);
@@ -26,6 +27,10 @@ function App() {
 
   const toggleRegisterPopup = () => {
     setIsRegisterPopupOpen(!isRegisterPopupOpen);
+  };
+
+  const toggleForgotPasswordPopup = () => {
+    setIsForgotPasswordPopupOpen(!isForgotPasswordPopupOpen);
   };
 
   return (
@@ -45,8 +50,16 @@ function App() {
           <Route path="/verify" element={<VerifyEmail />} />
           <Route path="/BlogAdmin" element={<BlogPageAdmin />} />
         </Routes>
-        <LoginPopup isOpen={isLoginPopupOpen} onClose={toggleLoginPopup} />
+        <LoginPopup
+          isOpen={isLoginPopupOpen}
+          onClose={toggleLoginPopup}
+          onForgotPassword={toggleForgotPasswordPopup}
+        />
         <RegisterPopup isOpen={isRegisterPopupOpen} onClose={toggleRegisterPopup} />
+        <ForgotPasswordPopup
+          isOpen={isForgotPasswordPopupOpen}
+          onClose={toggleForgotPasswordPopup}
+        />
         <Footer />
       </div>
     </Router>

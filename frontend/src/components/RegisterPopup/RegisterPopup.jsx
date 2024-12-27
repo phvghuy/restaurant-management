@@ -1,31 +1,54 @@
 //frontend/src/components/RegisterPopup/RegisterPopup.jsx
-import React, { useState } from 'react';
-import styles from './RegisterPopup.module.css';
-import { registerUser } from '../../redux/apiRequest';
-import { useDispatch} from "react-redux";
-import { useNavigate} from "react-router-dom";
+import React, { useState } from "react";
+import styles from "./RegisterPopup.module.css";
+import { registerUser } from "../../redux/apiRequest";
+import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
 
 const RegisterPopup = ({ isOpen, onClose }) => {
   // Các state để lưu thông tin người dùng nhập vào
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
-  const [confirmPassword, setConfirmPassword] = useState('');
-  const [fullName, setFullName] = useState('');
-  const [phoneNumber, setPhoneNumber] = useState('');
-  const [email, setEmail] = useState('');
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const [fullName, setFullName] = useState("");
+  const [phoneNumber, setPhoneNumber] = useState("");
+  const [email, setEmail] = useState("");
   const [agreeTerms, setAgreeTerms] = useState(false);
-  const [receivePromotions, setReceivePromotions] = useState(false);
+  const [error, setError] = useState("");
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const handleSubmit = (event) => {
     event.preventDefault();
 
-    if (password !== confirmPassword) {
-      alert("Mật khẩu và xác nhận mật khẩu không khớp!");
-      return;
-  }
-  
+    const fields = [
+      { value: username, message: "Vui lòng nhập tài khoản!" },
+      { value: password, message: "Vui lòng nhập mật khẩu!" },
+      { value: confirmPassword, message: "Vui lòng nhập xác nhận mật khẩu!" },
+      {
+        value: password === confirmPassword,
+        message: "Mật khẩu và xác nhận mật khẩu không khớp!",
+        skip: password !== confirmPassword,
+      },
+      { value: fullName, message: "Vui lòng nhập họ và tên!" },
+      { value: phoneNumber, message: "Vui lòng nhập số điện thoại!" },
+      { value: email, message: "Vui lòng nhập email!" },
+      {
+        value: agreeTerms,
+        message:
+          "Vui lòng đồng ý với Điều khoản dịch vụ và Chính sách bảo mật!",
+      },
+    ];
+
+    for (const field of fields) {
+      if (field.skip) continue;
+      if (!field.value) {
+        setError(field.message);
+        return;
+      }
+    }
+
+    // Nếu tất cả các trường hợp lệ, tạo newUser và gọi API
     const newUser = {
       email: email,
       password: password,
@@ -50,9 +73,6 @@ const RegisterPopup = ({ isOpen, onClose }) => {
             X
           </button>
         </div>
-        <p className={styles.subtitle}>
-          Đăng ký thông tin để đặt dịch vụ nhanh hơn cho lần sau!
-        </p>
         <form onSubmit={handleSubmit}>
           {/* Phần 1: Các ô input */}
           <div className={styles.inputSection}>
@@ -62,7 +82,10 @@ const RegisterPopup = ({ isOpen, onClose }) => {
                 type="text"
                 id="username"
                 value={username}
-                onChange={(e) => setUsername(e.target.value)}
+                onChange={(e) => {
+                  setUsername(e.target.value);
+                  setError(""); // Xóa error khi người dùng nhập liệu
+                }}
                 placeholder="Tài khoản"
                 className={styles.inputField}
               />
@@ -73,7 +96,10 @@ const RegisterPopup = ({ isOpen, onClose }) => {
                 type="password"
                 id="password"
                 value={password}
-                onChange={(e) => setPassword(e.target.value)}
+                onChange={(e) => {
+                  setPassword(e.target.value);
+                  setError(""); // Xóa error khi người dùng nhập liệu
+                }}
                 placeholder="Mật khẩu"
                 className={styles.inputField}
               />
@@ -84,7 +110,10 @@ const RegisterPopup = ({ isOpen, onClose }) => {
                 type="password"
                 id="confirmPassword"
                 value={confirmPassword}
-                onChange={(e) => setConfirmPassword(e.target.value)}
+                onChange={(e) => {
+                  setConfirmPassword(e.target.value);
+                  setError(""); // Xóa error khi người dùng nhập liệu
+                }}
                 placeholder="Xác nhận mật khẩu"
                 className={styles.inputField}
               />
@@ -95,7 +124,10 @@ const RegisterPopup = ({ isOpen, onClose }) => {
                 type="text"
                 id="fullName"
                 value={fullName}
-                onChange={(e) => setFullName(e.target.value)}
+                onChange={(e) => {
+                  setFullName(e.target.value);
+                  setError(""); // Xóa error khi người dùng nhập liệu
+                }}
                 placeholder="Họ và tên"
                 className={styles.inputField}
               />
@@ -106,7 +138,10 @@ const RegisterPopup = ({ isOpen, onClose }) => {
                 type="tel"
                 id="phoneNumber"
                 value={phoneNumber}
-                onChange={(e) => setPhoneNumber(e.target.value)}
+                onChange={(e) => {
+                  setPhoneNumber(e.target.value);
+                  setError(""); // Xóa error khi người dùng nhập liệu
+                }}
                 placeholder="Số điện thoại"
                 className={styles.inputField}
               />
@@ -117,11 +152,16 @@ const RegisterPopup = ({ isOpen, onClose }) => {
                 type="email"
                 id="email"
                 value={email}
-                onChange={(e) => setEmail(e.target.value)}
+                onChange={(e) => {
+                  setEmail(e.target.value);
+                  setError(""); // Xóa error khi người dùng nhập liệu
+                }}
                 placeholder="Email"
                 className={styles.inputField}
               />
             </div>
+            {/* Hiển thị lỗi nếu có */}
+            {error && <div className={styles.error}>{error}</div>}
           </div>
 
           {/* Phần 2: Checkbox và nút Đăng ký */}
@@ -131,28 +171,20 @@ const RegisterPopup = ({ isOpen, onClose }) => {
                 type="checkbox"
                 id="agreeTerms"
                 checked={agreeTerms}
-                onChange={(e) => setAgreeTerms(e.target.checked)}
+                onChange={(e) => {
+                  setAgreeTerms(e.target.checked);
+                  setError("");
+                }}
               />
               <label htmlFor="agreeTerms">
-                Tôi đồng ý với{' '}
+                Tôi đồng ý với{" "}
                 <a href="#" className={styles.link}>
                   Điều khoản dịch vụ
-                </a>{' '}
-                và{' '}
+                </a>{" "}
+                và{" "}
                 <a href="#" className={styles.link}>
                   Chính sách bảo mật
                 </a>
-              </label>
-            </div>
-            <div className={styles.checkboxGroup}>
-              <input
-                type="checkbox"
-                id="receivePromotions"
-                checked={receivePromotions}
-                onChange={(e) => setReceivePromotions(e.target.checked)}
-              />
-              <label htmlFor="receivePromotions">
-                Gửi cho tôi thông báo khuyến mãi mới nhất
               </label>
             </div>
             <button type="submit" className={styles.submitButton}>
