@@ -21,6 +21,7 @@ const BlogCard = ({ title, date, imageUrl, content, author, postId, isAdmin, onD
       <img src={imageSrc} alt="Blog" className="blog-image" />
       <h2 className="blog-card-title">{title}</h2>
       <p className="blog-content">{content}</p>
+      {/* Thêm class blog-author vào đây */}
       <p className="blog-author">Tác giả: {author}</p>
       <div className="blog-card-footer">
         <p className="blog-date">🕳 {date}</p>
