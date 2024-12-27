@@ -1,3 +1,4 @@
+/* frontend/src/components/BlogCard/BlogCard.css */
 .blog-card {
     background-color: #fff;
     border: 1px solid #ddd;
@@ -47,4 +48,10 @@
 .blog-content {
     text-align: justify;
     padding: 0 20px;
+}
+
+.blog-author {
+    text-align: center;
+    margin: 10px 0; 
+    font-weight: 600; 
 }
