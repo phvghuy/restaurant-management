@@ -124,6 +124,7 @@ export const createBlog = async (blog, accessToken, dispatch, onSuccess) => {
   try {
     const res = await axios.post('/v1/blogs', blog, {
       headers: {
+        'Content-Type': 'multipart/form-data',
         token: `Bearer ${accessToken}`,
       },
     });

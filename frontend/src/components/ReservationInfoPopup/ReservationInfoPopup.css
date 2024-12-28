@@ -1,0 +1,118 @@
+/* frontend/src/components/ReservationInfoPopup/ReservationInfoPopup.css */
+.popup-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.reservation-info-popup {
+  background-color: #fff;
+  padding: 40px;
+  border-radius: 10px;
+  box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.1);
+  width: 800px; /* Chỉnh lại width */
+  box-sizing: border-box;
+}
+
+.popup-title {
+  text-align: center;
+  margin-bottom: 20px;
+  color: #000;
+}
+
+.form-group {
+  margin-bottom: 15px;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 5px;
+  color: #000;
+}
+
+.required-star {
+  color: red;
+}
+
+/* Style cho input, select, textarea */
+.form-group input,
+.form-group select,
+.form-group textarea {
+  width: 90%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 16px;
+}
+
+.form-group input::placeholder,
+.form-group select::placeholder,
+.form-group textarea::placeholder {
+  color: #999;
+}
+
+.form-group textarea {
+  min-height: 100px;
+}
+
+/* Style cho nút */
+.button-group {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 20px;
+}
+
+.button-group button {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.cancel-button {
+  background-color: #fff;
+  color: #000;
+  border: 1px solid #000 !important; 
+}
+
+.cancel-button:hover {
+  background-color: #000;
+  color: #fff;
+}
+
+.submit-button {
+  background-color: #00b04f;
+  color: #fff;
+}
+
+.submit-button:hover {
+  background-color: #fff;
+  color: #00b04f;
+  border: 1px solid #00b04f;
+}
+
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+  border-color: #00b04f;
+  box-shadow: 0 0 0 0.2rem rgba(0, 176, 79, 0.25);
+  outline: none;
+}
+
+/* Style cho 2 cột */
+.form-content {
+  display: flex;
+  gap: 20px;
+}
+
+.form-column {
+  flex: 1;
+}
