@@ -1,119 +1,145 @@
-// frontend/pages/redux/reservationSlice.js
-import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import axios from 'axios';
-
-// Async thunk action để tạo đặt bàn
-export const createReservation = createAsyncThunk(
-  'reservations/create',
-  async (reservationData, { rejectWithValue }) => {
-    try {
-      const response = await axios.post('/api/reservations', reservationData);
-      return response.data;
-    } catch (error) {
-      return rejectWithValue(error.response.data);
-    }
-  }
-);
-
-// Async thunk action để lấy danh sách đặt bàn
-export const fetchReservations = createAsyncThunk(
-  'reservations/fetch',
-  async (_, { rejectWithValue }) => {
-    try {
-      const response = await axios.get('/api/reservations');
-      return response.data;
-    } catch (error) {
-      return rejectWithValue(error.response.data);
-    }
-  }
-);
-
-// Async thunk action để lấy thông tin đặt bàn theo ID
-export const fetchReservationById = createAsyncThunk(
-  'reservations/fetchById',
-  async (id, { rejectWithValue }) => {
-    try {
-      const response = await axios.get(`/api/reservations/${id}`);
-      return response.data;
-    } catch (error) {
-      return rejectWithValue(error.response.data);
-    }
-  }
-);
-
-// Async thunk action để kiểm tra đặt bàn
-export const checkReservation = createAsyncThunk(
-  'reservations/check',
-  async (checkData, { rejectWithValue }) => {
-    try {
-      const response = await axios.post('/api/reservations/check', checkData);
-      return response.data;
-    } catch (error) {
-      return rejectWithValue(error.response.data);
-    }
-  }
-);
+// frontend/src/redux/reservationSlice.js
+import { createSlice } from "@reduxjs/toolkit";
 
 const reservationSlice = createSlice({
-  name: 'reservations',
+  name: "reservations",
   initialState: {
     reservations: [],
-    currentReservation: null,
-    status: 'idle', // 'idle' | 'loading' | 'succeeded' | 'failed'
-    error: null,
+    isFetching: false,
+    error: false,
+    createReservation: {
+      isFetching: false,
+      error: false,
+      success: false,
+    },
+    createUserReservation: { // Thêm state cho user
+      isFetching: false,
+      error: false,
+      success: false,
+    },
   },
-  reducers: {},
-  extraReducers: (builder) => {
-    builder
-      // Xử lý createReservation
-      .addCase(createReservation.pending, (state) => {
-        state.status = 'loading';
-      })
-      .addCase(createReservation.fulfilled, (state, action) => {
-        state.status = 'succeeded';
-        state.reservations.push(action.payload);
-      })
-      .addCase(createReservation.rejected, (state, action) => {
-        state.status = 'failed';
-        state.error = action.payload;
-      })
-      // Xử lý fetchReservations
-      .addCase(fetchReservations.pending, (state) => {
-        state.status = 'loading';
-      })
-      .addCase(fetchReservations.fulfilled, (state, action) => {
-        state.status = 'succeeded';
-        state.reservations = action.payload;
-      })
-      .addCase(fetchReservations.rejected, (state, action) => {
-        state.status = 'failed';
-        state.error = action.payload;
-      })
-      // Xử lý fetchReservationById
-      .addCase(fetchReservationById.pending, (state) => {
-        state.status = 'loading';
-      })
-      .addCase(fetchReservationById.fulfilled, (state, action) => {
-        state.status = 'succeeded';
-        state.currentReservation = action.payload;
-      })
-      .addCase(fetchReservationById.rejected, (state, action) => {
-        state.status = 'failed';
-        state.error = action.payload;
-      })
-      // Xử lý checkReservation
-      .addCase(checkReservation.pending, (state) => {
-        state.status = 'loading';
-      })
-      .addCase(checkReservation.fulfilled, (state, action) => {
-        state.status = 'succeeded';
-        state.currentReservation = action.payload;
-      })
-      .addCase(checkReservation.rejected, (state, action) => {
-        state.status = 'failed';
-        state.error = action.payload;
-      });
+  reducers: {
+    getAllReservationsStart: (state) => {
+      state.isFetching = true;
+      state.error = false;
+    },
+    getAllReservationsSuccess: (state, action) => {
+      state.isFetching = false;
+      state.reservations = action.payload;
+    },
+    getAllReservationsFailure: (state) => {
+      state.isFetching = false;
+      state.error = true;
+    },
+    createReservationStart: (state) => {
+      // Kiểm tra và khởi tạo state.createReservation nếu nó chưa tồn tại
+      state.createReservation = state.createReservation ?? {
+        isFetching: false,
+        error: false,
+        success: false,
+      };
+      // Bây giờ có thể an toàn gán giá trị
+      state.createReservation.isFetching = true;
+      state.createReservation.error = false;
+      state.createReservation.success = false;
+    },
+    createReservationSuccess: (state, action) => {
+      state.createReservation.isFetching = false;
+      state.createReservation.success = true;
+      state.reservations.push(action.payload);
+    },
+    createReservationFailure: (state) => {
+      state.createReservation.isFetching = false;
+      state.createReservation.error = true;
+      state.createReservation.success = false;
+    },
+    // Thêm reducers cho user
+    createUserReservationStart: (state) => {
+      state.createUserReservation.isFetching = true;
+      state.createUserReservation.error = false;
+      state.createUserReservation.success = false;
+    },
+    createUserReservationSuccess: (state, action) => {
+      state.createUserReservation.isFetching = false;
+      state.createUserReservation.success = true;
+      state.reservations.push(action.payload); // Có thể bạn không cần lưu vào state.reservations
+    },
+    createUserReservationFailure: (state) => {
+      state.createUserReservation.isFetching = false;
+      state.createUserReservation.error = true;
+      state.createUserReservation.success = false;
+    },
+    deleteReservationStart: (state) => {
+      state.isFetching = true;
+      state.error = false;
+    },
+    deleteReservationSuccess: (state, action) => {
+      state.isFetching = false;
+      state.reservations = state.reservations.filter(
+        (reservation) => reservation._id !== action.payload
+      );
+    },
+    deleteReservationFailure: (state) => {
+      state.isFetching = false;
+      state.error = true;
+    },
+    updateReservationStart: (state) => {
+      state.isFetching = true;
+      state.error = false;
+    },
+    updateReservationSuccess: (state, action) => {
+      state.isFetching = false;
+      const index = state.reservations.findIndex(
+        (reservation) => reservation._id === action.payload._id
+      );
+      if (index !== -1) {
+        state.reservations[index] = action.payload;
+      }
+    },
+    updateReservationFailure: (state) => {
+      state.isFetching = false;
+      state.error = true;
+    },
+    resetCreateReservationState: (state) => {
+      state.createReservation.isFetching = false;
+      state.createReservation.error = false;
+      state.createReservation.success = false;
+    },
+    // Thêm reducer để reset trạng thái createUserReservation
+    resetCreateUserReservationState: (state) => {
+      // Kiểm tra và khởi tạo state.createUserReservation nếu nó chưa tồn tại
+      state.createUserReservation = state.createUserReservation ?? {
+        isFetching: false,
+        error: false,
+        success: false,
+      };
+
+      // Bây giờ có thể an toàn gán giá trị
+      state.createUserReservation.isFetching = false;
+      state.createUserReservation.error = false;
+      state.createUserReservation.success = false;
+    },
   },
 });
+
+export const {
+  getAllReservationsStart,
+  getAllReservationsSuccess,
+  getAllReservationsFailure,
+  createReservationStart,
+  createReservationSuccess,
+  createReservationFailure,
+  deleteReservationStart,
+  deleteReservationSuccess,
+  deleteReservationFailure,
+  updateReservationStart,
+  updateReservationSuccess,
+  updateReservationFailure,
+  resetCreateReservationState,
+  createUserReservationStart, 
+  createUserReservationSuccess, 
+  createUserReservationFailure,
+  resetCreateUserReservationState, 
+} = reservationSlice.actions;
 
 export default reservationSlice.reducer;

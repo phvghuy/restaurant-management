@@ -1,0 +1,131 @@
+/* frontend/src/components/CheckReservationPopup/CheckReservationPopup.css */
+.popup-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+  }
+  
+  /* Thêm nền trắng và padding cho popup */
+  .check-reservation-popup {
+    background-color: #fff; /* Nền trắng */
+    padding: 40px;
+    border-radius: 10px;
+    box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.1);
+    width: 400px; 
+    box-sizing: border-box; 
+  }
+  
+  .popup-title {
+    text-align: center;
+    margin-bottom: 20px;
+    color: #000;
+  }
+  
+  .form-group {
+    margin-bottom: 15px;
+  }
+  
+  .form-group label {
+    display: block;
+    margin-bottom: 5px;
+  }
+  
+  .form-group input,
+  .form-group select,
+  .form-group textarea {
+    width: 93%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+  }
+  
+  .form-group textarea {
+    min-height: 100px;
+  }
+  
+  .button-group {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+  }
+  
+  .button-group button {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+  }
+  
+  /* Màu nền và viền cho nút "Quay lại" */
+  .cancel-button {
+    background-color: #d9534f !important ; /* Nền trắng */
+    color: #fff ; /* Chữ màu cam */
+    border: 1px solid #d9534f; /* Viền màu cam */
+  }
+  
+  .cancel-button:hover {
+    background-color: #d9534f; /* Màu cam khi hover */
+    color: #fff; /* Chữ trắng khi hover */
+    opacity: 0.8;
+  }
+  
+  /* Màu nền cho nút "Xác nhận" */
+  .submit-button {
+    background-color: #008000; /* Màu cam */
+    color: #fff;
+  }
+  
+  .submit-button:hover {
+    background-color: #fff;
+    color: #008000;
+    opacity: 0.8;
+  }
+
+  .form-group input::placeholder { /* Thay đổi màu placeholder */
+    color: #999; /* Màu xám nhạt */
+  }
+  
+  .form-group input:focus,
+  .form-group select:focus,
+  .form-group textarea:focus { /* Thêm focus style */
+    border-color: #d9534f; /* Màu cam */
+    box-shadow: 0 0 0 0.2rem rgba(217, 83, 79, 0.25); /* Thêm glow effect */
+    outline: none;
+  }
+  
+  /* Style cho phần kết quả (nếu có) */
+  .results-popup {
+    background-color: #f8f8f8;
+    padding: 20px;
+    border-radius: 5px;
+    margin-top: 20px;
+  }
+  
+  .results-popup ul {
+    list-style: none;
+    padding: 0;
+  }
+  
+  .results-popup li {
+    border-bottom: 1px solid #ccc;
+    padding: 10px 0;
+  }
+  
+  .results-popup button {
+    background-color: #008000; /* Bạn có thể thay đổi màu nền tại đây */
+    color: white;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 10px;
+  }

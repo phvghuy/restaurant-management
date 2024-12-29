@@ -1,0 +1,165 @@
+/* frontend/src/pages/ReservationAdmin/ReservationAdmin.module.css */
+.reservationAdminContainer {
+  padding: 20px;
+  font-family: Arial, sans-serif;
+  background-color: #f8f8f8;
+  min-height: calc(100vh - 96px);
+  margin-top: 96px;
+}
+
+.contentHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.searchBar {
+  position: relative;
+  width: 300px;
+}
+
+.searchBar input {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 16px;
+}
+
+.addReservationAndSearchBar {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.searchIcon {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #aaa;
+}
+
+.clearIcon {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #aaa;
+  cursor: pointer;
+}
+
+.pageTitle {
+  text-align: center;
+  margin-bottom: 30px;
+  color: #333;
+}
+
+.addReservationButton {
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  font-size: 16px;
+  cursor: pointer;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.addReservationButton:hover {
+  background-color: #0056b3;
+}
+
+.filterButtons {
+  display: flex;
+  margin-bottom: 0px;
+}
+
+.filterButtons button {
+  background-color: #e9ecef;
+  color: #333;
+  border: none;
+  padding: 10px 15px;
+  margin: 0 5px;
+  border-radius: 5px;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.filterButtons button:hover {
+  background-color: #ced4da;
+}
+
+.filterButtons button.active {
+  background-color: #007bff;
+  color: #fff;
+}
+
+.reservationsList {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
+  gap: 20px;
+}
+
+.reservationItem {
+  background-color: #fff;
+  border: 1px solid #ddd;
+  padding: 20px;
+  border-radius: 5px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.reservationDetails {
+  margin-bottom: 10px;
+}
+
+.label {
+  font-weight: bold;
+  margin-right: 5px;
+}
+
+.reservationActions {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.reservationActions button {
+  border: none;
+  padding: 8px 15px;
+  border-radius: 5px;
+  font-size: 14px;
+  cursor: pointer;
+  color: #fff;
+}
+
+.statusButton {
+  background-color: #6c757d;
+}
+
+.checkButton {
+  background-color: #28a745;
+}
+
+.reservationActions button:hover {
+  opacity: 0.8;
+}
+
+.footer {
+  margin-top: 40px;
+}
+
+.buttonContainer {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+  justify-content: space-between;
+}
+
+.filterAndSearchContainer {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-left: auto;
+}

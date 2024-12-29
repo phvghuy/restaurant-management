@@ -22,6 +22,15 @@ const reservationSchema = new mongoose.Schema({
     type: String,
     required: false, 
   },
+  status: {
+    type: String,
+    enum: ['Chờ xử lý', 'Hoàn thành', 'Đã hủy'], // Các trạng thái cho phép
+    default: 'Chờ xử lý', // Trạng thái mặc định
+  },
+  note: {
+    type: String,
+    required: false,
+  }
 }, { timestamps: true } //thêm thời gian khi tạo và cập nhật
 );
 

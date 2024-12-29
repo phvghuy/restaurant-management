@@ -1,0 +1,232 @@
+.employeeProfile {
+  margin-top: 100px !important;
+  display: flex;
+  width: 100%;
+  max-width: 1100px;
+  padding: 20px;
+  margin: 20px auto;
+  background-color: #f0f0f0; /* Thêm màu nền */
+  border-radius: 10px;
+}
+
+.employeeCard {
+  width: 300px;
+  background-color: #fff;
+  border-radius: 10px;
+  padding: 20px;
+  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.profileAvatar {
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  overflow: hidden;
+  margin: 0 auto 10px;
+}
+
+.profileAvatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.employeeId {
+  font-size: 1.5rem;
+  font-weight: bold;
+  text-align: center;
+  margin-bottom: 5px;
+}
+
+.employeeRole {
+  font-size: 1rem;
+  text-align: center;
+  margin-bottom: 15px;
+  color: #65afde;
+  display: flex;
+  justify-content: center;
+}
+
+.employeeRole .arrow {
+  margin-right: 5px;
+  font-size: 1rem;
+}
+
+.employeeDetails .icon {
+  margin-right: 5px;
+}
+
+.employeeDetails {
+  font-size: 0.9rem;
+}
+
+.employeeDetailRow {
+  margin-bottom: 8px;
+  display: flex;
+  align-items: center;
+}
+
+.employeeInfo {
+  flex: 1;
+  margin-left: 20px;
+  background-color: #fff;
+  border-radius: 10px;
+  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.tabHeader {
+  display: flex;
+  border-bottom: 1px solid #ddd;
+}
+
+.tabItem {
+  padding: 15px 20px;
+  cursor: pointer;
+  font-weight: bold;
+  color: #555;
+  border-bottom: 2px solid transparent;
+  transition: all 0.2s ease-in;
+  background: none;
+  border: none;
+}
+
+.tabItem.active {
+  border-bottom: 2px solid #ff6600;
+  color: #ff6600;
+}
+
+.tabContent {
+  padding: 20px;
+}
+
+.inputGroup {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 15px;
+}
+
+.inputGroup label {
+  font-size: 0.9rem;
+  margin-bottom: 5px;
+  font-weight: bold;
+}
+
+.inputGroup input,
+.inputGroup select {
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  outline: none;
+  transition: border-color 0.2s ease-in-out;
+}
+
+.inputGroup input:focus,
+.inputGroup select:focus {
+  border-color: #000000;
+}
+
+.roleGroup {
+  display: flex;
+  margin-bottom: 15px;
+  font-size: 0.9rem;
+  align-items: center;
+}
+
+.roleGroup label {
+  margin-right: 15px;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+}
+
+.roleGroup label input {
+  margin-right: 5px;
+}
+
+.dateInput {
+  position: relative;
+}
+
+.iconCalendar {
+  position: relative;
+  right: 30px;
+  color: #999;
+  pointer-events: none;
+  font-size: 0.9rem;
+}
+
+.bankingInfoGroup {
+  margin-top: 20px;
+  border-top: 1px solid #ddd;
+  padding-top: 20px;
+}
+
+.groupTitle {
+  font-weight: bold;
+  font-size: 1rem;
+  margin-bottom: 10px;
+}
+
+.saveButton {
+  padding: 12px 20px;
+  background-color: #ff6600;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: all 0.2s ease-in;
+  margin-top: 10px;
+}
+
+.saveButton:hover {
+  background-color: #e65c00;
+}
+
+.inputContainer {
+  display: flex;
+  align-items: center;
+  position: relative;
+}
+
+.inputContainer input {
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  outline: none;
+  transition: border-color 0.2s ease-in-out;
+  flex: 1;
+}
+
+.inputContainer input:focus {
+  border-color: #000000;
+}
+
+.iconCalendar {
+  position: absolute;
+  right: 10px; /* Khoảng cách từ icon đến cạnh phải của input */
+  color: #999;
+  pointer-events: none; /* Ngăn chặn click vào icon */
+  font-size: 0.9rem;
+  /* Đảm bảo icon ở giữa chiều cao */
+  display: flex;
+  align-items: center;
+  height: 100%;
+}
+
+.label {
+  font-size: 0.9rem;
+  margin-bottom: 5px;
+  font-weight: bold;
+}
+
+.userInfoTab {
+  position: relative; /* Thêm position relative để định vị nút */
+  padding-bottom: 60px;
+}
+
+.userInfoTab .saveButton {
+  position: absolute; /* Định vị tuyệt đối */
+  bottom: 10px; /* Điều chỉnh vị trí theo chiều dọc (từ dưới lên) */
+  right: 10px; /* Điều chỉnh vị trí theo chiều ngang (từ phải sang) */
+}

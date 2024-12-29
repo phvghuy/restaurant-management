@@ -11,6 +11,7 @@ const blogRoutes = require("./routes/blogRoutes");
 const swaggerSetup = require('./config/swagger');
 const userRoute = require("./routes/user")
 const menuRoute = require("./routes/menu")
+const path = require('path');
 
 const app = express();
 dotenv.config();
@@ -29,19 +30,20 @@ connectDB();
 // Middleware
 app.use(cors());
 app.use(cookieParser())
-app.use(express.json())
-app.use(morgan("common")); // Đảm bảo bạn đã cài đặt morgan
+app.use(express.json());
+app.use(morgan("common")); 
 app.use(express.static('public'));
+// Serve static files from the 'public' directory
+app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
 // Tích hợp Swagger
 swaggerSetup(app);
 
 //ROUTES
-
 app.use("/v1/auth", authRoute);
-app.use("/v1/blogs", blogRoutes); // Đăng ký route blog
+app.use("/v1/blogs", blogRoutes); 
 app.use("/v1/user", userRoute)
-app.use('/api/reservations', reservationRoutes)
+app.use('/v1/reservations', reservationRoutes)
 app.use("/v1/menu", menuRoute)
 
 app.listen(8000, () => {

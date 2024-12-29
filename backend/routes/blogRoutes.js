@@ -28,7 +28,7 @@ const middlewareController = require('../controllers/middlewareControllers');
  *       400:
  *         description: Bad request
  */
-// Route tạo blog
+// Route tạo blog ADMIN
 router.post("/", middlewareController.verifyTokenAndAdminAuth, blogController.createBlog);
 
 /**
