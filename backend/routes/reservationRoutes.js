@@ -5,7 +5,8 @@ const reservationController = require('../controllers/reservationController');
 const middlewareController = require('../controllers/middlewareControllers');
 
 // Route cho các chức năng đặt bàn
-router.post('/', middlewareController.verifyTokenAndAdminAuth, reservationController.createReservation); // Tạo đặt bàn mới
+router.post('/', middlewareController.verifyTokenAndAdminAuth, reservationController.createReservation); // Tạo đặt bàn mới ADMIN
+router.post('/user', reservationController.createUserReservation); // Route mới cho user
 router.get('/', reservationController.getAllReservations); // Lấy danh sách đặt bàn
 router.get('/:id', middlewareController.verifyTokenAndAdminAuth, reservationController.getReservationById); // Lấy thông tin đặt bàn theo ID
 router.post('/check', reservationController.checkReservation); // Kiểm tra đặt bàn

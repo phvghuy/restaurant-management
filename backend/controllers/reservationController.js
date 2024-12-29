@@ -1,8 +1,28 @@
 //backend/controllers/reservationController.js
 const Reservation = require('../models/Reservation');
 
-// Tạo một đặt bàn mới
+// Tạo một đặt bàn mới ADMIN
 const createReservation = async (req, res) => {
+  try {
+    console.log('Request Body:', req.body);
+    const { Name, numberOfPeople, reservationDate, phoneNumber, message } = req.body;
+    const newReservation = new Reservation({
+      Name,
+      numberOfPeople,
+      reservationDate,
+      phoneNumber,
+      message,
+    });
+    await newReservation.save();
+    res.status(201).json(newReservation);
+  } catch (error) {
+    console.error('Error creating reservation:', error);
+    res.status(500).json({ message: 'Error creating reservation', error: error.message });
+  }
+};
+
+//USER hoặc không đăng nhập
+const createUserReservation = async (req, res) => {
   try {
     console.log('Request Body:', req.body);
     const { Name, numberOfPeople, reservationDate, phoneNumber, message } = req.body;
@@ -110,4 +130,5 @@ module.exports = {
   checkReservation,
   updateReservation,
   deleteReservation,
+  createUserReservation,
 };

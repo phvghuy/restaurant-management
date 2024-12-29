@@ -1,24 +1,31 @@
+//frontend/src/components/Navbar/Navbar.js
 import React, { useState } from "react";
 import { useLocation, Link, useNavigate } from "react-router-dom";
 import "./Navbar.css";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import { logoutUser } from "../../redux/apiRequest";
+import { createAxios } from "../../createInstance";
+import { logOutSuccess } from "../../redux/authSlice";
 
 const Navbar = ({ toggleLoginPopup, toggleRegisterPopup }) => {
   const location = useLocation();
   const currentPage = location.pathname.replace("/", "") || "home";
   const currentUser = useSelector((state) => state.auth.login.currentUser);
-  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const accessToken = currentUser?.accessToken;
+  const dispatch = useDispatch();
   const navigate = useNavigate();
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+
+  let axiosJWT = createAxios(currentUser, dispatch, logOutSuccess);
 
   const toggleDropdown = () => {
     setIsDropdownOpen(!isDropdownOpen);
   };
 
-  const handleLogout = () => {
-    // TODO: Xử lý logic đăng xuất ở đây (xóa token, cập nhật state, v.v.)
-    console.log("Đăng xuất");
+  const handleLogout = async () => {
+    await logoutUser(dispatch, currentUser.id, accessToken, axiosJWT);
+    dispatch(logOutSuccess());
     setIsDropdownOpen(false);
-    // Sau khi đăng xuất, có thể bạn muốn navigate về trang chủ
     navigate("/");
   };
 
@@ -41,6 +48,7 @@ const Navbar = ({ toggleLoginPopup, toggleRegisterPopup }) => {
               </Link>
             </li>
             <li>
+              {/* Kiểm tra currentUser tồn tại trước */}
               {currentUser ? (
                 currentUser.admin ? (
                   <Link
@@ -60,8 +68,9 @@ const Navbar = ({ toggleLoginPopup, toggleRegisterPopup }) => {
                   </Link>
                 )
               ) : (
+               /* Nếu không có currentUser, chuyển hướng đến trang /reservation */
                 <Link
-                  to="/login"
+                  to="/reservation"
                   className={currentPage === "reservation" ? "active" : ""}
                 >
                   ĐẶT BÀN
@@ -90,11 +99,13 @@ const Navbar = ({ toggleLoginPopup, toggleRegisterPopup }) => {
           {currentUser ? (
             <div className="navbar-user" onClick={toggleDropdown}>
               <div className="user-info">
-                <span className="username">
-                  Xin chào, {currentUser.username}!
-                </span>
+                <div className="username-container">
+                  <span className="username">
+                    Xin chào, {currentUser.username}!
+                  </span>
+                </div>
                 <img
-                  src="/images/default-avatar.png"
+                  src="/images/avatar.png"
                   alt="User Avatar"
                   className="user-avatar"
                 />

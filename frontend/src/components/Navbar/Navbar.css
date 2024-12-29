@@ -112,8 +112,20 @@
     align-items: center; /* Căn giữa theo chiều dọc */
   }
   
+  .user-info{
+    display: flex;
+    align-items: center;
+  }
+
+  .username-container {
+    display: flex;
+    align-items: center;
+    height: 40px;
+  }
+
   .username{
-    margin-right: 10px;
+    margin-right: 0px;
+
     color: #fff;
     font-weight: bold;
   }

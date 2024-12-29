@@ -23,6 +23,9 @@ import {
   createReservationStart,
   createReservationSuccess,
   createReservationFailure,
+  createUserReservationStart,
+  createUserReservationSuccess,
+  createUserReservationFailure,
   deleteReservationStart,
   deleteReservationSuccess,
   deleteReservationFailure,
@@ -238,7 +241,7 @@ export const updateBlog = async (
 };
 
 // Đặt bàn
-
+//admin
 export const createReservation = async (
   reservationData,
   accessToken,
@@ -266,6 +269,32 @@ export const createReservation = async (
       : "Network error or server error.";
     return Promise.reject(errorMessage);
   }
+};
+
+//USER hoặc chưa đăng nhập
+export const createUserReservation = (reservationData) => {
+  return async (dispatch) => {
+    dispatch(createUserReservationStart()); 
+    try {
+      // Sử dụng axios thường (không cần axiosJWT) vì người dùng có thể chưa đăng nhập
+      const res = await axios.post("/v1/reservations/user", reservationData); // Thay đổi endpoint
+      if (res.status === 201) {
+        dispatch(createUserReservationSuccess(res.data)); 
+        return Promise.resolve(res.data);
+      } else {
+        dispatch(createUserReservationFailure()); 
+        const errorMessage = res.data.message || "Failed to create reservation.";
+        return Promise.reject(errorMessage);
+      }
+    } catch (err) {
+      console.error("Create reservation error:", err);
+      dispatch(createUserReservationFailure());
+      const errorMessage = err.response
+        ? err.response.data.message || "Failed to create reservation."
+        : "Network error or server error.";
+      return Promise.reject(errorMessage);
+    }
+  };
 };
 
 export const getAllReservations = async (accessToken, dispatch, axiosJWT) => {
@@ -311,5 +340,15 @@ export const updateReservation = async (id, updatedData, accessToken, axiosJWT) 
       ? err.response.data.message || 'Failed to update reservation.'
       : 'Network error or server error.';
     return Promise.reject(errorMessage);
+  }
+};
+
+export const logoutUser = async (dispatch, id, accessToken, axiosJWT) => {
+  try {
+    await axiosJWT.post("/v1/auth/logout", id, {
+      headers: { token: `Bearer ${accessToken}` },
+    });
+  } catch (err) {
+    console.log(err);
   }
 };
