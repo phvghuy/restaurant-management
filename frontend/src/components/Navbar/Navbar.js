@@ -1,7 +1,7 @@
 //frontend/src/components/Navbar/Navbar.js
 import React, { useState } from "react";
 import { useLocation, Link, useNavigate } from "react-router-dom";
-import "./Navbar.css";
+import styles from "./Navbar.module.css"; 
 import { useSelector, useDispatch } from "react-redux";
 import { logoutUser } from "../../redux/apiRequest";
 import { createAxios } from "../../createInstance";
@@ -30,20 +30,29 @@ const Navbar = ({ toggleLoginPopup, toggleRegisterPopup }) => {
   };
 
   return (
-    <header className="navbar-container">
-      <div className="navbar">
-        <a className="navbar-logo" href="/">
+    <header className={styles["navbar-container"]}>
+      <div className={styles.navbar}>
+        <a
+          className={styles["navbar-logo"]}
+          href={currentUser?.admin ? "/CustomerAdmin" : "/"}
+        >
           <img src="/logo.png" alt="AJIMAZING Logo" />
         </a>
-        <nav className="navbar-links">
+        <nav className={styles["navbar-links"]}>
           <ul>
             <li>
-              <Link to="/" className={currentPage === "home" ? "active" : ""}>
+              <Link
+                to={currentUser?.admin ? "/CustomerAdmin" : "/"}
+                className={currentPage === "home" || currentPage === "CustomerAdmin" ? styles.active : ""}
+              >
                 TRANG CHỦ
               </Link>
             </li>
             <li>
-              <Link to="/menu" className={currentPage === "menu" ? "active" : ""}>
+              <Link
+                to="/menu"
+                className={currentPage === "menu" ? styles.active : ""}
+              >
                 THỰC ĐƠN
               </Link>
             </li>
@@ -54,7 +63,7 @@ const Navbar = ({ toggleLoginPopup, toggleRegisterPopup }) => {
                   <Link
                     to="/reservation-admin"
                     className={
-                      currentPage === "reservation-admin" ? "active" : ""
+                      currentPage === "reservation-admin" ? styles.active : ""
                     }
                   >
                     ĐẶT BÀN
@@ -62,16 +71,16 @@ const Navbar = ({ toggleLoginPopup, toggleRegisterPopup }) => {
                 ) : (
                   <Link
                     to="/reservation"
-                    className={currentPage === "reservation" ? "active" : ""}
+                    className={currentPage === "reservation" ? styles.active : ""}
                   >
                     ĐẶT BÀN
                   </Link>
                 )
               ) : (
-               /* Nếu không có currentUser, chuyển hướng đến trang /reservation */
+                /* Nếu không có currentUser, chuyển hướng đến trang /reservation */
                 <Link
                   to="/reservation"
-                  className={currentPage === "reservation" ? "active" : ""}
+                  className={currentPage === "reservation" ? styles.active : ""}
                 >
                   ĐẶT BÀN
                 </Link>
@@ -80,7 +89,7 @@ const Navbar = ({ toggleLoginPopup, toggleRegisterPopup }) => {
             <li>
               <Link
                 to="/blog"
-                className={currentPage === "blog" ? "active" : ""}
+                className={currentPage === "blog" ? styles.active : ""}
               >
                 TIN TỨC
               </Link>
@@ -88,29 +97,29 @@ const Navbar = ({ toggleLoginPopup, toggleRegisterPopup }) => {
             <li>
               <Link
                 to="/contact"
-                className={currentPage === "contact" ? "active" : ""}
+                className={currentPage === "contact" ? styles.active : ""}
               >
                 LIÊN HỆ
               </Link>
             </li>
           </ul>
         </nav>
-        <div className="navbar-actions">
+        <div className={styles["navbar-actions"]}>
           {currentUser ? (
-            <div className="navbar-user" onClick={toggleDropdown}>
-              <div className="user-info">
-                <div className="username-container">
-                  <span className="username">
+            <div className={styles["navbar-user"]} onClick={toggleDropdown}>
+              <div className={styles["user-info"]}>
+                <div className={styles["username-container"]}>
+                  <span className={styles.username}>
                     Xin chào, {currentUser.username}!
                   </span>
                 </div>
                 <img
                   src="/images/avatar.png"
                   alt="User Avatar"
-                  className="user-avatar"
+                  className={styles["user-avatar"]}
                 />
                 {isDropdownOpen && (
-                  <div className="dropdown-menu">
+                  <div className={styles["dropdown-menu"]}>
                     <ul>
                       {currentUser.admin ? (
                         <>
@@ -143,10 +152,16 @@ const Navbar = ({ toggleLoginPopup, toggleRegisterPopup }) => {
             </div>
           ) : (
             <>
-              <button className="navbar-login" onClick={toggleLoginPopup}>
+              <button
+                className={styles["navbar-login"]}
+                onClick={toggleLoginPopup}
+              >
                 Đăng nhập
               </button>
-              <button className="navbar-register" onClick={toggleRegisterPopup}>
+              <button
+                className={styles["navbar-register"]}
+                onClick={toggleRegisterPopup}
+              >
                 Đăng ký
               </button>
             </>

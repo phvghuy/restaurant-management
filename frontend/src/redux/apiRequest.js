@@ -42,7 +42,7 @@ export const loginUser = async (user, dispatch, navigate) => {
   try {
     const res = await axios.post("/v1/auth/login", user);
     dispatch(loginSuccess(res.data));
-    // Kiểm tra nếu là admin thì chuyển hướng đến /BlogAdmin
+    // Kiểm tra nếu là admin thì chuyển hướng đến /CustomerAdmin
     if (res.data.admin) {
       navigate("/CustomerAdmin");
     } else {
