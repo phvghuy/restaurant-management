@@ -14,6 +14,7 @@ import ResetPassword from './pages/ResetPassword/ResetPassword';
 import Reservation from "./pages/Reservation/Reservation";
 import VerifyEmail from "./pages/VerifyEmail/VerifyEmail";
 import BlogPageAdmin from "./pages/BlogPageAdmin/BlogPageAdmin";
+import EmployeeProfile from "./pages/UserInfoPage/UserInfoPage";
 
 
 function App() {
@@ -44,6 +45,7 @@ function App() {
           <Route path="/reset-password" element={<ResetPassword />} />
           <Route path="/verify" element={<VerifyEmail />} />
           <Route path="/BlogAdmin" element={<BlogPageAdmin />} />
+          <Route path="/employee-info" element={<EmployeeProfile />} />
         </Routes>
         <LoginPopup isOpen={isLoginPopupOpen} onClose={toggleLoginPopup} />
         <RegisterPopup isOpen={isRegisterPopupOpen} onClose={toggleRegisterPopup} />
