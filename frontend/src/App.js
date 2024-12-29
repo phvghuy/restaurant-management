@@ -15,6 +15,8 @@ import ResetPassword from './pages/ResetPassword/ResetPassword';
 import Reservation from "./pages/Reservation/Reservation";
 import VerifyEmail from "./pages/VerifyEmail/VerifyEmail";
 import BlogPageAdmin from "./pages/BlogPageAdmin/BlogPageAdmin";
+import UserProfile from "./pges/UserInfoPage/UserInfoPage";
+import AdminProfile from "./pages/AdminInfoPage/AdminInfoPage";
 import CustomerAdmin from "./pages/CustomerAdmin/CustomerAdmin";
 import Employeemanager from "./pages/Employeemanager/Employeemanager";
 import PrivateRoute from './components/PrivateRoute/PrivateRoute';
@@ -52,7 +54,8 @@ function App() {
           <Route path="/blog" element={<Blog />} />
           <Route path="/reset-password" element={<ResetPassword />} />
           <Route path="/verify" element={<VerifyEmail />} />
-          <Route path="/CustomerAdmin" element={<CustomerAdmin />} />
+          <Route path="/user-info" element={<UserProfile />} />
+          <Route path="/admin-info" element={<AdminProfile />} />
           <Route path="/Employeemanager" element={<Employeemanager />} />
           <Route
             path="/BlogAdmin"
@@ -70,16 +73,6 @@ function App() {
               </PrivateRoute>
             }
           />
-  <Route
-    path="/BlogAdmin"
-    element={
-      <PrivateRoute>
-        <BlogPageAdmin />
-      </PrivateRoute>
-    }
-  />
-          <Route path="/reservation-admin" element={<ReservationAdmin />} />
-          
         </Routes>
         <LoginPopup
           isOpen={isLoginPopupOpen}
