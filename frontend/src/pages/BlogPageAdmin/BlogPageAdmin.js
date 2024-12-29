@@ -11,7 +11,8 @@ import {
 import { useDispatch, useSelector } from "react-redux";
 import CreateBlogPopup from "../../components/CreateBlogPopup/CreateBlogPopup";
 import EditBlogPopup from "../../components/EditBlogPopup/EditBlogPopup";
-import { createAxios } from "../../createInstance";
+import axios from "axios";
+import { jwtDecode } from "jwt-decode";
 import { loginSuccess } from "../../redux/authSlice";
 
 const BlogPageAdmin = () => {
@@ -23,7 +24,41 @@ const BlogPageAdmin = () => {
   const [showEditForm, setShowEditForm] = useState(false);
   const [selectedBlog, setSelectedBlog] = useState(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
-  let axiosJWT = createAxios(user, dispatch, loginSuccess);
+
+  // Tạo instance axiosJWT
+  const axiosJWT = axios.create();
+
+  const refreshToken = async () => {
+    try {
+      const res = await axios.post("/v1/auth/refresh", {
+        withCredentials: true,
+      });
+      return res.data;
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  // Interceptor cho axiosJWT
+  axiosJWT.interceptors.request.use(
+    async (config) => {
+      let currentDate = new Date();
+      const decodedToken = jwtDecode(user?.accessToken);
+      if (decodedToken.exp < currentDate.getTime() / 1000) {
+        const data = await refreshToken();
+        const refreshUser = {
+          ...user,
+          accessToken: data.accessToken,
+        };
+        dispatch(loginSuccess(refreshUser));
+        config.headers["token"] = "Bearer " + data.accessToken;
+      }
+      return config;
+    },
+    (err) => {
+      return Promise.reject(err);
+    }
+  );
 
   useEffect(() => {
     // Chỉ gọi getAllBlogs nếu user là admin và có accessToken
