@@ -49,7 +49,7 @@ const authControllers = {
                     <a href="${verifyLink}">Verify Email</a>`,
             });
 
-            res.status(200).json({ message: "User registered successfully. Please verify your email.", user });
+            res.status(200).json({ message: "Đăng ký thành công. Hãy vào email để xác nhận tài khoản.", user });
         } catch (err) {
             res.status(500).json({ error: err.message });
         }

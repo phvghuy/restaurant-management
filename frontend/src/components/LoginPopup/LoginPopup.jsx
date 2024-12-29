@@ -1,3 +1,4 @@
+//frontend/src/components/LoginPopup/LoginPopup.jsx
 import React, { useState, useEffect } from 'react';
 import styles from './LoginPopup.module.css';
 import { loginUser, resendVerificationEmail } from '../../redux/apiRequest';
@@ -141,7 +142,6 @@ function LoginPopup({ isOpen, onClose, onForgotPassword }) {
             <label htmlFor="rememberMe">Ghi nhớ đăng nhập</label>
           </div>
 
-          {/* Hiển thị thông báo lỗi */}
           {errorMessage && (
             <p className={`${styles.errorMessage} ${styles.errorText}`}>
               {errorMessage}
