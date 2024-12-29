@@ -2,9 +2,10 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import "./Reservation.css";
-import { createReservation } from '../../redux/apiRequest';
+import { createUserReservation } from '../../redux/apiRequest';
 import { useLocation, useNavigate } from "react-router-dom";
 import CheckReservationPopup from "../../components/CheckReservationPopup/CheckReservationPopup";
+import { resetCreateUserReservationState } from "../../redux/reservationSlice";
 
 const Reservation = () => {
   const dispatch = useDispatch();
@@ -25,7 +26,19 @@ const Reservation = () => {
   const user = useSelector((state) => state.auth.login.currentUser);
 
   // Lấy trạng thái từ Redux store
-  const { status, error } = useSelector((state) => state.reservations);
+  const createUserReservationState = useSelector(
+    (state) => state.reservations.createUserReservation
+  );
+  // Kiểm tra xem createUserReservationState có tồn tại hay không
+  const isCreating = createUserReservationState ? createUserReservationState.isFetching : false;
+  const isCreateError = createUserReservationState ? createUserReservationState.error : false;
+  const isCreateSuccess = createUserReservationState ? createUserReservationState.success : false;
+
+  useEffect(() => {
+    return () => {
+      dispatch(resetCreateUserReservationState());
+    };
+  }, [dispatch]);
 
   useEffect(() => {
     // Kiểm tra nếu user đã đăng nhập và có thông tin
@@ -40,13 +53,24 @@ const Reservation = () => {
   }, [user]);
 
   useEffect(() => {
-    if (status === "succeeded") {
+    if (isCreateSuccess) {
       alert("Đặt bàn thành công!");
-      // Chuyển hướng người dùng về trang trước đó hoặc trang chủ
-      const from = location.state?.from?.pathname || "/";
-      navigate(from, { replace: true });
+      // Xóa trắng các ô input
+      setFormData({
+        Name: "",
+        numberOfPeople: 1,
+        reservationDate: "",
+        phoneNumber: "",
+        message: "",
+        time: "",
+      });
+      dispatch(resetCreateUserReservationState());
     }
-  }, [status, navigate, location]);
+    if (isCreateError) {
+      alert("Đặt bàn thất bại. Vui lòng thử lại.");
+      dispatch(resetCreateUserReservationState());
+    }
+  }, [isCreateSuccess, isCreateError, dispatch]);
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -65,7 +89,8 @@ const Reservation = () => {
       reservationDate: reservationDateTime, // Gửi đối tượng Date mới
     };
 
-    dispatch(createReservation(reservationData));
+    // Sử dụng createUserReservation thay vì createReservation
+    dispatch(createUserReservation(reservationData));
   };
 
   const handleOpenCheckReservationPopup = () => {
@@ -173,13 +198,17 @@ const Reservation = () => {
                   value={formData.message}
                   onChange={handleChange}
                 ></textarea>
-                <button type="submit" disabled={status === "loading"}>
-                  {status === "loading" ? "Đang xử lý..." : "Xác nhận"}
+                <button type="submit" disabled={isCreating}>
+                  {isCreating ? "Đang xử lý..." : "Xác nhận"}
                 </button>
-                {status === "succeeded" && (
+                {isCreateSuccess && (
                   <div className="success-message">Đặt bàn thành công!</div>
                 )}
-                {error && <p className="error-message">{error}</p>}
+                {isCreateError && (
+                  <p className="error-message">
+                    Có lỗi xảy ra, vui lòng thử lại.
+                  </p>
+                )}
               </form>
               {/* Popup kiểm tra danh sách đặt bàn */}
               <CheckReservationPopup

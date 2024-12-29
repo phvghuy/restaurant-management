@@ -45,8 +45,27 @@ function App() {
         <Routes>
           <Route path="/" element={<HomePage />} />
           <Route path="/menu" element={<MenuPage />} />
+          <Route path="/reservation" element={<Reservation />} />
           <Route path="/contact" element={<Contact />} />
           <Route path="/blog" element={<Blog />} />
+          <Route path="/reset-password" element={<ResetPassword />} />
+          <Route path="/verify" element={<VerifyEmail />} />
+          <Route
+            path="/BlogAdmin"
+            element={
+              <PrivateRoute>
+                <BlogPageAdmin />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="/reservation-admin"
+            element={
+              <PrivateRoute>
+                <ReservationAdmin />
+              </PrivateRoute>
+            }
+          />
   <Route
     path="/BlogAdmin"
     element={
@@ -56,9 +75,7 @@ function App() {
     }
   />
           <Route path="/reservation-admin" element={<ReservationAdmin />} />
-          <Route path="/reservation" element={<Reservation />} />
-          <Route path="/reset-password" element={<ResetPassword />} />
-          <Route path="/verify" element={<VerifyEmail />} />
+          
         </Routes>
         <LoginPopup
           isOpen={isLoginPopupOpen}
