@@ -1,16 +1,16 @@
 // frontend/src/components/EditBlogPopup/EditBlogPopup.js
-import React, { useState, useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import {  updateBlog } from '../../redux/apiRequest'; // Import updateBlog
-import './EditBlogPopup.css'; // Tạo file CSS tương ứng (copy từ CreateBlogPopup.css)
+import React, { useState, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { updateBlog } from "../../redux/apiRequest";
+import "./EditBlogPopup.css";
 
-const EditBlogPopup = ({ isOpen, onClose, onSuccess, blog }) => {
+const EditBlogPopup = ({ isOpen, onClose, onSuccess, blog, axiosJWT }) => {
   const dispatch = useDispatch();
   const user = useSelector((state) => state.auth.login?.currentUser);
   const accessToken = user?.accessToken;
-  const [editedBlogTitle, setEditedBlogTitle] = useState('');
-  const [editedBlogContent, setEditedBlogContent] = useState('');
-  const [editedBlogAuthor, setEditedBlogAuthor] = useState('');
+  const [editedBlogTitle, setEditedBlogTitle] = useState("");
+  const [editedBlogContent, setEditedBlogContent] = useState("");
+  const [editedBlogAuthor, setEditedBlogAuthor] = useState("");
 
   useEffect(() => {
     if (blog) {
@@ -20,24 +20,33 @@ const EditBlogPopup = ({ isOpen, onClose, onSuccess, blog }) => {
     }
   }, [blog]);
 
+  const handleImageChange = (e) => {
+    const file = e.target.files[0];
+  };
+
   const handleUpdateBlog = async (e) => {
     e.preventDefault();
-    const updatedBlog = {
-      title: editedBlogTitle,
-      content: editedBlogContent,
-      author: editedBlogAuthor,
-    };
+    const formData = new FormData();
+    formData.append("title", editedBlogTitle);
+    formData.append("content", editedBlogContent);
+    formData.append("author", editedBlogAuthor);
 
     try {
-      await updateBlog(blog._id, updatedBlog, accessToken, dispatch, onSuccess);
-      onClose(); // Đóng popup sau khi update thành công
+      await updateBlog(blog._id, formData, accessToken, dispatch, axiosJWT);
+      onSuccess(); // Gọi hàm callback để thông báo cập nhật thành công
+      onClose();
     } catch (err) {
       console.error(err);
+      alert(err); // Hiển thị thông báo lỗi từ server hoặc lỗi kết nối
     }
   };
 
   const handleClose = () => {
     onClose();
+    // Reset form fields khi đóng popup
+    setEditedBlogTitle("");
+    setEditedBlogContent("");
+    setEditedBlogAuthor("");
   };
 
   if (!isOpen || !blog) return null;
@@ -77,6 +86,10 @@ const EditBlogPopup = ({ isOpen, onClose, onSuccess, blog }) => {
               value={editedBlogAuthor}
               onChange={(e) => setEditedBlogAuthor(e.target.value)}
             />
+          </div>
+          <div className="form-group">
+            <label htmlFor="image">Ảnh:</label>
+            <input type="file" id="image" onChange={handleImageChange} />
           </div>
           <button type="submit" className="create-btn">
             Cập nhật

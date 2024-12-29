@@ -1,63 +1,84 @@
-//frontend/src/pages/ResetPassword/ResetPassword.jsx
+// frontend/src/pages/ResetPassword/ResetPassword.js
 import React, { useState, useEffect } from 'react';
 import { useSearchParams, useNavigate } from 'react-router-dom';
-import { resetPassword } from '../../redux/apiRequest'; // Import hàm resetPassword
+import { resetPassword } from '../../redux/apiRequest';
 import { useDispatch } from 'react-redux';
+import styles from './ResetPassword.module.css'; 
 
 const ResetPassword = () => {
-  const [searchParams] = useSearchParams();
-  const email = searchParams.get('email');
-  const token = searchParams.get('token');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
-  const [message, setMessage] = useState(''); // Thông báo lỗi/thành công
-  const dispatch = useDispatch();
+  const [email, setEmail] = useState('');
+  const [message, setMessage] = useState('');
+  const [searchParams] = useSearchParams();
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   useEffect(() => {
-    if (!email || !token) {
+    const emailFromParams = searchParams.get('email');
+    const tokenFromParams = searchParams.get('token');
+
+    if (!emailFromParams || !tokenFromParams) {
       navigate('/'); // Chuyển hướng về trang chủ nếu không có email và token
+    } else {
+        setEmail(emailFromParams)
     }
-  }, [email, token, navigate]);
+  }, [searchParams, navigate]);
 
   const handleSubmit = (event) => {
     event.preventDefault();
+    const token = searchParams.get('token');
+    // Kiểm tra input trống
+    if (!password) {
+      setMessage('Vui lòng nhập mật khẩu mới!');
+      return;
+    }
+    if (!confirmPassword) {
+      setMessage('Vui lòng nhập xác nhận mật khẩu!');
+      return;
+    }
+
     if (password !== confirmPassword) {
       setMessage('Mật khẩu và xác nhận mật khẩu không khớp!');
       return;
     }
-    
+
     // Gọi API resetPassword
     resetPassword({ email, token, password }, dispatch, navigate, setMessage);
   };
 
   return (
-    <div>
-      <h2>Đặt lại mật khẩu</h2>
-      <form onSubmit={handleSubmit}>
-        <input type="hidden" value={email} />
-        <input type="hidden" value={token} />
-        <div>
-          <label htmlFor="password">Mật khẩu mới:</label>
-          <input
-            type="password"
-            id="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-          />
-        </div>
-        <div>
-          <label htmlFor="confirmPassword">Xác nhận mật khẩu mới:</label>
-          <input
-            type="password"
-            id="confirmPassword"
-            value={confirmPassword}
-            onChange={(e) => setConfirmPassword(e.target.value)}
-          />
-        </div>
-        {message && <p>{message}</p>}
-        <button type="submit">Đặt lại mật khẩu</button>
-      </form>
+    <div className={styles.container}> 
+      <div className={styles.formContainer}> 
+        <h2 className={styles.title}>Đặt lại mật khẩu</h2> 
+        <p className={styles.userInfo}>Email: {email}</p> 
+        <form onSubmit={handleSubmit} className={styles.form}> 
+          <div className={styles.inputGroup}> 
+            <label htmlFor="password">Mật khẩu mới:</label>
+            <input
+              type="password"
+              id="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              className={styles.input} 
+            />
+          </div>
+          <div className={styles.inputGroup}>
+            <label htmlFor="confirmPassword">Xác nhận mật khẩu:</label>
+            <input
+              type="password"
+              id="confirmPassword"
+              value={confirmPassword}
+              onChange={(e) => setConfirmPassword(e.target.value)}
+              className={styles.input} 
+            />
+          </div>
+          {message && <p className={styles.message}>{message}</p>}
+          <button type="submit" className={styles.button}> 
+            Đặt lại mật khẩu
+          </button>
+        </form>
+      </div>
     </div>
   );
 };
