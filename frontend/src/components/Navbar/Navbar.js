@@ -68,7 +68,7 @@ const Navbar = ({ toggleLoginPopup, toggleRegisterPopup }) => {
                   </Link>
                 )
               ) : (
-                /* Nếu không có currentUser, chuyển hướng đến trang /reservation */
+               /* Nếu không có currentUser, chuyển hướng đến trang /reservation */
                 <Link
                   to="/reservation"
                   className={currentPage === "reservation" ? "active" : ""}
