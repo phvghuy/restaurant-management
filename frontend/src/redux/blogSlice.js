@@ -13,7 +13,7 @@ const blogSlice = createSlice({
       isFetching: false,
       error: false,
       success: false,
-    }
+    },
   },
   reducers: {
     getBlogStart: (state) => {
@@ -42,18 +42,13 @@ const blogSlice = createSlice({
       state.createBlog.error = true;
       state.createBlog.success = false;
     },
-    resetCreateBlogState: (state) => { 
+    resetCreateBlogState: (state) => {
       state.createBlog.isFetching = false;
       state.createBlog.error = false;
       state.createBlog.success = false;
     },
-    resetCreateBlogState: (state) => { 
-      state.createBlog.isFetching = false;
-      state.createBlog.error = false;
-      state.createBlog.success = false;
-    }
-  }
-})
+  },
+});
 
 export const {
   getBlogStart,
@@ -62,7 +57,7 @@ export const {
   createBlogStart,
   createBlogSuccess,
   createBlogFailed,
-  resetCreateBlogState
+  resetCreateBlogState,
 } = blogSlice.actions;
 
 export default blogSlice.reducer;

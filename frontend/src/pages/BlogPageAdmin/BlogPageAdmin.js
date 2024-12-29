@@ -1,11 +1,18 @@
 // frontend/src/pages/BlogPageAdmin/BlogPageAdmin.js
-import React, { useEffect, useState } from 'react';
-import BlogCard from '../../components/BlogCard/BlogCard';
-import '../BlogPageAdmin/BlogPageAdmin.css';
-import { getAllBlogs, createBlog, deleteBlog, updateBlog } from '../../redux/apiRequest';
-import { useDispatch, useSelector } from 'react-redux';
-import CreateBlogPopup from '../../components/CreateBlogPopup/CreateBlogPopup';
-import EditBlogPopup from '../../components/EditBlogPopup/EditBlogPopup';
+import React, { useEffect, useState } from "react";
+import BlogCard from "../../components/BlogCard/BlogCard";
+import "../BlogPageAdmin/BlogPageAdmin.css";
+import {
+  getAllBlogs,
+  createBlog,
+  deleteBlog,
+  updateBlog,
+} from "../../redux/apiRequest";
+import { useDispatch, useSelector } from "react-redux";
+import CreateBlogPopup from "../../components/CreateBlogPopup/CreateBlogPopup";
+import EditBlogPopup from "../../components/EditBlogPopup/EditBlogPopup";
+import { createAxios } from "../../createInstance";
+import { loginSuccess } from "../../redux/authSlice";
 
 const BlogPageAdmin = () => {
   const user = useSelector((state) => state.auth.login?.currentUser);
@@ -15,12 +22,19 @@ const BlogPageAdmin = () => {
   const [showCreateForm, setShowCreateForm] = useState(false);
   const [showEditForm, setShowEditForm] = useState(false);
   const [selectedBlog, setSelectedBlog] = useState(null);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  let axiosJWT = createAxios(user, dispatch, loginSuccess);
 
   useEffect(() => {
-    if (accessToken) {
-      getAllBlogs(accessToken, dispatch);
+    // Chỉ gọi getAllBlogs nếu user là admin và có accessToken
+    if (user?.admin && accessToken) {
+      getAllBlogs(accessToken, dispatch, axiosJWT).catch((err) => {
+        console.error("Failed to fetch blogs:", err);
+        // Xử lý lỗi, ví dụ hiển thị thông báo cho người dùng
+        alert("Failed to fetch blogs. Please try again later.");
+      });
     }
-  }, [accessToken, dispatch]);
+  }, [accessToken, dispatch, user]);
 
   const handleCreateClick = () => {
     setShowCreateForm(!showCreateForm);
@@ -28,7 +42,10 @@ const BlogPageAdmin = () => {
 
   const handleCreateBlogSuccess = () => {
     setShowCreateForm(false);
-    getAllBlogs(accessToken, dispatch);
+    getAllBlogs(accessToken, dispatch, axiosJWT).catch((err) => {
+      console.error("Failed to fetch blogs:", err);
+      alert("Failed to fetch blogs. Please try again later.");
+    });
   };
 
   const handleClosePopup = () => {
@@ -36,14 +53,20 @@ const BlogPageAdmin = () => {
   };
 
   const handleDelete = async (postId) => {
-    if (window.confirm('Bạn có chắc chắn muốn xóa blog này?')) {
+    if (window.confirm("Bạn có chắc chắn muốn xóa blog này?")) {
       try {
-        await deleteBlog(postId, accessToken, dispatch);
-        alert('Blog đã được xóa thành công!');
-        getAllBlogs(accessToken, dispatch);
+        setIsSubmitting(true); // Bắt đầu quá trình xóa
+        await deleteBlog(postId, accessToken, dispatch, axiosJWT);
+        alert("Blog đã được xóa thành công!");
+        getAllBlogs(accessToken, dispatch, axiosJWT).catch((err) => {
+          console.error("Failed to fetch blogs:", err);
+          alert("Failed to fetch blogs. Please try again later.");
+        });
       } catch (err) {
         console.error(err);
-        alert('Xóa Blog thất bại!');
+        alert(`Xóa Blog thất bại: ${err}`);
+      } finally {
+        setIsSubmitting(false); // Kết thúc quá trình xóa
       }
     }
   };
@@ -55,14 +78,27 @@ const BlogPageAdmin = () => {
   };
 
   const handleEditBlogSuccess = () => {
-    alert('Blog đã được cập nhật thành công');
+    alert("Blog đã được cập nhật thành công");
     setShowEditForm(false);
-    getAllBlogs(accessToken, dispatch);
+    getAllBlogs(accessToken, dispatch, axiosJWT).catch((err) => {
+      console.error("Failed to fetch blogs:", err);
+      alert("Failed to fetch blogs. Please try again later.");
+    });
   };
 
   const handleCloseEditPopup = () => {
     setShowEditForm(false);
   };
+
+  // Kiểm tra nếu user không phải là admin thì không hiển thị trang
+  if (!user?.admin) {
+    return (
+      <div className="not-authorized">
+        <h1>403 - Forbidden</h1>
+        <p>You do not have permission to view this page.</p>
+      </div>
+    );
+  }
 
   return (
     <div>
@@ -74,16 +110,22 @@ const BlogPageAdmin = () => {
           onClose={handleCloseEditPopup}
           onSuccess={handleEditBlogSuccess}
           blog={selectedBlog}
+          axiosJWT={axiosJWT}
         />
         {user?.admin && (
           <div className="blog-create">
-            <button className="create-button" onClick={handleCreateClick}>
+            <button
+              className="create-button"
+              onClick={handleCreateClick}
+              disabled={isSubmitting}
+            >
               + Tạo bài viết mới
             </button>
             <CreateBlogPopup
               isOpen={showCreateForm}
               onClose={handleClosePopup}
               onSuccess={handleCreateBlogSuccess}
+              axiosJWT={axiosJWT}
             />
           </div>
         )}
