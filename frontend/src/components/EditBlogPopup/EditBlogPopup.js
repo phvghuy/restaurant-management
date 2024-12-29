@@ -1,16 +1,16 @@
 // frontend/src/components/EditBlogPopup/EditBlogPopup.js
-import React, { useState, useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { updateBlog } from '../../redux/apiRequest';
-import './EditBlogPopup.css';
+import React, { useState, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { updateBlog } from "../../redux/apiRequest";
+import "./EditBlogPopup.css";
 
-const EditBlogPopup = ({ isOpen, onClose, onSuccess, blog }) => {
+const EditBlogPopup = ({ isOpen, onClose, onSuccess, blog, axiosJWT }) => {
   const dispatch = useDispatch();
   const user = useSelector((state) => state.auth.login?.currentUser);
   const accessToken = user?.accessToken;
-  const [editedBlogTitle, setEditedBlogTitle] = useState('');
-  const [editedBlogContent, setEditedBlogContent] = useState('');
-  const [editedBlogAuthor, setEditedBlogAuthor] = useState('');
+  const [editedBlogTitle, setEditedBlogTitle] = useState("");
+  const [editedBlogContent, setEditedBlogContent] = useState("");
+  const [editedBlogAuthor, setEditedBlogAuthor] = useState("");
 
   useEffect(() => {
     if (blog) {
@@ -27,24 +27,26 @@ const EditBlogPopup = ({ isOpen, onClose, onSuccess, blog }) => {
   const handleUpdateBlog = async (e) => {
     e.preventDefault();
     const formData = new FormData();
-    formData.append('title', editedBlogTitle);
-    formData.append('content', editedBlogContent);
-    formData.append('author', editedBlogAuthor);
+    formData.append("title", editedBlogTitle);
+    formData.append("content", editedBlogContent);
+    formData.append("author", editedBlogAuthor);
 
     try {
-      await updateBlog(blog._id, formData, accessToken, dispatch, onSuccess);
+      await updateBlog(blog._id, formData, accessToken, dispatch, axiosJWT);
+      onSuccess(); // Gọi hàm callback để thông báo cập nhật thành công
       onClose();
     } catch (err) {
       console.error(err);
+      alert(err); // Hiển thị thông báo lỗi từ server hoặc lỗi kết nối
     }
   };
 
   const handleClose = () => {
     onClose();
     // Reset form fields khi đóng popup
-    setEditedBlogTitle('');
-    setEditedBlogContent('');
-    setEditedBlogAuthor('');
+    setEditedBlogTitle("");
+    setEditedBlogContent("");
+    setEditedBlogAuthor("");
   };
 
   if (!isOpen || !blog) return null;
