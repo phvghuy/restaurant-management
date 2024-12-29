@@ -53,7 +53,7 @@ const blogController = {
       } else {
         // Kiểm tra xem có file được upload không
         if (req.file === undefined) {
-          return res.status(400).json({ message: 'No file selected!' });
+          return res.status(400).json({ message: 'Không có file nào được chọn' });
         }
 
         try {
@@ -96,7 +96,7 @@ const blogController = {
 
         const blog = await Blog.findById(id);
         if (!blog) {
-            return res.status(404).json({ message: 'Blog not found' });
+            return res.status(404).json({ message: 'Không tìm thấy Blog' });
         }
 
         blog.title = title || blog.title;

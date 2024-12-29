@@ -1,17 +1,17 @@
 // frontend/src/components/CreateBlogPopup/CreateBlogPopup.js
-import React, { useState, useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { createBlog } from '../../redux/apiRequest';
-import { resetCreateBlogState } from '../../redux/blogSlice';
-import './CreateBlogPopup.css';
+import React, { useState, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { createBlog } from "../../redux/apiRequest";
+import { resetCreateBlogState } from "../../redux/blogSlice";
+import "./CreateBlogPopup.css";
 
-const CreateBlogPopup = ({ isOpen, onClose, onSuccess }) => {
+const CreateBlogPopup = ({ isOpen, onClose, onSuccess, axiosJWT }) => {
   const dispatch = useDispatch();
   const user = useSelector((state) => state.auth.login?.currentUser);
   const accessToken = user?.accessToken;
-  const [blogTitle, setBlogTitle] = useState('');
-  const [blogContent, setBlogContent] = useState('');
-  const [blogAuthor, setBlogAuthor] = useState('');
+  const [blogTitle, setBlogTitle] = useState("");
+  const [blogContent, setBlogContent] = useState("");
+  const [blogAuthor, setBlogAuthor] = useState("");
   const [blogImage, setBlogImage] = useState(null);
   const isCreating = useSelector((state) => state.blogs.createBlog.isFetching);
   const isCreateError = useSelector((state) => state.blogs.createBlog.error);
@@ -29,7 +29,7 @@ const CreateBlogPopup = ({ isOpen, onClose, onSuccess }) => {
   // Hiển thị thông báo lỗi khi tạo blog thất bại
   useEffect(() => {
     if (isCreateError) {
-      alert('Failed to create blog. Please try again.');
+      alert("Failed to create blog. Please try again.");
       dispatch(resetCreateBlogState());
     }
   }, [isCreateError, dispatch]);
@@ -37,12 +37,12 @@ const CreateBlogPopup = ({ isOpen, onClose, onSuccess }) => {
   // Hiển thị thông báo khi tạo blog thành công và không có lỗi
   useEffect(() => {
     if (isCreateSuccess) {
-      alert('Blog được tạo thành công');
+      alert("Blog được tạo thành công");
       onSuccess();
       onClose();
-      setBlogTitle('');
-      setBlogContent('');
-      setBlogAuthor('');
+      setBlogTitle("");
+      setBlogContent("");
+      setBlogAuthor("");
       setBlogImage(null);
       dispatch(resetCreateBlogState());
     }
@@ -57,29 +57,40 @@ const CreateBlogPopup = ({ isOpen, onClose, onSuccess }) => {
 
     // Kiểm tra điều kiện bắt buộc nhập đầy đủ thông tin
     if (!blogTitle || !blogContent || !blogAuthor) {
-      alert('Vui lòng nhập đầy đủ tiêu đề, nội dung và tác giả.');
+      alert("Vui lòng nhập đầy đủ tiêu đề, nội dung và tác giả.");
       return;
     }
 
     const formData = new FormData();
-    formData.append('title', blogTitle);
-    formData.append('content', blogContent);
-    formData.append('author', blogAuthor);
-    formData.append('imageUrl', blogImage);
+    formData.append("title", blogTitle);
+    formData.append("content", blogContent);
+    formData.append("author", blogAuthor);
+    formData.append("imageUrl", blogImage);
 
     // Chỉ gọi createBlog khi đã nhập đầy đủ thông tin
-    createBlog(formData, accessToken, dispatch, onSuccess).catch((err) => {
-      // Xử lý lỗi: hiển thị thông báo lỗi
-      console.error(err);
-    });
+    createBlog(formData, accessToken, dispatch, axiosJWT)
+      .then(() => {
+        // Xử lý thành công: đóng popup, reset form (không cần alert ở đây)
+        onSuccess();
+        onClose();
+        setBlogTitle("");
+        setBlogContent("");
+        setBlogAuthor("");
+        setBlogImage(null);
+      })
+      .catch((err) => {
+        // Xử lý lỗi: hiển thị thông báo lỗi
+        console.error(err);
+        alert(err);
+      });
   };
 
   const handleClose = () => {
     onClose();
     // Reset form fields khi đóng popup
-    setBlogTitle('');
-    setBlogContent('');
-    setBlogAuthor('');
+    setBlogTitle("");
+    setBlogContent("");
+    setBlogAuthor("");
     setBlogImage(null);
   };
 
