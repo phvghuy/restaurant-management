@@ -84,14 +84,36 @@ const Navbar = ({ toggleLoginPopup, toggleRegisterPopup }) => {
                 </Link>
               )}
             </li>
+            
             <li>
-              <Link
-                to="/blog"
-                className={currentPage === "blog" ? styles.active : ""}
-              >
-                TIN TỨC
-              </Link>
+              {currentUser ? (
+                currentUser.admin ? (
+                  <Link
+                    to="/BlogAdmin"
+                    className={
+                      currentPage === "BlogAdmin" ? styles.active : ""
+                    }
+                  >
+                    TIN TỨC
+                  </Link>
+                ) : (
+                  <Link
+                    to="/blog"
+                    className={currentPage === "blog" ? styles.active : ""}
+                  >
+                    TIN TỨC
+                  </Link>
+                )
+              ) : (
+                <Link
+                  to="/blog"
+                  className={currentPage === "blog" ? styles.active : ""}
+                >
+                  TIN TỨC
+                </Link>
+              )}
             </li>
+
             <li>
               <Link
                 to="/contact"
