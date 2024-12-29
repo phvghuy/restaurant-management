@@ -1,9 +1,9 @@
+// frontend/src/components/ReservationInfoPopup/ReservationInfoPopup.js
 import React, { useState, useEffect } from 'react';
-import './ReservationInfoPopup.css';
+import styles from './ReservationInfoPopup.module.css'; // Sửa đổi: Import từ file .module.css
 
-const ReservationInfoPopup = ({ isOpen, onClose, reservation }) => {
-  // Sử dụng state để lưu thông tin chỉnh sửa, giá trị khởi tạo là thông tin từ reservation prop
-  const [customerName, setCustomerName] = useState('');
+const ReservationInfoPopup = ({ isOpen, onClose, reservation, onUpdate, onDelete }) => {
+  const [Name, setCustomerName] = useState('');
   const [phoneNumber, setPhoneNumber] = useState('');
   const [reservationDate, setReservationDate] = useState('');
   const [reservationTime, setReservationTime] = useState('');
@@ -13,61 +13,112 @@ const ReservationInfoPopup = ({ isOpen, onClose, reservation }) => {
   const [note, setNote] = useState('');
 
   useEffect(() => {
-    // Cập nhật state khi reservation thay đổi
     if (reservation) {
-      setCustomerName(reservation.customerName);
+      setCustomerName(reservation.Name);
       setPhoneNumber(reservation.phoneNumber);
-      // Tách riêng ngày và giờ
-      const [date, time] = new Date(reservation.reservationDate).toISOString().split('T');
-      setReservationDate(date);
-      setReservationTime(time.substring(0, 5)); // Chỉ lấy "HH:mm"
       setNumberOfPeople(reservation.numberOfPeople);
       setMessage(reservation.message);
-      setStatus(reservation.status);
+      setStatus(reservation.status || 'Chờ xử lý');
+      setNote(reservation.note || '');
+
+      if (reservation.reservationDate) {
+        const dateObj = new Date(reservation.reservationDate);
+        if (!isNaN(dateObj)) {
+          // Chuyển đổi sang định dạng YYYY-MM-DD và múi giờ UTC+7 để hiển thị
+          const year = dateObj.toLocaleString('default', {
+            timeZone: 'Asia/Ho_Chi_Minh',
+            year: 'numeric',
+          });
+          const month = dateObj.toLocaleString('default', {
+            timeZone: 'Asia/Ho_Chi_Minh',
+            month: '2-digit',
+          });
+          const day = dateObj.toLocaleString('default', {
+            timeZone: 'Asia/Ho_Chi_Minh',
+            day: '2-digit',
+          });
+          const formattedDate = `${year}-${month}-${day}`;
+
+          setReservationDate(formattedDate);
+          setReservationTime(
+            dateObj.toLocaleTimeString('vi-VN', {
+              timeZone: 'Asia/Ho_Chi_Minh',
+              hour: '2-digit',
+              minute: '2-digit',
+            }),
+          );
+        } else {
+          console.error('Invalid reservation date:', reservation.reservationDate);
+          setReservationDate('');
+          setReservationTime('');
+        }
+      } else {
+        setReservationDate('');
+        setReservationTime('');
+      }
     }
   }, [reservation]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // TODO: Gửi dữ liệu cập nhật đến API
-    console.log('Update reservation:', {
-      customerName,
+    // Chuyển đổi reservationDate và reservationTime sang UTC+0 trước khi gửi đi
+    const dateObj = new Date(reservationDate); // Ngày từ input date (đã được format YYYY-MM-DD)
+    const [hours, minutes] = reservationTime.split(':'); // Giờ và phút (UTC+7)
+
+    // Set giờ và phút cho dateObj (vẫn là UTC+7)
+    dateObj.setHours(parseInt(hours, 10), parseInt(minutes, 10), 0, 0); // Set giây và mili giây về 0
+
+    // KHÔNG CẦN TRỪ ĐI 7 TIẾNG NỮA, GIỮ NGUYÊN GIỜ UTC+7
+    // const offset = -7 * 60 * 60 * 1000; // -7 giờ * 60 phút * 60 giây * 1000 mili giây
+    // const utcDate = new Date(dateObj.getTime() + offset);
+
+    const updatedReservation = {
+      Name,
       phoneNumber,
-      reservationDate,
-      reservationTime,
+      reservationDate: dateObj.toISOString(), // Lưu ngày giờ dưới dạng UTC+7 (nhưng vẫn dùng toISOString để đảm bảo định dạng chuẩn)
       numberOfPeople,
       message,
       status,
       note,
-    });
-    onClose();
+    };
+
+    onUpdate(reservation._id, updatedReservation);
+  };
+
+  const handleDelete = () => {
+    if (window.confirm('Bạn có chắc chắn muốn xóa đặt bàn này?')) {
+      onDelete(reservation._id);
+      onClose();
+    }
   };
 
   if (!isOpen || !reservation) return null;
 
   return (
-    <div className="popup-overlay">
-      <div className="reservation-info-popup">
-        <h2 className="popup-title">Thông tin đặt bàn</h2>
+    <div className={styles.popupOverlay}> 
+      <div className={styles.reservationInfoPopup}> 
+        <h2 className={styles.popupTitle}> 
+          Thông tin đặt bàn
+        </h2>
         <form onSubmit={handleSubmit}>
-          <div className="form-content">
-            <div className="form-column">
+          <div className={styles.formContent}> 
+            <div className={styles.formColumn}> 
               {/* Các trường thông tin bên trái */}
-              <div className="form-group">
+              <div className={styles.formGroup}> 
                 <label htmlFor="customerName">
-                  Họ và Tên <span className="required-star">*</span>
+                  Họ và Tên <span className={styles.requiredStar}></span> 
                 </label>
                 <input
                   type="text"
                   id="customerName"
-                  value={customerName}
+                  value={Name}
                   onChange={(e) => setCustomerName(e.target.value)}
                   placeholder="Nhập tên khách hàng"
                 />
               </div>
-              <div className="form-group">
+              <div className={styles.formGroup}> 
                 <label htmlFor="phoneNumber">
-                  Số điện thoại <span className="required-star">*</span>
+                  Số điện thoại <span className={styles.requiredStar}></span> 
                 </label>
                 <input
                   type="tel"
@@ -77,8 +128,8 @@ const ReservationInfoPopup = ({ isOpen, onClose, reservation }) => {
                   placeholder="ví dụ: 0983204020"
                 />
               </div>
-              <div className="form-group">
-                <label htmlFor="reservationDate">Ngày</label>
+              <div className={styles.formGroup}> 
+                <label htmlFor="reservationDate">Ngày đặt</label>
                 <input
                   type="date"
                   id="reservationDate"
@@ -86,7 +137,7 @@ const ReservationInfoPopup = ({ isOpen, onClose, reservation }) => {
                   onChange={(e) => setReservationDate(e.target.value)}
                 />
               </div>
-              <div className="form-group">
+              <div className={styles.formGroup}> 
                 <label htmlFor="reservationTime">Giờ</label>
                 <input
                   type="time"
@@ -95,7 +146,7 @@ const ReservationInfoPopup = ({ isOpen, onClose, reservation }) => {
                   onChange={(e) => setReservationTime(e.target.value)}
                 />
               </div>
-              <div className="form-group">
+              <div className={styles.formGroup}> 
                 <label htmlFor="numberOfPeople">Số người</label>
                 <input
                   type="number"
@@ -105,7 +156,7 @@ const ReservationInfoPopup = ({ isOpen, onClose, reservation }) => {
                   placeholder="ví dụ: 5"
                 />
               </div>
-              <div className="form-group">
+              <div className={styles.formGroup}> 
                 <label htmlFor="message">Lời nhắn</label>
                 <textarea
                   id="message"
@@ -114,9 +165,9 @@ const ReservationInfoPopup = ({ isOpen, onClose, reservation }) => {
                 />
               </div>
             </div>
-            <div className="form-column">
+            <div className={styles.formColumn}> 
               {/* Các trường thông tin bên phải */}
-              <div className="form-group">
+              <div className={styles.formGroup}> 
                 <label htmlFor="status">Tình trạng đặt bàn</label>
                 <select
                   id="status"
@@ -128,7 +179,7 @@ const ReservationInfoPopup = ({ isOpen, onClose, reservation }) => {
                   <option value="Đã hủy">Đã hủy</option>
                 </select>
               </div>
-              <div className="form-group">
+              <div className={styles.formGroup}> 
                 <label htmlFor="note">Ghi chú</label>
                 <textarea
                   id="note"
@@ -138,11 +189,22 @@ const ReservationInfoPopup = ({ isOpen, onClose, reservation }) => {
                 />
               </div>
               {/* Nút đóng và xác nhận */}
-              <div className="button-group">
-                <button type="button" className="cancel-button" onClick={onClose}>
+              <div className={styles.buttonGroup}> 
+                <button
+                  type="button"
+                  className={styles.deleteButton} 
+                  onClick={handleDelete}
+                >
+                  Xóa
+                </button>
+                <button
+                  type="button"
+                  className={styles.cancelButton} 
+                  onClick={onClose}
+                >
                   Quay lại
                 </button>
-                <button type="submit" className="submit-button">
+                <button type="submit" className={styles.submitButton}> 
                   Xác nhận
                 </button>
               </div>

@@ -1,26 +1,25 @@
-/* frontend/src/pages/ReservationAdmin/ReservationAdmin.css */
-.reservation-admin-container {
+/* frontend/src/pages/ReservationAdmin/ReservationAdmin.module.css */
+.reservationAdminContainer {
   padding: 20px;
   font-family: Arial, sans-serif;
   background-color: #f8f8f8;
-  min-height: calc(100vh - 96px); /* Đảm bảo chiều cao tối thiểu bằng 100vh trừ đi chiều cao của Navbar */
+  min-height: calc(100vh - 96px);
   margin-top: 96px;
-  
 }
 
-.content-header {
+.contentHeader {
   display: flex;
   justify-content: space-between;
   align-items: center;
   margin-bottom: 20px;
 }
 
-.search-bar {
+.searchBar {
   position: relative;
   width: 300px;
 }
 
-.search-bar input {
+.searchBar input {
   width: 100%;
   padding: 10px;
   border: 1px solid #ccc;
@@ -28,12 +27,13 @@
   font-size: 16px;
 }
 
-.add-reservation-and-search-bar {
+.addReservationAndSearchBar {
   display: flex;
   align-items: center;
-  gap: 10px; /* Khoảng cách giữa*/
+  gap: 10px;
 }
-.search-icon {
+
+.searchIcon {
   position: absolute;
   right: 10px;
   top: 50%;
@@ -41,7 +41,7 @@
   color: #aaa;
 }
 
-.clear-icon {
+.clearIcon {
   position: absolute;
   right: 10px;
   top: 50%;
@@ -50,14 +50,13 @@
   cursor: pointer;
 }
 
-
-.page-title {
+.pageTitle {
   text-align: center;
   margin-bottom: 30px;
   color: #333;
 }
 
-.add-reservation-button {
+.addReservationButton {
   background-color: #007bff;
   color: #fff;
   border: none;
@@ -68,18 +67,16 @@
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
 }
 
-.add-reservation-button:hover {
+.addReservationButton:hover {
   background-color: #0056b3;
 }
 
-
-
-.filter-buttons {
+.filterButtons {
   display: flex;
   margin-bottom: 0px;
 }
 
-.filter-buttons button {
+.filterButtons button {
   background-color: #e9ecef;
   color: #333;
   border: none;
@@ -90,22 +87,22 @@
   cursor: pointer;
 }
 
-.filter-buttons button:hover {
+.filterButtons button:hover {
   background-color: #ced4da;
 }
 
-.filter-buttons button.active {
+.filterButtons button.active {
   background-color: #007bff;
   color: #fff;
 }
 
-.reservations-list {
+.reservationsList {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
   gap: 20px;
 }
 
-.reservation-item {
+.reservationItem {
   background-color: #fff;
   border: 1px solid #ddd;
   padding: 20px;
@@ -113,7 +110,7 @@
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
-.reservation-details {
+.reservationDetails {
   margin-bottom: 10px;
 }
 
@@ -122,13 +119,13 @@
   margin-right: 5px;
 }
 
-.reservation-actions {
+.reservationActions {
   display: flex;
   justify-content: space-between;
   gap: 10px;
 }
 
-.reservation-actions button {
+.reservationActions button {
   border: none;
   padding: 8px 15px;
   border-radius: 5px;
@@ -137,35 +134,32 @@
   color: #fff;
 }
 
-.status-button {
-  background-color: #6c757d; /* Màu xám cho trạng thái */
+.statusButton {
+  background-color: #6c757d;
 }
 
-.check-button {
-  background-color: #28a745; /* Màu xanh cho kiểm tra */
+.checkButton {
+  background-color: #28a745;
 }
 
-.reservation-actions button:hover {
+.reservationActions button:hover {
   opacity: 0.8;
 }
 
-/* Thêm style cho phần footer nếu cần */
 .footer {
   margin-top: 40px;
 }
 
-.button-container {
+.buttonContainer {
   display: flex;
   align-items: center;
   margin-bottom: 20px;
   justify-content: space-between;
 }
 
-.filter-and-search-container {
+.filterAndSearchContainer {
   display: flex;
   align-items: center;
   gap: 10px;
-  margin-left: auto; /* Đẩy container sang phải */
+  margin-left: auto;
 }
-
-

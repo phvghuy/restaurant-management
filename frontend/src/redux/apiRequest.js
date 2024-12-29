@@ -16,6 +16,20 @@ import {
   createBlogStart,
   createBlogSuccess,
 } from "./blogSlice";
+import {
+  getAllReservationsStart,
+  getAllReservationsSuccess,
+  getAllReservationsFailure,
+  createReservationStart,
+  createReservationSuccess,
+  createReservationFailure,
+  deleteReservationStart,
+  deleteReservationSuccess,
+  deleteReservationFailure,
+  updateReservationStart,
+  updateReservationSuccess,
+  updateReservationFailure,
+} from './reservationSlice';
 
 // user: Thông tin người dùng cần để đăng nhập (ví dụ: username, password).
 // dispatch: Hàm dispatch của Redux, được sử dụng để gửi các actions đến store.
@@ -219,6 +233,83 @@ export const updateBlog = async (
     const errorMessage = err.response
       ? err.response.data.message || "Failed to update blog."
       : "Network error or server error.";
+    return Promise.reject(errorMessage);
+  }
+};
+
+// Đặt bàn
+
+export const createReservation = async (
+  reservationData,
+  accessToken,
+  dispatch,
+  axiosJWT
+) => {
+  dispatch(createReservationStart());
+  try {
+    const res = await axiosJWT.post("/v1/reservations", reservationData, {
+      headers: { token: `Bearer ${accessToken}` },
+    });
+    if (res.status === 201) {
+      dispatch(createReservationSuccess(res.data));
+      return Promise.resolve(res.data);
+    } else {
+      dispatch(createReservationFailure());
+      const errorMessage = res.data.message || "Failed to create reservation.";
+      return Promise.reject(errorMessage);
+    }
+  } catch (err) {
+    console.error("Create reservation error:", err);
+    dispatch(createReservationFailure());
+    const errorMessage = err.response
+      ? err.response.data.message || "Failed to create reservation."
+      : "Network error or server error.";
+    return Promise.reject(errorMessage);
+  }
+};
+
+export const getAllReservations = async (accessToken, dispatch, axiosJWT) => {
+  dispatch(getAllReservationsStart());
+  try {
+    const res = await axios.get(`/v1/reservations/`); 
+    dispatch(getAllReservationsSuccess(res.data));
+    return res.data; 
+  } catch (err) {
+    dispatch(getAllReservationsFailure()); // Thêm dispatch khi có lỗi
+    console.error('Failed to fetch reservations:', err);
+    const errorMessage = err.response
+      ? err.response.data.message || 'Failed to fetch reservations.'
+      : 'Network error or server error.';
+    return Promise.reject(errorMessage);
+  }
+};
+
+export const deleteReservation = async (id, accessToken, axiosJWT) => {
+  try {
+    const res = await axiosJWT.delete(`/v1/reservations/${id}`, {
+      headers: { token: `Bearer ${accessToken}` },
+    });
+    return res.data;
+  } catch (err) {
+    console.error('Delete reservation error:', err);
+    const errorMessage = err.response
+      ? err.response.data.message || 'Failed to delete reservation.'
+      : 'Network error or server error.';
+    return Promise.reject(errorMessage);
+  }
+};
+
+export const updateReservation = async (id, updatedData, accessToken, axiosJWT) => {
+  try {
+    const res = await axiosJWT.put(`/v1/reservations/${id}`, updatedData, {
+      headers: { token: `Bearer ${accessToken}` },
+    });
+    return res.data;
+  } catch (err) {
+    console.error('Update reservation error:', err);
+    const errorMessage = err.response
+      ? err.response.data.message || 'Failed to update reservation.'
+      : 'Network error or server error.';
     return Promise.reject(errorMessage);
   }
 };
