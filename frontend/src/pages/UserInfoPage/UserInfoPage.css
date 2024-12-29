@@ -42,7 +42,7 @@
   font-size: 1rem;
   text-align: center;
   margin-bottom: 15px;
-  color: #ff6600;
+  color: #65afde;
   display: flex;
     justify-content: center;
 }
@@ -122,18 +122,18 @@
 
 .input-group input:focus,
 .input-group select:focus {
-  border-color: #ff6600;
+  border-color: #000000;
 }
 
 .role-group {
-  display: flex;
+    display: flex;
     margin-bottom: 15px;
     font-size: 0.9rem;
     align-items: center;
 }
 
 .role-group label {
-  margin-right: 15px;
+    margin-right: 15px;
     display: flex;
     align-items: center;
     cursor: pointer;
@@ -183,9 +183,9 @@
 }
 
 .input-group {
-  display: flex;
-  flex-direction: column;
-  margin-bottom: 15px;
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 15px;
 }
 
 .input-group label {
@@ -199,7 +199,7 @@
     position: relative;
 }
 .input-container input {
-  padding: 10px;
+    padding: 10px;
     border: 1px solid #ddd;
     border-radius: 5px;
     outline: none;
@@ -207,7 +207,7 @@
     flex: 1;
 }
 .input-container input:focus {
-  border-color: #ff6600;
+  border-color: #000000;
 }
 .icon-calendar {
     position: absolute;
@@ -216,13 +216,24 @@
     pointer-events: none; /* Ngăn chặn click vào icon */
     font-size: 0.9rem;
      /* Đảm bảo icon ở giữa chiều cao */
-      display: flex;
-      align-items: center;
+    display: flex;
+    align-items: center;
     height: 100%;
 }
 
 .label {
-  font-size: 0.9rem;
-  margin-bottom: 5px;
-  font-weight: bold;
+    font-size: 0.9rem;
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+
+.user-info-tab {
+    position: relative; /* Thêm position relative để định vị nút */
+    padding-bottom: 60px;
+}
+
+.user-info-tab .save-button {
+    position: absolute; /* Định vị tuyệt đối */
+    bottom: 10px; /* Điều chỉnh vị trí theo chiều dọc (từ dưới lên) */
+    right: 10px; /* Điều chỉnh vị trí theo chiều ngang (từ phải sang) */
 }
