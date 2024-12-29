@@ -34,7 +34,7 @@ const authControllers = {
             const token = jwt.sign(
                 { email: user.email }, // Payload
                 process.env.JWT_ACCESS_KEY, // Secret key
-                { expiresIn: '1h' } // Token expiration time
+                { expiresIn: '30s' } // Token expiration time
             );
 
             // Create verification link
