@@ -144,7 +144,7 @@ body {
 
 .reservation-form-section button {
     padding: 12px;
-    background-color: #DA4B26;
+    background-color: #008000;
     color: white;
     border: none;
     cursor: pointer;
@@ -153,7 +153,8 @@ body {
 }
 
 .reservation-form-section button:hover {
-    background-color: #af2424;
+    background-color:#008000;
+    opacity: 0.8;
 }
 
 .container {

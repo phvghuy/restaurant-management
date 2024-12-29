@@ -48,6 +48,9 @@ const authSlice = createSlice({
       state.register.error = null;
       state.register.success = false;
     },
+    logOutSuccess: (state) => {
+    state.login.currentUser = null;
+    },
   },
 });
 
@@ -59,6 +62,7 @@ export const {
   registerFailed,
   registerSuccess,
   resetRegister,
+  logOutSuccess,
 } = authSlice.actions;
 
 export default authSlice.reducer;

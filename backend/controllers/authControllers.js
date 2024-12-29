@@ -34,7 +34,7 @@ const authControllers = {
             const token = jwt.sign(
                 { email: user.email }, // Payload
                 process.env.JWT_ACCESS_KEY, // Secret key
-                { expiresIn: '1h' } // Token expiration time
+                { expiresIn: '2h' } // Token expiration time
             );
 
             // Create verification link
@@ -145,7 +145,7 @@ const authControllers = {
           const token = jwt.sign(
             { email: user.email },
             process.env.JWT_ACCESS_KEY,
-            { expiresIn: '1h' }
+            { expiresIn: '3h' }
           );
     
           // Tạo link xác thực
