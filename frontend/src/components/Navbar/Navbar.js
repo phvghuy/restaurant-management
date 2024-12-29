@@ -22,8 +22,20 @@ const Navbar = ({ toggleLoginPopup, toggleRegisterPopup }) => {
                         {/* Thay thế thẻ <a> bằng <Link> */}
                         <li><Link to="/" className={currentPage === 'home' ? 'active' : ''}>TRANG CHỦ</Link></li>
                         <li><Link to="/menu" className={currentPage === 'menu' ? 'active' : ''}>THỰC ĐƠN</Link></li>
-                        <li><Link to="/reservation" className={currentPage === 'reservation' ? 'active' : ''}>ĐẶT BÀN</Link></li>
-                        <li><Link to="/blog" className={currentPage === 'blog' ? 'active' : ''}>TIN TỨC</Link></li>
+                        <li>
+                            {currentUser?.admin ? (
+                                <Link to="/reservation-admin" className={currentPage === 'reservation-admin' ? 'active' : ''}>ĐẶT BÀN</Link>
+                            ) : (
+                                <Link to="/reservation" className={currentPage === 'reservation' ? 'active' : ''}>ĐẶT BÀN</Link>
+                            )}
+                        </li>
+                        <li>
+                            {currentUser?.admin ? (
+                                <Link to="/blogadmin" className={currentPage === 'blogadmin' ? 'active' : ''}>TIN TỨC</Link>
+                            ) : (
+                                <Link to="/blog" className={currentPage === 'blog' ? 'active' : ''}>TIN TỨC</Link>
+                            )}
+                        </li>
                         <li><Link to="/contact" className={currentPage === 'contact' ? 'active' : ''}>LIÊN HỆ</Link></li>
                     </ul>
                 </nav>

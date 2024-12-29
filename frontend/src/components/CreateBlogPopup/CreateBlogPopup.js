@@ -62,6 +62,7 @@ const CreateBlogPopup = ({ isOpen, onClose, onSuccess, axiosJWT }) => {
     }
 
     const formData = new FormData();
+
     formData.append("title", blogTitle);
     formData.append("content", blogContent);
     formData.append("author", blogAuthor);

@@ -15,6 +15,8 @@ import ResetPassword from './pages/ResetPassword/ResetPassword';
 import Reservation from "./pages/Reservation/Reservation";
 import VerifyEmail from "./pages/VerifyEmail/VerifyEmail";
 import BlogPageAdmin from "./pages/BlogPageAdmin/BlogPageAdmin";
+import PrivateRoute from './components/PrivateRoute/PrivateRoute';
+import ReservationAdmin from "./pages/ReservationAdmin/ReservationAdmin";
 
 function App() {
   const [isLoginPopupOpen, setIsLoginPopupOpen] = useState(false);
@@ -45,10 +47,18 @@ function App() {
           <Route path="/menu" element={<MenuPage />} />
           <Route path="/contact" element={<Contact />} />
           <Route path="/blog" element={<Blog />} />
+  <Route
+    path="/BlogAdmin"
+    element={
+      <PrivateRoute>
+        <BlogPageAdmin />
+      </PrivateRoute>
+    }
+  />
+          <Route path="/reservation-admin" element={<ReservationAdmin />} />
           <Route path="/reservation" element={<Reservation />} />
           <Route path="/reset-password" element={<ResetPassword />} />
           <Route path="/verify" element={<VerifyEmail />} />
-          <Route path="/BlogAdmin" element={<BlogPageAdmin />} />
         </Routes>
         <LoginPopup
           isOpen={isLoginPopupOpen}
