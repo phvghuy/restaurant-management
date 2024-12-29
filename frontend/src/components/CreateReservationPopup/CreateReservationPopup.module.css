@@ -1,5 +1,5 @@
-/* frontend/src/components/ReservationInfoPopup/ReservationInfoPopup.css */
-.popup-overlay {
+/* frontend/src/components/CreateReservationPopup/CreateReservationPopup.module.css */
+.popupOverlay {
   position: fixed;
   top: 0;
   left: 0;
@@ -12,64 +12,51 @@
   z-index: 1000;
 }
 
-.reservation-info-popup {
+.createReservationPopup {
   background-color: #fff;
   padding: 40px;
   border-radius: 10px;
   box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.1);
-  width: 800px; /* Chỉnh lại width */
+  width: 400px;
   box-sizing: border-box;
 }
 
-.popup-title {
+.popupTitle {
   text-align: center;
   margin-bottom: 20px;
   color: #000;
 }
 
-.form-group {
+.formGroup {
   margin-bottom: 15px;
 }
 
-.form-group label {
+.formGroup label {
   display: block;
   margin-bottom: 5px;
-  color: #000;
 }
 
-.required-star {
-  color: red;
-}
-
-/* Style cho input, select, textarea */
-.form-group input,
-.form-group select,
-.form-group textarea {
-  width: 90%;
+.formGroup input,
+.formGroup select,
+.formGroup textarea {
+  width: 93%;
   padding: 10px;
   border: 1px solid #ccc;
   border-radius: 5px;
   font-size: 16px;
 }
 
-.form-group input::placeholder,
-.form-group select::placeholder,
-.form-group textarea::placeholder {
-  color: #999;
-}
-
-.form-group textarea {
+.formGroup textarea {
   min-height: 100px;
 }
 
-/* Style cho nút */
-.button-group {
+.buttonGroup {
   display: flex;
   justify-content: space-between;
   margin-top: 20px;
 }
 
-.button-group button {
+.buttonGroup button {
   padding: 10px 20px;
   border: none;
   border-radius: 5px;
@@ -77,42 +64,35 @@
   cursor: pointer;
 }
 
-.cancel-button {
-  background-color: #fff;
-  color: #000;
-  border: 1px solid #000 !important; 
-}
-
-.cancel-button:hover {
-  background-color: #000;
-  color: #fff;
-}
-
-.submit-button {
+.submitButton {
   background-color: #00b04f;
   color: #fff;
 }
 
-.submit-button:hover {
+.submitButton:hover {
   background-color: #fff;
   color: #00b04f;
   border: 1px solid #00b04f;
 }
 
-.form-group input:focus,
-.form-group select:focus,
-.form-group textarea:focus {
+.formGroup input::placeholder {
+  color: #999;
+}
+
+.formGroup input:focus,
+.formGroup select:focus,
+.formGroup textarea:focus {
   border-color: #00b04f;
   box-shadow: 0 0 0 0.2rem rgba(0, 176, 79, 0.25);
   outline: none;
 }
 
-/* Style cho 2 cột */
-.form-content {
-  display: flex;
-  gap: 20px;
+.formGroup label {
+  display: block;
+  margin-bottom: 5px;
+  color: #000;
 }
 
-.form-column {
-  flex: 1;
+.requiredStar {
+  color: red;
 }

@@ -43,7 +43,7 @@ swaggerSetup(app);
 app.use("/v1/auth", authRoute);
 app.use("/v1/blogs", blogRoutes); 
 app.use("/v1/user", userRoute)
-app.use('/api/reservations', reservationRoutes)
+app.use('/v1/reservations', reservationRoutes)
 app.use("/v1/menu", menuRoute)
 
 app.listen(8000, () => {

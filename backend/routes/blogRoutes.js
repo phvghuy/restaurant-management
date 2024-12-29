@@ -31,10 +31,6 @@ const middlewareController = require('../controllers/middlewareControllers');
 // Route tạo blog ADMIN
 router.post("/", middlewareController.verifyTokenAndAdminAuth, blogController.createBlog);
 
-
-
-
-
 /**
  * @swagger
  * /v1/blogs/{id}:

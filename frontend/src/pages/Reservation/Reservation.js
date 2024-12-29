@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import "./Reservation.css";
-import { createReservation } from "../../redux/reservationSlice";
+import { createReservation } from '../../redux/apiRequest';
 import { useLocation, useNavigate } from "react-router-dom";
 import CheckReservationPopup from "../../components/CheckReservationPopup/CheckReservationPopup";
 
