@@ -15,7 +15,7 @@ import ResetPassword from './pages/ResetPassword/ResetPassword';
 import Reservation from "./pages/Reservation/Reservation";
 import VerifyEmail from "./pages/VerifyEmail/VerifyEmail";
 import BlogPageAdmin from "./pages/BlogPageAdmin/BlogPageAdmin";
-import UserProfile from "./pges/UserInfoPage/UserInfoPage";
+import UserProfile from "./pages/UserInfoPage/UserInfoPage";
 import AdminProfile from "./pages/AdminInfoPage/AdminInfoPage";
 import CustomerAdmin from "./pages/CustomerAdmin/CustomerAdmin";
 import Employeemanager from "./pages/Employeemanager/Employeemanager";
@@ -55,8 +55,9 @@ function App() {
           <Route path="/reset-password" element={<ResetPassword />} />
           <Route path="/verify" element={<VerifyEmail />} />
           <Route path="/user-info" element={<UserProfile />} />
-          <Route path="/admin-info" element={<AdminProfile />} />
+          {/* <Route path="/admin-info" element={<AdminProfile />} />
           <Route path="/Employeemanager" element={<Employeemanager />} />
+          <Route path="/CustomerAdmin" element={<CustomerAdmin />} /> */}
           <Route
             path="/BlogAdmin"
             element={
@@ -70,6 +71,30 @@ function App() {
             element={
               <PrivateRoute>
                 <ReservationAdmin />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="/CustomerAdmin"
+            element={
+              <PrivateRoute>
+                <CustomerAdmin />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="/Employeemanager"
+            element={
+              <PrivateRoute>
+                <Employeemanager />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="/admin-info"
+            element={
+              <PrivateRoute>
+                <AdminProfile />
               </PrivateRoute>
             }
           />

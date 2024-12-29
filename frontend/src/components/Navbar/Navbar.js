@@ -57,7 +57,6 @@ const Navbar = ({ toggleLoginPopup, toggleRegisterPopup }) => {
               </Link>
             </li>
             <li>
-              {/* Kiểm tra currentUser tồn tại trước */}
               {currentUser ? (
                 currentUser.admin ? (
                   <Link
@@ -77,7 +76,6 @@ const Navbar = ({ toggleLoginPopup, toggleRegisterPopup }) => {
                   </Link>
                 )
               ) : (
-                /* Nếu không có currentUser, chuyển hướng đến trang /reservation */
                 <Link
                   to="/reservation"
                   className={currentPage === "reservation" ? styles.active : ""}
@@ -102,6 +100,17 @@ const Navbar = ({ toggleLoginPopup, toggleRegisterPopup }) => {
                 LIÊN HỆ
               </Link>
             </li>
+            {/* Thêm mục NHÂN VIÊN nếu là admin */}
+            {currentUser?.admin && (
+              <li>
+                <Link
+                  to="/Employeemanager"
+                  className={currentPage === "Employeemanager" ? styles.active : ""}
+                >
+                  NHÂN VIÊN
+                </Link>
+              </li>
+            )}
           </ul>
         </nav>
         <div className={styles["navbar-actions"]}>
@@ -124,7 +133,7 @@ const Navbar = ({ toggleLoginPopup, toggleRegisterPopup }) => {
                       {currentUser.admin ? (
                         <>
                           <li>
-                            <Link to="/admin-account">Quản lý tài khoản</Link>
+                            <Link to="/admin-info">Quản lý tài khoản</Link>
                           </li>
                           <li>
                             <button onClick={handleLogout}>Đăng xuất</button>
@@ -133,7 +142,7 @@ const Navbar = ({ toggleLoginPopup, toggleRegisterPopup }) => {
                       ) : (
                         <>
                           <li>
-                            <Link to="/profile">Thông tin tài khoản</Link>
+                            <Link to="/user-info">Thông tin tài khoản</Link>
                           </li>
                           <li>
                             <Link to="/check-reservations">
