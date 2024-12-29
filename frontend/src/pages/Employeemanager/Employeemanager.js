@@ -115,29 +115,29 @@ const EmployeeManager = () => {
           <h3 className="form-title">THÔNG TIN NHÂN VIÊN</h3>
           <div className="form-group">
             <label htmlFor="fullname">Họ và tên</label>
-            <input type="text" id="fullname" placeholder="" />
+            <input type="text" id="fullname" placeholder="DINH QUOC HUY" />
           </div>
           <div className="form-group">
             <label htmlFor="position">Chức vụ</label>
-            <input type="text" id="position" placeholder="" />
+            <input type="text" id="position" placeholder="Nhân viên phục vụ" />
           </div>
           <div className="form-group">
             <label htmlFor="employeeId">Mã nhân viên</label>
-            <input type="text" id="employeeId" placeholder="" />
+            <input type="text" id="employeeId" placeholder="234234234234" />
           </div>
           <div className="form-group">
             <label htmlFor="gender">Giới tính</label>
-            <input type="text" id="gender" placeholder="" />
+            <input type="text" id="gender" placeholder="Nam" />
           </div>
           <div className="form-group">
             <label htmlFor="email">Email</label>
-            <input type="email" id="email" placeholder="" />
+            <input type="email" id="email" placeholder="ABCDE@GMAIL.COM " />
           </div>
           <div className="form-group">
             <label htmlFor="dob">Ngày sinh</label>
-            <input type="text" id="dob" placeholder="" />
+            <input type="text" id="dob" placeholder="11/2/2000" />
           </div>
-          <button className="update-button">Cập nhật thông tin </button>
+
         </div>
         <div className="summary">
           <div className="summary-item order-item">
