@@ -44,7 +44,7 @@ export const loginUser = async (user, dispatch, navigate) => {
     dispatch(loginSuccess(res.data));
     // Kiểm tra nếu là admin thì chuyển hướng đến /BlogAdmin
     if (res.data.admin) {
-      navigate("/BlogAdmin");
+      navigate("/CustomerAdmin");
     } else {
       navigate("/");
     }
