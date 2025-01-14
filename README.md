@@ -2,7 +2,7 @@
 
 ## Giới Thiệu Tổng Quan
 
-UIT-VNU-IE104.P11.CNVN là đồ án cuối kỳ môn IE104 - Internet và công nghệ Web của nhóm sinh viên của trường Đại học Công nghệ Thông tin - ĐHQG. Đồ án này được thực hiện bởi nhóm 12, lớp IE104.P11.CNVN dưới sự hướng dẫn của Th.S Võ Tấn Khoa.
+UIT-VNU-IE104.P11.CNVN là đồ án cuối kỳ môn IE104 - Internet và công nghệ Web của nhóm sinh viên của trường Đại học Công nghệ Thông tin - ĐHQG. Đồ án này được thực hiện bởi nhóm 12, lớp IE104.P11.CNVN dưới sự hướng dẫn của Th.S Võ Tấn Khoa. Đây là một trang web quản lý nhà hàng Nhật Bản.
 
 ## Thành Viên Nhóm
 
@@ -12,10 +12,9 @@ Các thành viên trong nhóm bao gồm:
 | --- | ------------------ | --------------- | ---------- |
 | 1   | Phạm Võ Gia Huy    | 22520572       | Trưởng nhóm |
 | 2   | Nguyễn Tấn Cao Hào | 22520402       | Thành Viên  |
-| 3   | Nguyễn Văn Mạnh    | 22520850       | Thành Viên  |
-| 4   | Đỗ Thành Danh      | 22520198       | Thành Viên  |
-| 5   | Đinh Quốc Huy      | 22520535       | Thành Viên  |
-| 6   | Phạm Hải Dương     | 22520309       | Thành Viên  |
+| 3   | Đỗ Thành Danh      | 22520198       | Thành Viên  |
+| 4   | Đinh Quốc Huy      | 22520535       | Thành Viên  |
+| 5   | Phạm Hải Dương     | 22520309       | Thành Viên  |
 
 ## Công nghệ sử dụng
 
@@ -105,3 +104,60 @@ restaurant-management
      │   └───index.js                    # File khởi tạo ứng dụng (entry point)
      └───package.json                    # File quản lý các thư viện, scripts
 ```
+## Demo Video:
+[Link Demo Video](https://drive.google.com/file/d/1hmsgm6AZmsczpHBC_lUUoM_UDxvihV1J/view?usp=sharing)
+
+## Screenshot:
+
+### Trang chủ
+![image_alt](https://github.com/phvghuy/restaurant-management/blob/main/screenshot/homepage.jpeg?raw=true)
+
+### Đăng nhập/đăng ký
+![image_alt](https://github.com/phvghuy/restaurant-management/blob/main/screenshot/login.jpeg?raw=true)
+![image_alt](https://github.com/phvghuy/restaurant-management/blob/main/screenshot/register.jpeg?raw=true)
+- Xác thực email sau khi đăng ký tài khoản
+![image_alt](https://github.com/phvghuy/restaurant-management/blob/main/screenshot/verifyEmail.jpeg?raw=true)
+
+### Quên mật khẩu
+![image_alt](https://github.com/phvghuy/restaurant-management/blob/main/screenshot/forgotPassword.jpeg?raw=true)
+- Link Reset Password trong email
+![image_alt](https://github.com/phvghuy/restaurant-management/blob/main/screenshot/ResetPasswordEmail.jpeg?raw=true)
+![image_alt](https://github.com/phvghuy/restaurant-management/blob/main/screenshot/forgonPasswordPage.jpeg?raw=true)
+
+### Menu
+![iamge_alt](https://github.com/phvghuy/restaurant-management/blob/main/screenshot/menu.jpeg?raw=true)
+
+### Đặt bàn
+![iamge_alt](https://github.com/phvghuy/restaurant-management/blob/main/screenshot/reservation.jpeg?raw=true?raw=true)
+
+### Tin tức
+![iamge_alt](https://github.com/phvghuy/restaurant-management/blob/main/screenshot/blog.jpeg?raw=true)
+
+### Liên hệ
+![iamge_alt](https://github.com/phvghuy/restaurant-management/blob/main/screenshot/about.jpeg?raw=true)
+
+### Thông tin tài khoản
+![iamge_alt](https://github.com/phvghuy/restaurant-management/blob/main/screenshot/account.jpeg?raw=true)
+
+### Trang chủ (ADMIN)
+![iamge_alt](https://github.com/phvghuy/restaurant-management/blob/main/screenshot/HomePageAdmin.jpeg?raw=true)
+
+### Đặt bàn (ADMIN)
+- Thêm, xóa, chỉnh sửa đặt bàn
+![iamge_alt](https://github.com/phvghuy/restaurant-management/blob/main/screenshot/reservationAdmin.jpeg?raw=true)
+![iamge_alt](https://github.com/phvghuy/restaurant-management/blob/main/screenshot/AddReservationAdmin.jpeg?raw=true)
+![iamge_alt](https://github.com/phvghuy/restaurant-management/blob/main/screenshot/EditReservationAdmin.jpeg?raw=true)
+
+### Tin tức (ADMIN)
+- Thêm, xóa, chỉnh sửa tin tức
+![iamge_alt](https://github.com/phvghuy/restaurant-management/blob/main/screenshot/AddBlogAdmin.jpeg?raw=true)
+![iamge_alt](https://github.com/phvghuy/restaurant-management/blob/main/screenshot/editBlogAdmin.jpeg?raw=true)
+
+### Thông tin nhân viên
+![iamge_alt](https://github.com/phvghuy/restaurant-management/blob/main/screenshot/employeeAdmin.jpeg?raw=true)
+
+### Thông tin ADMIN
+![iamge_alt](https://github.com/phvghuy/restaurant-management/blob/main/screenshot/infoAdmin.jpeg?raw=true)
+
+### Database (MongoDB)
+![iamge_alt](https://github.com/phvghuy/restaurant-management/blob/main/screenshot/database.png?raw=true)
